@@ -1,0 +1,24 @@
+---
+import type { Service } from '../data/services';
+const { service } = Astro.props as { service: Service };
+---
+<section class="section">
+  <div class="container grid grid-2">
+    <div data-reveal>
+      <h1 class="section-title">{service.title}</h1>
+      <p class="lead">{service.intro}</p>
+      <p><strong>Turnaround:</strong> {service.turnaround}</p>
+      <a class="btn btn-primary" href="/quote">Request a quote</a>
+    </div>
+    <aside class="card" data-reveal>
+      <h2>Who this is for</h2>
+      <ul>
+        {service.forWho.map((item) => <li>{item}</li>)}
+      </ul>
+      <h2>What is included</h2>
+      <ul>
+        {service.whatIncluded.map((item) => <li>{item}</li>)}
+      </ul>
+    </aside>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<section class="section hero">
+  <div class="container hero-grid">
+    <div data-reveal>
+      <p class="kicker">Energy & Compliance Specialists</p>
+      <h1>Professional property compliance services across Scotland.</h1>
+      <p class="lead">Scottish Energy Services delivers EPCs, SAPs, FRAs, and legionella assessments with clear reporting, practical guidance, and dependable turnaround.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/quote">Request a Quote</a>
+        <a class="btn btn-ghost" href="/services">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-panel card" data-reveal>
+      <div class="metric"><strong data-count="2500">0</strong><span>Assessments completed</span></div>
+      <div class="metric"><strong data-count="18">0</strong><span>Scottish council areas served</span></div>
+      <div class="metric"><strong>48 hrs</strong><span>Typical domestic EPC turnaround</span></div>
+    </div>
+  </div>
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: clip; padding-top: 4.5rem; }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr .9fr; gap: 1.2rem; align-items: center; }
+  .kicker { color: var(--accent); margin: 0; font-weight: 600; letter-spacing: .03em; }
+  h1 { font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.08; margin: .6rem 0 1rem; max-width: 14ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+  .hero-panel { display: grid; gap: .75rem; }
+  .metric { padding: .8rem; border-radius: 14px; background: rgba(10, 21, 37, .8); border: 1px solid rgba(255,255,255,.08); }
+  .metric strong { display: block; font-size: 1.7rem; }
+  .metric span { color: var(--muted); font-size: .94rem; }
+  .orb { position: absolute; border-radius: 999px; filter: blur(70px); pointer-events: none; }
+  .orb-1 { width: 320px; height: 320px; right: -80px; top: 20px; background: rgba(20,150,227,.35); }
+  .orb-2 { width: 230px; height: 230px; left: -60px; bottom: -50px; background: rgba(89,214,180,.22); }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+</style>

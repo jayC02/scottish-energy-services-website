@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+---
+<BaseLayout title="Coverage" description="Scottish Energy Services provides coverage across Scotland for energy and compliance assessments.">
+  <section class="section">
+    <div class="container" data-reveal>
+      <h1 class="section-title">Areas we cover</h1>
+      <p class="lead">We provide services across Scotland, including Glasgow, Edinburgh, Dundee, Aberdeen, Inverness, Stirling, Perth, Ayrshire, Fife, and surrounding regions.</p>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="container grid grid-3">
+      <article class="card" data-reveal><h2>Central Belt</h2><p>Frequent scheduling across Glasgow, Edinburgh, Lanarkshire, and West Lothian.</p></article>
+      <article class="card" data-reveal><h2>East & North-East</h2><p>Support for Dundee, Angus, Aberdeen, and nearby towns.</p></article>
+      <article class="card" data-reveal><h2>Highlands & Rural</h2><p>Planned coverage for regional sites with advance coordination.</p></article>
+    </div>
+  </section>
+  <CTASection title="Not sure if we cover your postcode?" text="Send us your property details and we will confirm availability quickly." />
+</BaseLayout>

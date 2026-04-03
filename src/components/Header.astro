@@ -1,0 +1,48 @@
+---
+import { navItems, siteConfig } from '../data/site';
+
+const pathname = Astro.url.pathname;
+---
+<header class="sticky">
+  <div class="container nav-wrap">
+    <a href="/" class="brand" aria-label="Scottish Energy Services home">
+      <span class="brand-mark">SE</span>
+      <span>{siteConfig.name}</span>
+    </a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" class="nav">
+      <ul>
+        {navItems.map((item) => (
+          <li>
+            <a class={pathname === item.href ? 'active' : ''} href={item.href}>{item.label}</a>
+          </li>
+        ))}
+      </ul>
+      <a href="/quote" class="btn btn-primary">Get a Quote</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 78px; }
+  .brand { display: flex; align-items: center; gap: .7rem; font-weight: 700; }
+  .brand-mark {
+    display: grid; place-items: center; width: 36px; height: 36px;
+    border-radius: 10px; background: linear-gradient(130deg, var(--brand), var(--accent)); color: #032034;
+  }
+  .nav { display: flex; align-items: center; gap: 1.2rem; }
+  ul { display: flex; list-style: none; gap: 1rem; margin: 0; padding: 0; }
+  a { color: var(--muted); }
+  a.active, a:hover { color: var(--text); }
+  .menu-toggle { display: none; }
+
+  @media (max-width: 880px) {
+    .menu-toggle { display: inline-flex; background: transparent; border: 1px solid rgba(255,255,255,.3); color: var(--text); border-radius: 999px; padding: .4rem .9rem; }
+    .nav {
+      position: absolute; left: 0; right: 0; top: 78px; display: none; flex-direction: column;
+      background: #08182b; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .nav.open { display: flex; }
+    ul { flex-direction: column; width: 100%; }
+  }
+</style>

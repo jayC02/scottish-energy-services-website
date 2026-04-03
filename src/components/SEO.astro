@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  pathname?: string;
+}
+
+const { title, description, pathname = '/' } = Astro.props;
+const canonical = new URL(pathname, Astro.site);
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Scottish Energy Services',
+  description,
+  telephone: '0141 345 0188',
+  areaServed: 'Scotland',
+  url: Astro.site
+};
+---
+<title>{title} | Scottish Energy Services</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical.toString()} />
+<meta property="og:title" content={`${title} | Scottish Energy Services`} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonical.toString()} />
+<meta name="twitter:card" content="summary_large_image" />
+<script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />

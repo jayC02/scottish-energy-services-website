@@ -1,0 +1,29 @@
+---
+import { siteConfig } from '../data/site';
+---
+<footer class="section">
+  <div class="container footer-grid">
+    <div>
+      <h3>{siteConfig.name}</h3>
+      <p class="lead">Trusted assessments and compliance services across Scotland.</p>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p>{siteConfig.phone}<br />{siteConfig.email}<br />{siteConfig.address}</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <p><a href="/services">All Services</a><br /><a href="/quote">Request a Quote</a><br /><a href="/contact">Contact</a></p>
+    </div>
+  </div>
+  <div class="container legal">© {new Date().getFullYear()} Scottish Energy Services. All rights reserved.</div>
+</footer>
+
+<style>
+  footer { border-top: 1px solid rgba(255,255,255,.08); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; }
+  .legal { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.08); color: var(--muted); }
+  h3,h4 { margin: 0 0 .5rem; }
+  p { margin: 0; color: var(--muted); }
+  @media (max-width: 720px){ .footer-grid { grid-template-columns: 1fr; }}
+</style>
