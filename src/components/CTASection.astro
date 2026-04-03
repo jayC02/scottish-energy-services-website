@@ -1,0 +1,16 @@
+---
+const { title = 'Need a dependable compliance partner?', text = 'Speak with our team for practical advice, transparent pricing, and quick scheduling.', button = 'Get in touch' } = Astro.props;
+---
+<section class="section">
+  <div class="container card cta" data-reveal>
+    <h2>{title}</h2>
+    <p>{text}</p>
+    <a class="btn btn-primary" href="/contact">{button}</a>
+  </div>
+</section>
+
+<style>
+  .cta { text-align: center; padding: 2rem; background: linear-gradient(120deg, rgba(20,150,227,.2), rgba(89,214,180,.15)); }
+  h2 { margin-top: 0; }
+  p { color: var(--muted); max-width: 62ch; margin: 0 auto 1rem; }
+</style>

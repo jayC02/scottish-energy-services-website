@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Request a Quote" description="Request a quote for EPCs, SAPs, FRAs, and legionella assessments.">
+  <section class="section">
+    <div class="container" style="max-width:780px" data-reveal>
+      <h1 class="section-title">Request a quote</h1>
+      <p class="lead">Share your property details and preferred timing. We will provide a transparent quote with no pressure.</p>
+      <form class="card quote-form" name="quote" method="post">
+        <label>Full name<input type="text" required /></label>
+        <label>Email address<input type="email" required /></label>
+        <label>Phone number<input type="tel" /></label>
+        <label>Property postcode<input type="text" required /></label>
+        <label>Service required<select><option>SAP Calculations</option><option>Domestic EPC</option><option>FRA</option><option>Legionella</option><option>Commercial EPC</option><option>Commercial Legionella</option></select></label>
+        <label>Property details<textarea rows="5" placeholder="Property type, size, occupancy, and any deadlines"></textarea></label>
+        <button class="btn btn-primary" type="submit">Submit quote request</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .quote-form { display: grid; gap: .8rem; }
+  label { display:grid; gap:.35rem; color:var(--muted); }
+  input,select,textarea { width:100%; border-radius: 10px; border:1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.15); color:var(--text); padding:.7rem; }
+</style>

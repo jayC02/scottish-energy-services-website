@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCards from '../../components/ServiceCards.astro';
+import CTASection from '../../components/CTASection.astro';
+---
+<BaseLayout title="Services" description="Explore our SAP, EPC, FRA, and legionella services for domestic and commercial properties.">
+  <section class="section">
+    <div class="container" data-reveal>
+      <h1 class="section-title">Our services</h1>
+      <p class="lead">We provide assessment and certification services that help clients meet obligations, reduce risk, and keep property transactions moving.</p>
+    </div>
+  </section>
+  <ServiceCards />
+  <CTASection title="Need help choosing the right service?" text="Tell us your property type and objective, and we will guide you to the right assessment." />
+</BaseLayout>

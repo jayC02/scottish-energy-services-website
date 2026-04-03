@@ -1,0 +1,29 @@
+---
+import { services } from '../data/services';
+const preview = Astro.props.preview ?? false;
+const list = preview ? services.slice(0, 6) : services;
+---
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Services built around compliance, clarity, and speed.</h2>
+    <p class="lead">Whether you need a single certificate or a managed programme across multiple properties, our team keeps the process straightforward.</p>
+    <div class="grid grid-3 cards">
+      {list.map((service) => (
+        <article class="card service-card" data-reveal>
+          <h3>{service.title}</h3>
+          <p>{service.short}</p>
+          <a href={`/services/${service.slug}`} class="service-link">View service →</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cards { margin-top: 1.4rem; }
+  .service-card { transition: transform .25s ease, border-color .25s ease; }
+  .service-card:hover { transform: translateY(-6px); border-color: var(--ring); }
+  h3 { margin-top: 0; }
+  p { color: var(--muted); }
+  .service-link { color: var(--accent); font-weight: 600; }
+</style>
