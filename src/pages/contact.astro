@@ -6,15 +6,20 @@ import { siteConfig } from '../data/site';
   <section class="section">
     <div class="container grid grid-2">
       <div data-reveal>
-        <h1 class="section-title">Contact us</h1>
-        <p class="lead">Tell us what service you need and we will respond with availability, scope, and pricing.</p>
-        <p><strong>Phone:</strong> {siteConfig.phone}<br/><strong>Email:</strong> {siteConfig.email}<br/><strong>Base:</strong> {siteConfig.address}</p>
+        <p class="eyebrow">Contact</p>
+        <h1 class="section-title">Talk to our team</h1>
+        <p class="lead">Tell us what service you need and we will respond with scope, availability, and transparent pricing.</p>
+        <div class="contact-card card">
+          <p><strong>Phone:</strong> <a href="tel:+441413450188">{siteConfig.phone}</a></p>
+          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
+          <p><strong>Base:</strong> {siteConfig.address}</p>
+        </div>
       </div>
-      <form class="card" data-reveal name="contact" method="post">
-        <label>Name<input required type="text" name="name" /></label>
-        <label>Email<input required type="email" name="email" /></label>
-        <label>Service needed<select name="service"><option>EPC</option><option>SAP</option><option>FRA</option><option>Legionella</option><option>Commercial EPC</option><option>Commercial Legionella</option></select></label>
-        <label>Message<textarea name="message" rows="4"></textarea></label>
+      <form class="form-shell form-grid" data-reveal name="contact" method="post">
+        <label>Name<input required type="text" name="name" placeholder="Your full name" /></label>
+        <label>Email<input required type="email" name="email" placeholder="name@company.co.uk" /></label>
+        <label>Service needed<select name="service"><option value="">Select a service</option><option>EPC</option><option>SAP</option><option>FRA</option><option>Legionella</option><option>Commercial EPC</option><option>Commercial Legionella</option></select></label>
+        <label>Message<textarea name="message" rows="4" placeholder="Briefly describe the property, location, and your timeframe"></textarea></label>
         <button class="btn btn-primary" type="submit">Send enquiry</button>
       </form>
     </div>
@@ -22,8 +27,7 @@ import { siteConfig } from '../data/site';
 </BaseLayout>
 
 <style>
-  form { display: grid; gap: .8rem; }
-  label { display: grid; gap: .35rem; color: var(--muted); font-size: .95rem; }
-  input, select, textarea { width: 100%; border-radius: 10px; border: 1px solid rgba(255,255,255,.2); background: rgba(0,0,0,.15); color: var(--text); padding: .7rem; }
-  input:focus, select:focus, textarea:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+  .contact-card { margin-top: 1rem; display: grid; gap: .25rem; background: linear-gradient(180deg, #ffffff 0%, #f5f9fd 100%); }
+  .contact-card p { margin: .1rem 0; }
+  .contact-card a { color: var(--brand-strong); }
 </style>

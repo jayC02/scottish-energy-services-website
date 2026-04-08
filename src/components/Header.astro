@@ -6,11 +6,10 @@ const pathname = Astro.url.pathname;
 <header class="sticky">
   <div class="container nav-wrap">
     <a href="/" class="brand" aria-label="Scottish Energy Services home">
-      <span class="brand-mark">SE</span>
-      <span>{siteConfig.name}</span>
+      <img src="/images/logos/ses-logo-horizontal.png" alt="Scottish Energy Services" loading="eager" decoding="async" />
     </a>
     <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
-    <nav id="site-nav" class="nav">
+    <nav id="site-nav" class="nav" aria-label="Primary navigation">
       <ul>
         {navItems.map((item) => (
           <li>
@@ -18,31 +17,61 @@ const pathname = Astro.url.pathname;
           </li>
         ))}
       </ul>
+      <a href="tel:+441413450188" class="nav-phone">{siteConfig.phone}</a>
       <a href="/quote" class="btn btn-primary">Get a Quote</a>
     </nav>
   </div>
 </header>
 
 <style>
-  .nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 78px; }
-  .brand { display: flex; align-items: center; gap: .7rem; font-weight: 700; }
-  .brand-mark {
-    display: grid; place-items: center; width: 36px; height: 36px;
-    border-radius: 10px; background: linear-gradient(130deg, var(--brand), var(--accent)); color: #032034;
+  .nav-wrap { display: flex; align-items: center; justify-content: space-between; min-height: 84px; gap: 1rem; }
+  .brand { display: inline-flex; align-items: center; max-width: 270px; }
+  .brand img { width: 100%; height: auto; }
+  .nav { display: flex; align-items: center; gap: 1rem; }
+  ul { display: flex; list-style: none; gap: .95rem; margin: 0; padding: 0; }
+  li a {
+    color: var(--muted);
+    font-weight: 500;
+    border-radius: 999px;
+    padding: .34rem .72rem;
+    transition: background-color .2s ease, color .2s ease;
   }
-  .nav { display: flex; align-items: center; gap: 1.2rem; }
-  ul { display: flex; list-style: none; gap: 1rem; margin: 0; padding: 0; }
-  a { color: var(--muted); }
-  a.active, a:hover { color: var(--text); }
+  li a.active, li a:hover { color: var(--text-strong); background: var(--surface-tint); }
+  .nav-phone {
+    color: var(--brand-strong);
+    font-weight: 700;
+    font-size: .93rem;
+    border-left: 1px solid var(--border);
+    padding-left: .95rem;
+  }
   .menu-toggle { display: none; }
 
-  @media (max-width: 880px) {
-    .menu-toggle { display: inline-flex; background: transparent; border: 1px solid rgba(255,255,255,.3); color: var(--text); border-radius: 999px; padding: .4rem .9rem; }
+  @media (max-width: 940px) {
+    .menu-toggle {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-strong);
+      border-radius: 999px;
+      font-weight: 600;
+      padding: .45rem .9rem;
+    }
     .nav {
-      position: absolute; left: 0; right: 0; top: 78px; display: none; flex-direction: column;
-      background: #08182b; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,.1);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 84px;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      background: #f8fbff;
+      padding: 1rem 1.2rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
     .nav.open { display: flex; }
     ul { flex-direction: column; width: 100%; }
+    li a { display: block; padding: .45rem .75rem; }
+    .nav-phone { border: 0; padding: .2rem 0 .35rem; }
   }
 </style>
