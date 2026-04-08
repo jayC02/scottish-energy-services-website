@@ -3,16 +3,19 @@ import { services } from '../data/services';
 const preview = Astro.props.preview ?? false;
 const list = preview ? services.slice(0, 6) : services;
 ---
-<section class="section">
+<section class="section surface-band">
   <div class="container">
-    <h2 class="section-title">Services built around compliance, clarity, and speed.</h2>
-    <p class="lead">Whether you need a single certificate or a managed programme across multiple properties, our team keeps the process straightforward.</p>
+    <div class="section-heading">
+      <p class="eyebrow">Core Services</p>
+      <h2 class="section-title">Compliance services designed for clarity, speed, and dependable outcomes.</h2>
+      <p class="lead">From one-off assessments to managed programmes across portfolios, we keep delivery straightforward and professionally coordinated.</p>
+    </div>
     <div class="grid grid-3 cards">
       {list.map((service) => (
         <article class="card service-card" data-reveal>
           <h3>{service.title}</h3>
           <p>{service.short}</p>
-          <a href={`/services/${service.slug}`} class="service-link">View service →</a>
+          <a href={`/services/${service.slug}`} class="service-link">View service <span aria-hidden="true">→</span></a>
         </article>
       ))}
     </div>
@@ -20,10 +23,10 @@ const list = preview ? services.slice(0, 6) : services;
 </section>
 
 <style>
-  .cards { margin-top: 1.4rem; }
-  .service-card { transition: transform .25s ease, border-color .25s ease; }
-  .service-card:hover { transform: translateY(-6px); border-color: var(--ring); }
-  h3 { margin-top: 0; }
-  p { color: var(--muted); }
-  .service-link { color: var(--accent); font-weight: 600; }
+  .cards { margin-top: 1.2rem; }
+  .service-card { display: grid; gap: .8rem; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+  .service-card:hover { transform: translateY(-5px); border-color: #bdd1e4; box-shadow: var(--shadow); }
+  h3 { margin: 0; color: var(--text-strong); font-size: 1.15rem; }
+  p { color: var(--muted); margin: 0; }
+  .service-link { color: var(--brand-strong); font-weight: 600; }
 </style>

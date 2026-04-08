@@ -1,35 +1,49 @@
 <section class="section hero">
   <div class="container hero-grid">
     <div data-reveal>
-      <p class="kicker">Energy & Compliance Specialists</p>
-      <h1>Professional property compliance services across Scotland.</h1>
-      <p class="lead">Scottish Energy Services delivers EPCs, SAPs, FRAs, and legionella assessments with clear reporting, practical guidance, and dependable turnaround.</p>
+      <p class="kicker">Scottish Compliance & Energy Specialists</p>
+      <h1>Professional property compliance support with dependable delivery.</h1>
+      <p class="lead">Scottish Energy Services provides EPCs, SAPs, FRAs, and legionella assessments with practical reporting, clear advice, and responsive scheduling across Scotland.</p>
       <div class="actions">
         <a class="btn btn-primary" href="/quote">Request a Quote</a>
         <a class="btn btn-ghost" href="/services">Explore Services</a>
       </div>
+      <ul class="hero-points">
+        <li>Domestic & commercial property support</li>
+        <li>Clear reporting aligned to regulatory standards</li>
+        <li>Friendly coordination from first call to final report</li>
+      </ul>
     </div>
-    <div class="hero-panel card" data-reveal>
+    <div class="hero-panel" data-reveal>
       <div class="metric"><strong data-count="2500">0</strong><span>Assessments completed</span></div>
       <div class="metric"><strong data-count="18">0</strong><span>Scottish council areas served</span></div>
       <div class="metric"><strong>48 hrs</strong><span>Typical domestic EPC turnaround</span></div>
     </div>
   </div>
-  <div class="orb orb-1"></div><div class="orb orb-2"></div>
 </section>
 
 <style>
-  .hero { position: relative; overflow: clip; padding-top: 4.5rem; }
-  .hero-grid { display: grid; grid-template-columns: 1.3fr .9fr; gap: 1.2rem; align-items: center; }
-  .kicker { color: var(--accent); margin: 0; font-weight: 600; letter-spacing: .03em; }
-  h1 { font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.08; margin: .6rem 0 1rem; max-width: 14ch; }
-  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
-  .hero-panel { display: grid; gap: .75rem; }
-  .metric { padding: .8rem; border-radius: 14px; background: rgba(10, 21, 37, .8); border: 1px solid rgba(255,255,255,.08); }
-  .metric strong { display: block; font-size: 1.7rem; }
+  .hero { padding-top: 5rem; }
+  .hero-grid { display: grid; grid-template-columns: 1.25fr .88fr; gap: 1.4rem; align-items: center; }
+  .kicker { color: var(--brand); margin: 0; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: .8rem; }
+  h1 { color: var(--text-strong); font-size: clamp(2rem, 4.5vw, 3.6rem); line-height: 1.08; margin: .7rem 0 1.1rem; max-width: 13.8ch; letter-spacing: -0.015em; }
+  .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.45rem; }
+  .hero-points { margin: 1.35rem 0 0; padding: 0; list-style: none; display: grid; gap: .4rem; color: var(--muted); }
+  .hero-points li { position: relative; padding-left: 1.15rem; }
+  .hero-points li::before { content: ''; position: absolute; left: 0; top: .58rem; width: 7px; height: 7px; border-radius: 999px; background: var(--accent); }
+
+  .hero-panel {
+    display: grid;
+    gap: .85rem;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(170deg, #ffffff 0%, #f4f8fc 100%);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+  }
+  .metric { padding: 1rem; border-radius: 14px; background: var(--surface-tint); border: 1px solid #d6e1ec; }
+  .metric strong { display: block; color: var(--text-strong); font-size: 1.9rem; line-height: 1.1; }
   .metric span { color: var(--muted); font-size: .94rem; }
-  .orb { position: absolute; border-radius: 999px; filter: blur(70px); pointer-events: none; }
-  .orb-1 { width: 320px; height: 320px; right: -80px; top: 20px; background: rgba(20,150,227,.35); }
-  .orb-2 { width: 230px; height: 230px; left: -60px; bottom: -50px; background: rgba(89,214,180,.22); }
+
   @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
 </style>
