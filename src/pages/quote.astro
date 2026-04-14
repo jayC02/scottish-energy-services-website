@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { services } from '../data/services';
 import { siteConfig } from '../data/site';
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 <BaseLayout title="Request a Quote" description="Request a quote for Scottish Energy Services technical compliance assessments.">
   <section class="section">
@@ -11,14 +12,49 @@ const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
       <h1 class="section-title">Request a detailed quote</h1>
       <p class="lead">Share your project details and preferred timescale. We will confirm scope, delivery programme, and fee in a clear no-obligation quotation.</p>
       <p class="quote-contact">Need to speak first? <a href={phoneHref}>{siteConfig.phone}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
-      <form class="form-shell form-grid" name="quote" method="post">
-        <label>Full name<input type="text" required placeholder="Your full name" /></label>
-        <label>Email address<input type="email" required placeholder="name@company.co.uk" /></label>
-        <label>Phone number<input type="tel" placeholder="Best number to reach you" /></label>
-        <label>Property postcode<input type="text" required placeholder="e.g. G2 4JR" /></label>
-        <label>Service required<select><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select></label>
-        <label>Property details<textarea rows="5" placeholder="Property type, approximate size, occupancy, and any deadlines"></textarea></label>
-        <button class="btn btn-primary" type="submit">Submit quote request</button>
+      <form class="form-shell form-grid" name="quote" method="post" action="/api/forms" data-ajax-form novalidate>
+        <input type="hidden" name="formType" value="quote" />
+        <label>
+          Full name
+          <input type="text" required name="name" placeholder="Your full name" autocomplete="name" />
+          <span class="field-error" data-error-for="name" aria-live="polite"></span>
+        </label>
+        <label>
+          Email address
+          <input type="email" required name="email" placeholder="name@company.co.uk" autocomplete="email" />
+          <span class="field-error" data-error-for="email" aria-live="polite"></span>
+        </label>
+        <label>
+          Phone number (optional)
+          <input type="tel" name="phone" placeholder="Best number to reach you" autocomplete="tel" />
+          <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+        </label>
+        <label>
+          Property postcode
+          <input type="text" required name="postcode" placeholder="e.g. G2 4JR" autocomplete="postal-code" />
+          <span class="field-error" data-error-for="postcode" aria-live="polite"></span>
+        </label>
+        <label>
+          Service required
+          <select name="service" required><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select>
+          <span class="field-error" data-error-for="service" aria-live="polite"></span>
+        </label>
+        <label>
+          Property details
+          <textarea required name="message" rows="5" placeholder="Property type, approximate size, occupancy, and any deadlines"></textarea>
+          <span class="field-error" data-error-for="message" aria-live="polite"></span>
+        </label>
+        <label class="sr-only" aria-hidden="true">
+          Leave this field blank
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+        <div class="captcha-wrap">
+          <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
+          <input type="hidden" name="cf-turnstile-response" value="" />
+          <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
+        </div>
+        <div class="form-status" data-form-status aria-live="polite"></div>
+        <button class="btn btn-primary" type="submit" data-submit-text="Submit quote request">Submit quote request</button>
       </form>
     </div>
   </section>
