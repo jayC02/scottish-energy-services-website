@@ -11,12 +11,19 @@ const { title, description, pathname = '/' } = Astro.props;
 const canonical = new URL(pathname, Astro.site);
 const orgSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'ProfessionalService',
   name: siteConfig.name,
   description,
   telephone: siteConfig.phone,
   email: siteConfig.email,
-  areaServed: 'Scotland',
+  areaServed: 'United Kingdom',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '272 Bath St',
+    addressLocality: 'Glasgow',
+    postalCode: 'G2 4JR',
+    addressCountry: 'GB'
+  },
   url: Astro.site
 };
 ---

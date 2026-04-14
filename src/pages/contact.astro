@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
 import { services } from '../data/services';
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
 <BaseLayout title="Contact" description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability.">
   <section class="section">
@@ -9,11 +10,12 @@ import { services } from '../data/services';
       <div data-reveal>
         <p class="eyebrow">Contact</p>
         <h1 class="section-title">Talk to our team</h1>
-        <p class="lead">Tell us what you need to deliver and we will respond with scope, programme, and clear pricing.</p>
+        <p class="lead">Tell us what you need and we will provide clear scope, delivery timescales, and a straightforward quotation.</p>
         <div class="contact-card card">
-          <p><strong>Phone:</strong> <a href={`tel:${siteConfig.phone}`}>{siteConfig.phone}</a></p>
+          <p><strong>Phone:</strong> <a href={phoneHref}>{siteConfig.phone}</a></p>
           <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
-          <p><strong>Base:</strong> {siteConfig.address}</p>
+          <p><strong>Office:</strong> {siteConfig.address}</p>
+          <p><strong>Coverage:</strong> Based in Scotland, delivering across the UK</p>
         </div>
       </div>
       <form class="form-shell form-grid" data-reveal name="contact" method="post">

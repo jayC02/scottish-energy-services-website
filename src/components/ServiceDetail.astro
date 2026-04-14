@@ -8,6 +8,9 @@ const { service } = Astro.props as { service: Service };
       <p class="eyebrow">Service Overview</p>
       <h1 class="section-title">{service.title}</h1>
       <p class="lead">{service.intro}</p>
+      <ul class="highlights">
+        {service.highlights.map((item) => <li>{item}</li>)}
+      </ul>
       <p><strong>Typical turnaround:</strong> {service.turnaround}</p>
       <a class="btn btn-primary" href="/quote">Request a quote</a>
     </div>
@@ -25,6 +28,28 @@ const { service } = Astro.props as { service: Service };
 </section>
 
 <style>
+  .highlights {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: grid;
+    gap: .35rem;
+  }
+  .highlights li {
+    color: var(--muted);
+    position: relative;
+    padding-left: 1rem;
+  }
+  .highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: .6rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
   .detail h2 { margin: 0 0 .6rem; font-size: 1.12rem; color: var(--text-strong); }
   .detail ul { margin: 0 0 1rem; padding-left: 1rem; color: var(--muted); }
   .detail li { margin-bottom: .35rem; }

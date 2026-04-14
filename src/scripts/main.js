@@ -61,51 +61,68 @@ if (!reducedMotion && counters.length) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
-const canvas = document.querySelector('#ambient-canvas');
-if (canvas && !reducedMotion) {
-  const ctx = canvas.getContext('2d');
-  const pointer = { x: 0.5, y: 0.45 };
+const heroCanvas = document.querySelector('#hero-field');
+if (heroCanvas && !reducedMotion) {
+  const ctx = heroCanvas.getContext('2d', { alpha: true });
+  const pointer = { x: 0.5, y: 0.5 };
+  const pointerTarget = { x: 0.5, y: 0.5 };
+
+  const getHeroBounds = () => {
+    const section = heroCanvas.closest('.hero');
+    if (!section) return { width: window.innerWidth, height: Math.max(420, window.innerHeight * 0.72) };
+    const rect = section.getBoundingClientRect();
+    return { width: Math.max(1, rect.width), height: Math.max(1, rect.height) };
+  };
 
   const resize = () => {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(window.innerWidth * ratio);
-    canvas.height = Math.floor(window.innerHeight * ratio);
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
+    const { width, height } = getHeroBounds();
+    heroCanvas.width = Math.floor(width * ratio);
+    heroCanvas.height = Math.floor(height * ratio);
+    heroCanvas.style.width = `${width}px`;
+    heroCanvas.style.height = `${height}px`;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   };
 
-  let start = performance.now();
+  const render = (time) => {
+    const elapsed = time * 0.001;
+    const width = heroCanvas.clientWidth;
+    const height = heroCanvas.clientHeight;
 
-  const drawGlow = (x, y, radius, color) => {
-    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    g.addColorStop(0, color);
-    g.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fill();
-  };
+    pointer.x += (pointerTarget.x - pointer.x) * 0.035;
+    pointer.y += (pointerTarget.y - pointer.y) * 0.035;
 
-  const render = (t) => {
-    const elapsed = (t - start) / 1000;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    ctx.clearRect(0, 0, w, h);
+    ctx.clearRect(0, 0, width, height);
 
-    const driftX = Math.sin(elapsed * 0.2) * 28;
-    const driftY = Math.cos(elapsed * 0.23) * 24;
+    const lines = Math.max(11, Math.floor(height / 56));
+    const segments = Math.max(20, Math.floor(width / 56));
 
-    drawGlow(w * 0.18 + driftX, h * 0.16 + driftY, Math.max(260, w * 0.28), 'rgba(106, 173, 240, 0.18)');
-    drawGlow(w * (0.84 + (pointer.x - 0.5) * 0.03), h * (0.74 + (pointer.y - 0.5) * 0.03), Math.max(240, w * 0.25), 'rgba(106, 207, 170, 0.14)');
-    drawGlow(w * (0.52 + (pointer.x - 0.5) * 0.05), h * (0.1 + (pointer.y - 0.5) * 0.05), Math.max(220, w * 0.2), 'rgba(159, 196, 238, 0.13)');
+    for (let row = 0; row < lines; row += 1) {
+      const rowProgress = row / Math.max(1, lines - 1);
+      const baseY = height * (0.12 + rowProgress * 0.78);
+      const alpha = 0.045 + (1 - rowProgress) * 0.04;
+
+      ctx.beginPath();
+      for (let i = 0; i <= segments; i += 1) {
+        const x = (i / segments) * width;
+        const waveA = Math.sin((x * 0.006) + (elapsed * 0.12) + row * 0.42) * 7;
+        const waveB = Math.cos((x * 0.0028) - (elapsed * 0.08) + row * 0.2) * 5;
+        const parallax = (pointer.x - 0.5) * 20 * Math.sin((x / width) * Math.PI);
+        const y = baseY + waveA + waveB + parallax;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(31, 79, 124, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
 
     requestAnimationFrame(render);
   };
 
-  window.addEventListener('mousemove', (event) => {
-    pointer.x = event.clientX / window.innerWidth;
-    pointer.y = event.clientY / window.innerHeight;
+  window.addEventListener('pointermove', (event) => {
+    pointerTarget.x = event.clientX / window.innerWidth;
+    pointerTarget.y = event.clientY / window.innerHeight;
   }, { passive: true });
 
   window.addEventListener('resize', resize, { passive: true });

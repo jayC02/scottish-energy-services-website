@@ -1,18 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { services } from '../data/services';
+import { siteConfig } from '../data/site';
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
 <BaseLayout title="Request a Quote" description="Request a quote for Scottish Energy Services technical compliance assessments.">
   <section class="section">
     <div class="container quote-wrap" data-reveal>
       <p class="eyebrow">Request a Quote</p>
       <h1 class="section-title">Request a detailed quote</h1>
-      <p class="lead">Share your property details and preferred timing. We will provide a clear quotation and delivery pathway.</p>
+      <p class="lead">Share your project details and preferred timescale. We will confirm scope, delivery programme, and fee in a clear no-obligation quotation.</p>
+      <p class="quote-contact">Need to speak first? <a href={phoneHref}>{siteConfig.phone}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
       <form class="form-shell form-grid" name="quote" method="post">
         <label>Full name<input type="text" required placeholder="Your full name" /></label>
         <label>Email address<input type="email" required placeholder="name@company.co.uk" /></label>
         <label>Phone number<input type="tel" placeholder="Best number to reach you" /></label>
-        <label>Property postcode<input type="text" required placeholder="e.g. G2 1AA" /></label>
+        <label>Property postcode<input type="text" required placeholder="e.g. G2 4JR" /></label>
         <label>Service required<select><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select></label>
         <label>Property details<textarea rows="5" placeholder="Property type, approximate size, occupancy, and any deadlines"></textarea></label>
         <button class="btn btn-primary" type="submit">Submit quote request</button>
@@ -23,4 +26,6 @@ import { services } from '../data/services';
 
 <style>
   .quote-wrap { max-width: 780px; }
+  .quote-contact { margin: .35rem 0 1rem; color: var(--muted); }
+  .quote-contact a { color: var(--brand-strong); font-weight: 600; }
 </style>

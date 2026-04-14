@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: 'Scottish Energy Services',
-  phone: '07960041069',
+  phone: '0141 255 1360',
   email: 'info@scottishenergyservices.co.uk',
-  address: 'Glasgow, Scotland',
-  serviceArea: 'Serving developers, landlords, asset managers, and businesses across Scotland.'
+  address: '272 Bath St, Glasgow G2 4JR',
+  serviceArea: 'Based in Scotland, delivering energy and compliance services for residential and non-domestic projects across the UK.'
 };
 
 export const navItems = [
