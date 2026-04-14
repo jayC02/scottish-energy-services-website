@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../data/site';
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
 <footer class="section footer">
   <div class="container footer-grid">
@@ -9,7 +10,7 @@ import { siteConfig } from '../data/site';
     </div>
     <div>
       <h4>Contact</h4>
-      <p><a href={`tel:${siteConfig.phone}`}>{siteConfig.phone}</a><br /><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />{siteConfig.address}</p>
+      <p><a href={phoneHref}>{siteConfig.phone}</a><br /><a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />{siteConfig.address}</p>
     </div>
     <div>
       <h4>Quick Links</h4>

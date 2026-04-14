@@ -2,6 +2,7 @@
 import { navItems, siteConfig } from '../data/site';
 
 const pathname = Astro.url.pathname;
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
 <header class="sticky" data-header>
   <div class="container nav-wrap">
@@ -17,7 +18,7 @@ const pathname = Astro.url.pathname;
           </li>
         ))}
       </ul>
-      <a href={`tel:${siteConfig.phone}`} class="nav-phone">{siteConfig.phone}</a>
+      <a href={phoneHref} class="nav-phone">{siteConfig.phone}</a>
       <a href="/quote" class="btn btn-primary">Get a Quote</a>
     </nav>
   </div>
