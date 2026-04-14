@@ -118,8 +118,8 @@ img { max-width: 100%; display: block; }
   box-shadow: var(--shadow-sm);
   padding: clamp(1.25rem, 2.5vw, 1.8rem);
 }
-.form-grid { display: grid; gap: .95rem; }
-label { display: grid; gap: .4rem; color: var(--muted); font-size: .94rem; font-weight: 500; }
+.form-grid { display: grid; gap: .78rem; }
+label { display: grid; gap: .3rem; color: var(--muted); font-size: .94rem; font-weight: 500; }
 input, select, textarea {
   width: 100%;
   border-radius: 11px;

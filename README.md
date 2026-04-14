@@ -27,6 +27,8 @@ Both `/contact` and `/quote` submit to the production-safe Vercel serverless fun
 - `RESEND_API_KEY` — API key for Resend email sending.
 - `FORM_FROM_EMAIL` — Verified sender (e.g. `Scottish Energy Services <website@yourdomain.com>`).
 
+> Important: `PUBLIC_TURNSTILE_SITE_KEY` is injected at build-time for Astro pages. If it is missing during build, the captcha widget cannot render on `/contact` or `/quote`.
+
 ### Form email routing
 
 All validated form submissions currently route to:

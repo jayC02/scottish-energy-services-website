@@ -59,8 +59,6 @@ const validateSubmission = (values: SubmissionValues): ValidationErrors => {
   if (!values.message || values.message.length < 12) errors.message = 'Please provide enough detail so we can help (at least 12 characters).';
   if (values.phone && !PHONE_REGEX.test(values.phone)) errors.phone = 'Please enter a valid phone number.';
   if (values.formType === 'quote' && !values.postcode) errors.postcode = 'Please enter the property postcode.';
-  if (!values.turnstileToken) errors.turnstileToken = 'Please complete the captcha check.';
-
   return errors;
 };
 
@@ -126,6 +124,15 @@ export default async function handler(req: { method?: string; body?: unknown; he
     const validationErrors = validateSubmission(values);
     if (Object.keys(validationErrors).length > 0) {
       return res.status(400).json({ ok: false, errors: validationErrors });
+    }
+
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    if (!turnstileSecret) {
+      return res.status(500).json({ ok: false, message: 'Captcha is not configured on the server. Please contact support.' });
+    }
+
+    if (!values.turnstileToken) {
+      return res.status(400).json({ ok: false, errors: { turnstileToken: 'Please complete the captcha check.' } });
     }
 
     const captchaValid = await verifyTurnstileToken(values.turnstileToken, req.headers['x-forwarded-for'] as string | undefined);
