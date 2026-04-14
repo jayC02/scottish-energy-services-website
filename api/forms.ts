@@ -96,7 +96,7 @@ const sendWithResend = async (content: { subject: string; html: string; text: st
     },
     body: JSON.stringify({
       from: fromEmail,
-      to: ['jay@scottishenergyservices.co.uk'],
+      to: ['info@scottishenergyservices.co.uk'],
       reply_to: content.replyTo,
       subject: content.subject,
       html: content.html,
