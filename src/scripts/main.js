@@ -129,3 +129,141 @@ if (heroCanvas && !reducedMotion) {
   resize();
   requestAnimationFrame(render);
 }
+
+const createToast = () => {
+  const existing = document.querySelector('[data-form-toast]');
+  if (existing) return existing;
+
+  const toast = document.createElement('div');
+  toast.className = 'form-toast';
+  toast.setAttribute('data-form-toast', '');
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  toast.hidden = true;
+  document.body.appendChild(toast);
+  return toast;
+};
+
+const showToast = (message, variant = 'success') => {
+  const toast = createToast();
+  toast.textContent = message;
+  toast.dataset.variant = variant;
+  toast.hidden = false;
+  toast.classList.add('is-visible');
+
+  window.clearTimeout(showToast.timeoutId);
+  showToast.timeoutId = window.setTimeout(() => {
+    toast.classList.remove('is-visible');
+    window.setTimeout(() => {
+      toast.hidden = true;
+    }, 220);
+  }, 3800);
+};
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+const PHONE_REGEX = /^[+\d\s().-]{7,20}$/;
+
+const validateClientValues = (values) => {
+  const errors = {};
+
+  if (!values.name || values.name.trim().length < 2) errors.name = 'Please enter your full name.';
+  if (!values.email || !EMAIL_REGEX.test(values.email.trim())) errors.email = 'Please enter a valid email address.';
+  if (!values.service) errors.service = 'Please select the service you need.';
+  if (!values.message || values.message.trim().length < 12) errors.message = 'Please provide a bit more detail (at least 12 characters).';
+  if (values.phone && !PHONE_REGEX.test(values.phone.trim())) errors.phone = 'Please enter a valid phone number.';
+  if (values.formType === 'quote' && !values.postcode) errors.postcode = 'Please enter the property postcode.';
+  if (!values['cf-turnstile-response']) errors.turnstileToken = 'Please complete the captcha check.';
+
+  return errors;
+};
+
+const setFieldError = (form, fieldName, message = '') => {
+  const field = form.querySelector(`[name="${fieldName}"]`);
+  const errorSlot = form.querySelector(`[data-error-for="${fieldName === 'cf-turnstile-response' ? 'turnstileToken' : fieldName}"]`);
+
+  if (field) {
+    field.setAttribute('aria-invalid', message ? 'true' : 'false');
+  }
+
+  if (errorSlot) {
+    errorSlot.textContent = message;
+  }
+};
+
+const collectValues = (formData) => Object.fromEntries(formData.entries());
+
+document.querySelectorAll('[data-ajax-form]').forEach((form) => {
+  const submitButton = form.querySelector('button[type="submit"]');
+  const statusEl = form.querySelector('[data-form-status]');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const values = collectValues(formData);
+
+    ['name', 'email', 'service', 'phone', 'postcode', 'message', 'turnstileToken'].forEach((field) => setFieldError(form, field, ''));
+    if (statusEl) statusEl.textContent = '';
+
+    const clientErrors = validateClientValues(values);
+    Object.entries(clientErrors).forEach(([field, message]) => setFieldError(form, field, message));
+
+    if (Object.keys(clientErrors).length > 0) {
+      const firstErrorField = form.querySelector('[aria-invalid="true"]');
+      if (firstErrorField instanceof HTMLElement) firstErrorField.focus();
+      return;
+    }
+
+    const defaultText = submitButton?.dataset.submitText || submitButton?.textContent || 'Submit';
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+    }
+
+    if (statusEl) statusEl.textContent = 'Submitting your request...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      const payload = await response.json();
+
+      if (!response.ok) {
+        if (payload?.errors && typeof payload.errors === 'object') {
+          Object.entries(payload.errors).forEach(([field, message]) => {
+            if (typeof message === 'string') setFieldError(form, field, message);
+          });
+        }
+
+        const message = payload?.message || 'We could not submit your request. Please try again.';
+        if (statusEl) statusEl.textContent = message;
+        showToast(message, 'error');
+        return;
+      }
+
+      form.reset();
+      if (window.turnstile && typeof window.turnstile.render === 'function') {
+        window.turnstile.reset();
+      }
+
+      const successMessage = 'Thanks — your form was submitted successfully. We will get back to you shortly.';
+      if (statusEl) statusEl.textContent = successMessage;
+      showToast(successMessage, 'success');
+    } catch (error) {
+      if (statusEl) statusEl.textContent = 'Unable to send right now. Please try again in a moment.';
+      showToast('Unable to send right now. Please try again in a moment.', 'error');
+      console.error(error);
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultText;
+      }
+    }
+  });
+});

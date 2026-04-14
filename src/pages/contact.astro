@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
 import { services } from '../data/services';
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 <BaseLayout title="Contact" description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability.">
   <section class="section">
@@ -18,12 +19,45 @@ const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
           <p><strong>Coverage:</strong> Based in Scotland, delivering across the UK</p>
         </div>
       </div>
-      <form class="form-shell form-grid" data-reveal name="contact" method="post">
-        <label>Name<input required type="text" name="name" placeholder="Your full name" /></label>
-        <label>Email<input required type="email" name="email" placeholder="name@company.co.uk" /></label>
-        <label>Service needed<select name="service"><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select></label>
-        <label>Message<textarea name="message" rows="4" placeholder="Briefly describe the property, location, and your timeframe"></textarea></label>
-        <button class="btn btn-primary" type="submit">Send enquiry</button>
+      <form class="form-shell form-grid" data-reveal data-ajax-form name="contact" method="post" action="/api/forms" novalidate>
+        <input type="hidden" name="formType" value="contact" />
+        <label>
+          Name
+          <input required type="text" name="name" placeholder="Your full name" autocomplete="name" />
+          <span class="field-error" data-error-for="name" aria-live="polite"></span>
+        </label>
+        <label>
+          Email
+          <input required type="email" name="email" placeholder="name@company.co.uk" autocomplete="email" />
+          <span class="field-error" data-error-for="email" aria-live="polite"></span>
+        </label>
+        <label>
+          Service needed
+          <select name="service" required>
+            <option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}
+          </select>
+          <span class="field-error" data-error-for="service" aria-live="polite"></span>
+        </label>
+        <label>
+          Phone number (optional)
+          <input type="tel" name="phone" placeholder="Best number to reach you" autocomplete="tel" />
+          <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+        </label>
+        <label>
+          Message
+          <textarea required name="message" rows="4" placeholder="Briefly describe the property, location, and your timeframe"></textarea>
+          <span class="field-error" data-error-for="message" aria-live="polite"></span>
+        </label>
+        <label class="sr-only" aria-hidden="true">
+          Leave this field blank
+          <input type="text" name="website" tabindex="-1" autocomplete="off" />
+        </label>
+        <div class="captcha-wrap">
+          <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+          <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
+        </div>
+        <div class="form-status" data-form-status aria-live="polite"></div>
+        <button class="btn btn-primary" type="submit" data-submit-text="Send enquiry">Send enquiry</button>
       </form>
     </div>
   </section>
