@@ -61,91 +61,68 @@ if (!reducedMotion && counters.length) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
-const canvas = document.querySelector('#ambient-canvas');
-if (canvas && !reducedMotion) {
-  const ctx = canvas.getContext('2d', { alpha: true });
+const heroCanvas = document.querySelector('#hero-field');
+if (heroCanvas && !reducedMotion) {
+  const ctx = heroCanvas.getContext('2d', { alpha: true });
   const pointer = { x: 0.5, y: 0.5 };
-  const targetPointer = { x: 0.5, y: 0.5 };
+  const pointerTarget = { x: 0.5, y: 0.5 };
+
+  const getHeroBounds = () => {
+    const section = heroCanvas.closest('.hero');
+    if (!section) return { width: window.innerWidth, height: Math.max(420, window.innerHeight * 0.72) };
+    const rect = section.getBoundingClientRect();
+    return { width: Math.max(1, rect.width), height: Math.max(1, rect.height) };
+  };
 
   const resize = () => {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    canvas.width = Math.floor(width * ratio);
-    canvas.height = Math.floor(height * ratio);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
+    const { width, height } = getHeroBounds();
+    heroCanvas.width = Math.floor(width * ratio);
+    heroCanvas.height = Math.floor(height * ratio);
+    heroCanvas.style.width = `${width}px`;
+    heroCanvas.style.height = `${height}px`;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  };
-
-  const drawFlowField = (elapsed, width, height) => {
-    const lineCount = Math.max(15, Math.floor(height / 44));
-    const segments = Math.max(18, Math.floor(width / 68));
-
-    for (let i = 0; i < lineCount; i += 1) {
-      const progress = i / Math.max(1, lineCount - 1);
-      const baseY = progress * height;
-
-      ctx.beginPath();
-      for (let j = 0; j <= segments; j += 1) {
-        const x = (j / segments) * width;
-        const waveA = Math.sin((x * 0.0048) + (elapsed * 0.2) + (i * 0.35));
-        const waveB = Math.cos((x * 0.0034) - (elapsed * 0.16) + (i * 0.22));
-        const pointerLift = (pointer.x - 0.5) * 30 * Math.sin((x / width) * Math.PI);
-        const y = baseY + (waveA * 11) + (waveB * 8) + pointerLift;
-
-        if (j === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-
-      const alpha = 0.06 + (1 - progress) * 0.05;
-      ctx.strokeStyle = `rgba(23, 86, 143, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-  };
-
-  const drawLightSweep = (elapsed, width, height) => {
-    const sweepX = ((elapsed * 0.05) % 1) * width;
-    const lateral = (pointer.x - 0.5) * 120;
-    const focusY = height * (0.36 + (pointer.y - 0.5) * 0.08);
-    const gradient = ctx.createLinearGradient(sweepX - 220 + lateral, 0, sweepX + 300 + lateral, height);
-
-    gradient.addColorStop(0, 'rgba(95, 158, 215, 0)');
-    gradient.addColorStop(0.45, 'rgba(95, 158, 215, 0.09)');
-    gradient.addColorStop(0.55, 'rgba(68, 135, 197, 0.12)');
-    gradient.addColorStop(1, 'rgba(68, 135, 197, 0)');
-
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
-
-    const halo = ctx.createRadialGradient(width * 0.58 + lateral * 0.35, focusY, 0, width * 0.58 + lateral * 0.35, focusY, Math.max(260, width * 0.35));
-    halo.addColorStop(0, 'rgba(121, 181, 233, 0.11)');
-    halo.addColorStop(1, 'rgba(121, 181, 233, 0)');
-
-    ctx.fillStyle = halo;
-    ctx.fillRect(0, 0, width, height);
   };
 
   const render = (time) => {
     const elapsed = time * 0.001;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const width = heroCanvas.clientWidth;
+    const height = heroCanvas.clientHeight;
 
-    pointer.x += (targetPointer.x - pointer.x) * 0.04;
-    pointer.y += (targetPointer.y - pointer.y) * 0.04;
+    pointer.x += (pointerTarget.x - pointer.x) * 0.035;
+    pointer.y += (pointerTarget.y - pointer.y) * 0.035;
 
     ctx.clearRect(0, 0, width, height);
-    drawFlowField(elapsed, width, height);
-    drawLightSweep(elapsed, width, height);
+
+    const lines = Math.max(11, Math.floor(height / 56));
+    const segments = Math.max(20, Math.floor(width / 56));
+
+    for (let row = 0; row < lines; row += 1) {
+      const rowProgress = row / Math.max(1, lines - 1);
+      const baseY = height * (0.12 + rowProgress * 0.78);
+      const alpha = 0.045 + (1 - rowProgress) * 0.04;
+
+      ctx.beginPath();
+      for (let i = 0; i <= segments; i += 1) {
+        const x = (i / segments) * width;
+        const waveA = Math.sin((x * 0.006) + (elapsed * 0.12) + row * 0.42) * 7;
+        const waveB = Math.cos((x * 0.0028) - (elapsed * 0.08) + row * 0.2) * 5;
+        const parallax = (pointer.x - 0.5) * 20 * Math.sin((x / width) * Math.PI);
+        const y = baseY + waveA + waveB + parallax;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `rgba(31, 79, 124, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
 
     requestAnimationFrame(render);
   };
 
   window.addEventListener('pointermove', (event) => {
-    targetPointer.x = event.clientX / window.innerWidth;
-    targetPointer.y = event.clientY / window.innerHeight;
+    pointerTarget.x = event.clientX / window.innerWidth;
+    pointerTarget.y = event.clientY / window.innerHeight;
   }, { passive: true });
 
   window.addEventListener('resize', resize, { passive: true });

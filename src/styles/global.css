@@ -28,7 +28,7 @@ html { scroll-behavior: smooth; }
 body {
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 40%, var(--bg-alt) 100%);
+  background: #ffffff;
   line-height: 1.6;
   letter-spacing: 0.01em;
 }
@@ -36,44 +36,6 @@ body {
 main { overflow: clip; position: relative; z-index: 1; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-
-.ambient-backdrop {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-  background:
-    radial-gradient(120% 85% at 10% -8%, rgba(116, 162, 210, 0.17), transparent 60%),
-    radial-gradient(110% 95% at 95% 100%, rgba(66, 128, 180, 0.1), transparent 64%),
-    linear-gradient(180deg, #f7fbff 0%, #edf3f9 42%, #eaf1f8 100%);
-}
-#ambient-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: .74;
-}
-.ambient-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(51, 82, 119, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(51, 82, 119, 0.08) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.18) 54%, transparent 100%);
-  opacity: .22;
-  transform: perspective(900px) rotateX(58deg) translateY(34%);
-  transform-origin: center bottom;
-}
-.ambient-vignette {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 90% at 50% 0%, transparent 0%, rgba(14, 34, 55, 0.03) 64%, rgba(14, 34, 55, 0.11) 100%),
-    linear-gradient(90deg, rgba(10, 24, 41, 0.08), transparent 24%, transparent 76%, rgba(10, 24, 41, 0.08));
-}
 
 .container { width: min(var(--max), 92vw); margin-inline: auto; }
 .section { padding: clamp(4rem, 8vw, 7rem) 0; position: relative; }
@@ -218,8 +180,6 @@ header.sticky.compact {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   [data-reveal] { opacity: 1; transform: none; transition: none; }
-  #ambient-canvas,
-  .ambient-grid { animation: none !important; }
 }
 
 @media (max-width: 900px) {
