@@ -1,11 +1,11 @@
 export const faqs = [
   {
     question: 'How quickly can you arrange an assessment?',
-    answer: 'For most domestic services we can offer appointments within a few working days, with urgent slots available in many areas.'
+    answer: 'For most domestic services we can offer appointments within a few working days, with urgent slots available in many locations.'
   },
   {
-    question: 'Do you cover all of Scotland?',
-    answer: 'Yes. We operate across mainland Scotland and can discuss travel arrangements for remote and island locations where required.'
+    question: 'Do you only work in Scotland?',
+    answer: 'No. We are based in Scotland and deliver projects right across the UK, including multi-site portfolios.'
   },
   {
     question: 'Can you handle multiple properties?',

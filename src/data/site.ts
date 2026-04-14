@@ -3,7 +3,7 @@ export const siteConfig = {
   phone: '07960041069',
   email: 'info@scottishenergyservices.co.uk',
   address: 'Glasgow, Scotland',
-  serviceArea: 'Serving developers, landlords, asset managers, and businesses across Scotland.'
+  serviceArea: 'Based in Scotland, delivering energy and compliance services for residential and commercial projects across the UK.'
 };
 
 export const navItems = [

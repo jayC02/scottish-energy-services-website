@@ -1,23 +1,43 @@
 <section class="section">
-  <div class="container grid grid-2">
+  <div class="container grid grid-2 coverage-grid">
     <div data-reveal>
       <p class="eyebrow">Coverage</p>
-      <h2 class="section-title">Coverage across Scotland with responsive appointment planning.</h2>
-      <p class="lead">From the Central Belt to regional towns and cities, we support domestic and commercial clients with coordinated scheduling and consistent communication.</p>
+      <h2 class="section-title">Based in Scotland. Structured for project delivery across the UK.</h2>
+      <p class="lead">We coordinate surveys, modelling, and reporting for domestic and commercial clients throughout England, Scotland, Wales, and Northern Ireland, with clear scheduling from enquiry to delivery.</p>
       <a href="/areas" class="btn btn-ghost">See coverage details</a>
     </div>
-    <div class="card map" data-reveal>
-      <img src="/images/scotland-abstract.svg" alt="Abstract map illustration of Scotland service coverage" />
+    <div class="card coverage-panel" data-reveal>
+      <div>
+        <p>Core office base</p>
+        <strong>Glasgow, Scotland</strong>
+      </div>
+      <div>
+        <p>Operational footprint</p>
+        <strong>UK-wide service delivery</strong>
+      </div>
+      <div>
+        <p>Appointment model</p>
+        <strong>Single properties to multi-site programmes</strong>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .map {
+  .coverage-grid { align-items: stretch; }
+  .coverage-panel {
     min-height: 320px;
     display: grid;
-    place-items: center;
-    background: linear-gradient(180deg, #ffffff 0%, #f5f8fc 100%);
+    gap: .8rem;
+    background: linear-gradient(165deg, #ffffff 0%, #f4f8fc 58%, #edf5fb 100%);
+    border-color: #ccdbe8;
   }
-  .map img { width: min(360px, 90%); opacity: .94; }
+  .coverage-panel > div {
+    border-radius: 14px;
+    border: 1px solid #d5e2ef;
+    background: rgba(255, 255, 255, 0.84);
+    padding: 1rem;
+  }
+  .coverage-panel p { margin: 0 0 .35rem; color: var(--muted); font-size: .86rem; text-transform: uppercase; letter-spacing: .06em; }
+  .coverage-panel strong { color: var(--text-strong); font-size: 1.02rem; line-height: 1.35; }
 </style>

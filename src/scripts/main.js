@@ -63,49 +63,89 @@ if (!reducedMotion && counters.length) {
 
 const canvas = document.querySelector('#ambient-canvas');
 if (canvas && !reducedMotion) {
-  const ctx = canvas.getContext('2d');
-  const pointer = { x: 0.5, y: 0.45 };
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const pointer = { x: 0.5, y: 0.5 };
+  const targetPointer = { x: 0.5, y: 0.5 };
 
   const resize = () => {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.floor(window.innerWidth * ratio);
-    canvas.height = Math.floor(window.innerHeight * ratio);
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    canvas.width = Math.floor(width * ratio);
+    canvas.height = Math.floor(height * ratio);
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   };
 
-  let start = performance.now();
+  const drawFlowField = (elapsed, width, height) => {
+    const lineCount = Math.max(15, Math.floor(height / 44));
+    const segments = Math.max(18, Math.floor(width / 68));
 
-  const drawGlow = (x, y, radius, color) => {
-    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    g.addColorStop(0, color);
-    g.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.fill();
+    for (let i = 0; i < lineCount; i += 1) {
+      const progress = i / Math.max(1, lineCount - 1);
+      const baseY = progress * height;
+
+      ctx.beginPath();
+      for (let j = 0; j <= segments; j += 1) {
+        const x = (j / segments) * width;
+        const waveA = Math.sin((x * 0.0048) + (elapsed * 0.2) + (i * 0.35));
+        const waveB = Math.cos((x * 0.0034) - (elapsed * 0.16) + (i * 0.22));
+        const pointerLift = (pointer.x - 0.5) * 30 * Math.sin((x / width) * Math.PI);
+        const y = baseY + (waveA * 11) + (waveB * 8) + pointerLift;
+
+        if (j === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      const alpha = 0.06 + (1 - progress) * 0.05;
+      ctx.strokeStyle = `rgba(23, 86, 143, ${alpha.toFixed(3)})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
   };
 
-  const render = (t) => {
-    const elapsed = (t - start) / 1000;
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-    ctx.clearRect(0, 0, w, h);
+  const drawLightSweep = (elapsed, width, height) => {
+    const sweepX = ((elapsed * 0.05) % 1) * width;
+    const lateral = (pointer.x - 0.5) * 120;
+    const focusY = height * (0.36 + (pointer.y - 0.5) * 0.08);
+    const gradient = ctx.createLinearGradient(sweepX - 220 + lateral, 0, sweepX + 300 + lateral, height);
 
-    const driftX = Math.sin(elapsed * 0.2) * 28;
-    const driftY = Math.cos(elapsed * 0.23) * 24;
+    gradient.addColorStop(0, 'rgba(95, 158, 215, 0)');
+    gradient.addColorStop(0.45, 'rgba(95, 158, 215, 0.09)');
+    gradient.addColorStop(0.55, 'rgba(68, 135, 197, 0.12)');
+    gradient.addColorStop(1, 'rgba(68, 135, 197, 0)');
 
-    drawGlow(w * 0.18 + driftX, h * 0.16 + driftY, Math.max(260, w * 0.28), 'rgba(106, 173, 240, 0.18)');
-    drawGlow(w * (0.84 + (pointer.x - 0.5) * 0.03), h * (0.74 + (pointer.y - 0.5) * 0.03), Math.max(240, w * 0.25), 'rgba(106, 207, 170, 0.14)');
-    drawGlow(w * (0.52 + (pointer.x - 0.5) * 0.05), h * (0.1 + (pointer.y - 0.5) * 0.05), Math.max(220, w * 0.2), 'rgba(159, 196, 238, 0.13)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
+
+    const halo = ctx.createRadialGradient(width * 0.58 + lateral * 0.35, focusY, 0, width * 0.58 + lateral * 0.35, focusY, Math.max(260, width * 0.35));
+    halo.addColorStop(0, 'rgba(121, 181, 233, 0.11)');
+    halo.addColorStop(1, 'rgba(121, 181, 233, 0)');
+
+    ctx.fillStyle = halo;
+    ctx.fillRect(0, 0, width, height);
+  };
+
+  const render = (time) => {
+    const elapsed = time * 0.001;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    pointer.x += (targetPointer.x - pointer.x) * 0.04;
+    pointer.y += (targetPointer.y - pointer.y) * 0.04;
+
+    ctx.clearRect(0, 0, width, height);
+    drawFlowField(elapsed, width, height);
+    drawLightSweep(elapsed, width, height);
 
     requestAnimationFrame(render);
   };
 
-  window.addEventListener('mousemove', (event) => {
-    pointer.x = event.clientX / window.innerWidth;
-    pointer.y = event.clientY / window.innerHeight;
+  window.addEventListener('pointermove', (event) => {
+    targetPointer.x = event.clientX / window.innerWidth;
+    targetPointer.y = event.clientY / window.innerHeight;
   }, { passive: true });
 
   window.addEventListener('resize', resize, { passive: true });
