@@ -2,6 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceDetail from '../../components/ServiceDetail.astro';
 import { services } from '../../data/services';
-const service = services.find((s) => s.slug === 'commercial-epcs')!;
+const service = services.find((s) => s.slug === 'dynamic-simulation-modelling-dsm')!;
 ---
 <BaseLayout title={service.title} description={service.short}><ServiceDetail service={service} /></BaseLayout>

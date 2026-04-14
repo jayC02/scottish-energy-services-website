@@ -3,7 +3,7 @@ import { navItems, siteConfig } from '../data/site';
 
 const pathname = Astro.url.pathname;
 ---
-<header class="sticky">
+<header class="sticky" data-header>
   <div class="container nav-wrap">
     <a href="/" class="brand" aria-label="Scottish Energy Services home">
       <img src="SES logo horizontal@4x.png" alt="Scottish Energy Services" loading="eager" decoding="async" />
@@ -17,7 +17,7 @@ const pathname = Astro.url.pathname;
           </li>
         ))}
       </ul>
-      <a href="tel:+441413450188" class="nav-phone">{siteConfig.phone}</a>
+      <a href={`tel:${siteConfig.phone}`} class="nav-phone">{siteConfig.phone}</a>
       <a href="/quote" class="btn btn-primary">Get a Quote</a>
     </nav>
   </div>
@@ -36,7 +36,7 @@ const pathname = Astro.url.pathname;
     padding: .34rem .72rem;
     transition: background-color .2s ease, color .2s ease;
   }
-  li a.active, li a:hover { color: var(--text-strong); background: var(--surface-tint); }
+  li a.active, li a:hover { color: var(--text-strong); background: color-mix(in oklab, var(--surface) 64%, var(--brand-soft)); }
   .nav-phone {
     color: var(--brand-strong);
     font-weight: 700;

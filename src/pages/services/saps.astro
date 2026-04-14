@@ -4,4 +4,4 @@ import ServiceDetail from '../../components/ServiceDetail.astro';
 import { services } from '../../data/services';
 const service = services.find((s) => s.slug === 'saps')!;
 ---
-<BaseLayout title="SAP Calculations" description={service.short}><ServiceDetail service={service} /></BaseLayout>
+<BaseLayout title={service.title} description={service.short}><ServiceDetail service={service} /></BaseLayout>

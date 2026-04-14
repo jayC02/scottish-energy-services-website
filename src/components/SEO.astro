@@ -1,4 +1,6 @@
 ---
+import { siteConfig } from '../data/site';
+
 interface Props {
   title: string;
   description: string;
@@ -10,9 +12,10 @@ const canonical = new URL(pathname, Astro.site);
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: 'Scottish Energy Services',
+  name: siteConfig.name,
   description,
-  telephone: '0141 345 0188',
+  telephone: siteConfig.phone,
+  email: siteConfig.email,
   areaServed: 'Scotland',
   url: Astro.site
 };
