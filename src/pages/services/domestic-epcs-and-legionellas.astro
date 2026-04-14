@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceDetail from '../../components/ServiceDetail.astro';
+import { services } from '../../data/services';
+const service = services.find((s) => s.slug === 'domestic-epcs-and-legionellas')!;
+---
+<BaseLayout title="Domestic EPCs and Legionellas" description={service.short}><ServiceDetail service={service} /></BaseLayout>

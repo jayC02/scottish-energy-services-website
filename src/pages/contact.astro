@@ -8,9 +8,9 @@ import { siteConfig } from '../data/site';
       <div data-reveal>
         <p class="eyebrow">Contact</p>
         <h1 class="section-title">Talk to our team</h1>
-        <p class="lead">Tell us what service you need and we will respond with scope, availability, and transparent pricing.</p>
+        <p class="lead">Share your project requirements and timeline, and we will respond with clear recommendations, pricing, and availability.</p>
         <div class="contact-card card">
-          <p><strong>Phone:</strong> <a href="tel:+441413450188">{siteConfig.phone}</a></p>
+          <p><strong>Phone:</strong> <a href="tel:07960041069">{siteConfig.phone}</a></p>
           <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
           <p><strong>Base:</strong> {siteConfig.address}</p>
         </div>
@@ -18,7 +18,7 @@ import { siteConfig } from '../data/site';
       <form class="form-shell form-grid" data-reveal name="contact" method="post">
         <label>Name<input required type="text" name="name" placeholder="Your full name" /></label>
         <label>Email<input required type="email" name="email" placeholder="name@company.co.uk" /></label>
-        <label>Service needed<select name="service"><option value="">Select a service</option><option>EPC</option><option>SAP</option><option>FRA</option><option>Legionella</option><option>Commercial EPC</option><option>Commercial Legionella</option></select></label>
+        <label>Service needed<select name="service"><option value="">Select a service</option><option>Commercial EPCs</option><option>SAPs</option><option>SBEM Calculations</option><option>Fire Risk Assessments (FRAs)</option><option>Section 63 Assessments</option><option>DECs</option><option>Overheating Assessments (TM59)</option><option>Dynamic Simulation Modelling (DSM)</option><option>Domestic EPCs and Legionellas</option></select></label>
         <label>Message<textarea name="message" rows="4" placeholder="Briefly describe the property, location, and your timeframe"></textarea></label>
         <button class="btn btn-primary" type="submit">Send enquiry</button>
       </form>

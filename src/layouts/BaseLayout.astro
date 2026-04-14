@@ -19,6 +19,11 @@ const { title, description } = Astro.props;
     <SEO title={title} description={description} pathname={Astro.url.pathname} />
   </head>
   <body>
+    <div class="ambient-backdrop" aria-hidden="true">
+      <canvas id="ambient-canvas"></canvas>
+      <div class="ambient-glow ambient-glow-a"></div>
+      <div class="ambient-glow ambient-glow-b"></div>
+    </div>
     <Header />
     <main>
       <slot />

@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'Scottish Energy Services',
-  phone: '0141 345 0188',
-  email: 'enquiries@scottishenergyservices.co.uk',
+  phone: '07960041069',
+  email: 'info@scottishenergyservices.co.uk',
   address: 'Glasgow, Scotland',
   serviceArea: 'Serving homeowners, landlords, agents, and businesses across Scotland.'
 };
