@@ -254,3 +254,41 @@ textarea[aria-invalid="true"] {
   opacity: 1;
   transform: translateY(0);
 }
+
+
+.route-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--loading-progress, 0%);
+  height: 3px;
+  z-index: 1300;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, #39d2ff 0%, #34e7b4 60%, #ffffff 100%);
+  box-shadow: 0 0 14px rgba(57, 210, 255, 0.5);
+  transition: width .2s linear, opacity .2s ease;
+}
+
+.route-loading-bar.is-active { opacity: 1; }
+
+.route-loading-bar.is-fail {
+  background: linear-gradient(90deg, #ff7a7a 0%, #ffb6b6 100%);
+  box-shadow: 0 0 12px rgba(244, 92, 92, 0.5);
+}
+
+button,
+.card,
+a { transition: transform .12s ease, filter .2s ease; }
+
+button:active,
+.btn:active,
+.card:active,
+a:active { transform: scale(0.99); }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-loading-bar { transition: none; }
+  button,
+  .card,
+  a { transition: none; }
+}
