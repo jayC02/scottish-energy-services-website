@@ -7,11 +7,6 @@ interface SubmissionValues {
   name: string;
   email: string;
   service: string;
-  businessName: string;
-  propertyLocation: string;
-  propertyType: string;
-  assessmentReason: string;
-  targetDeadline: string;
   sourcePage: string;
   message: string;
   phone: string;
@@ -50,11 +45,6 @@ const toSubmissionValues = (payload: Record<string, unknown>): SubmissionValues 
   service: clean(payload.service),
   message: clean(payload.message),
   phone: clean(payload.phone),
-  businessName: clean(payload.businessName),
-  propertyLocation: clean(payload.propertyLocation),
-  propertyType: clean(payload.propertyType),
-  assessmentReason: clean(payload.assessmentReason),
-  targetDeadline: clean(payload.targetDeadline),
   sourcePage: clean(payload.sourcePage),
   website: clean(payload.website),
   turnstileToken: clean(payload['cf-turnstile-response'])
@@ -66,13 +56,8 @@ const validateSubmission = (values: SubmissionValues): ValidationErrors => {
   if (!values.name || values.name.length < 2) errors.name = 'Please enter your full name.';
   if (!values.email || !EMAIL_REGEX.test(values.email)) errors.email = 'Please enter a valid email address.';
   if (!values.service) errors.service = 'Please select the service you need.';
-  if (!values.businessName || values.businessName.length < 2) errors.businessName = 'Please enter your business name.';
   if (!values.message || values.message.length < 12) errors.message = 'Please provide enough detail so we can help (at least 12 characters).';
   if (values.phone && !PHONE_REGEX.test(values.phone)) errors.phone = 'Please enter a valid phone number.';
-  if (!values.propertyLocation) errors.propertyLocation = 'Please enter the property address or project location.';
-  if (!values.propertyType) errors.propertyType = 'Please select the property type.';
-  if (!values.assessmentReason) errors.assessmentReason = 'Please select the reason for assessment.';
-  if (!values.targetDeadline) errors.targetDeadline = 'Please enter your target deadline.';
   return errors;
 };
 
@@ -159,13 +144,8 @@ export default async function handler(req: { method?: string; body?: unknown; he
       ['Name', values.name],
       ['Email', values.email],
       ['Source page', values.sourcePage || 'Not provided'],
-      ['Business name', values.businessName],
       ['Phone', values.phone || 'Not provided'],
       ['Service required', values.service],
-      ['Property address / project location', values.propertyLocation],
-      ['Property type', values.propertyType],
-      ['Reason for assessment', values.assessmentReason],
-      ['Target deadline', values.targetDeadline],
       ['Message / project details', values.message],
       ['Form type', values.formType],
       ['Submitted at (UTC)', new Date().toISOString()]

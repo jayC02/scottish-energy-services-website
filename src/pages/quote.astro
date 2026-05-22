@@ -1,23 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
-const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 import QuoteRequestForm from '../components/QuoteRequestForm.astro';
+
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
 <BaseLayout title="Request a Quote" description="Request a quote for Scottish Energy Services technical compliance assessments.">
   <section class="section">
-    <div class="container quote-wrap" data-reveal>
-      <p class="eyebrow">Request a Quote</p>
-      <h1 class="section-title">Request a detailed quote</h1>
-      <p class="lead">Share your project details and preferred timescale. We will confirm scope, delivery programme, and fee in a clear no-obligation quotation.</p>
-      <p class="quote-contact">Need to speak first? <a href={phoneHref}>{siteConfig.phone}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
-      <QuoteRequestForm formType="quote" submitText="Submit quote request" />
+    <div class="container grid grid-2 form-layout">
+      <div data-reveal>
+        <p class="eyebrow">REQUEST A QUOTE</p>
+        <h1 class="section-title">Send project details</h1>
+        <p class="lead">Tell us what assessment you need and a few details about the property or project. We will review your enquiry and come back with the next steps.</p>
+        <div class="contact-card card">
+          <p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p>
+          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p>
+        </div>
+      </div>
+      <QuoteRequestForm formType="quote" submitText="Send enquiry" reveal={true} />
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .quote-wrap { max-width: 780px; }
-  .quote-contact { margin: .35rem 0 1rem; color: var(--muted); }
-  .quote-contact a { color: var(--brand-strong); font-weight: 600; }
+  .form-layout { align-items: start; gap: 1rem 1.2rem; }
 </style>
