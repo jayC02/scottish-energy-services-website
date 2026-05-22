@@ -7,9 +7,9 @@ interface SubmissionValues {
   name: string;
   email: string;
   service: string;
+  sourcePage: string;
   message: string;
   phone: string;
-  postcode: string;
   website: string;
   turnstileToken: string;
 }
@@ -45,7 +45,7 @@ const toSubmissionValues = (payload: Record<string, unknown>): SubmissionValues 
   service: clean(payload.service),
   message: clean(payload.message),
   phone: clean(payload.phone),
-  postcode: clean(payload.postcode),
+  sourcePage: clean(payload.sourcePage),
   website: clean(payload.website),
   turnstileToken: clean(payload['cf-turnstile-response'])
 });
@@ -58,7 +58,6 @@ const validateSubmission = (values: SubmissionValues): ValidationErrors => {
   if (!values.service) errors.service = 'Please select the service you need.';
   if (!values.message || values.message.length < 12) errors.message = 'Please provide enough detail so we can help (at least 12 characters).';
   if (values.phone && !PHONE_REGEX.test(values.phone)) errors.phone = 'Please enter a valid phone number.';
-  if (values.formType === 'quote' && !values.postcode) errors.postcode = 'Please enter the property postcode.';
   return errors;
 };
 
@@ -144,10 +143,10 @@ export default async function handler(req: { method?: string; body?: unknown; he
     const metadata = [
       ['Name', values.name],
       ['Email', values.email],
+      ['Source page', values.sourcePage || 'Not provided'],
       ['Phone', values.phone || 'Not provided'],
-      ['Service', values.service],
-      ['Postcode', values.postcode || 'Not provided'],
-      ['Message', values.message],
+      ['Service required', values.service],
+      ['Message / project details', values.message],
       ['Form type', values.formType],
       ['Submitted at (UTC)', new Date().toISOString()]
     ] as const;

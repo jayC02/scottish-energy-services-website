@@ -1,0 +1,91 @@
+---
+interface Props {
+  formType: 'contact' | 'quote';
+  submitText?: string;
+  reveal?: boolean;
+}
+
+const { formType, submitText = 'Send enquiry', reveal = false } = Astro.props;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+const serviceOptions = [
+  'Commercial EPCs',
+  'Domestic EPCs',
+  'Legionella Risk Assessments',
+  'SAPs',
+  'SBEM Calculations',
+  'Fire Risk Assessments (FRAs)',
+  'Section 63 Assessments',
+  'DECs',
+  'Overheating Assessments (TM59)',
+  'Dynamic Simulation Modelling (DSM)',
+  'Other'
+];
+---
+<form class="form-shell form-grid compact-form" data-reveal={reveal ? '' : undefined} data-ajax-form name={formType} method="post" action="/api/forms" novalidate>
+  <input type="hidden" name="formType" value={formType} />
+  <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+
+  <div class="compact-grid">
+    <label>Name
+      <input required type="text" name="name" autocomplete="name" />
+      <span class="field-error" data-error-for="name" aria-live="polite"></span>
+    </label>
+
+    <label>Email
+      <input required type="email" name="email" autocomplete="email" />
+      <span class="field-error" data-error-for="email" aria-live="polite"></span>
+    </label>
+
+    <label>Phone number
+      <input required type="tel" name="phone" autocomplete="tel" />
+      <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+    </label>
+
+    <label>Service required
+      <select name="service" required>
+        <option value="">Select a service</option>
+        {serviceOptions.map((option) => <option value={option}>{option}</option>)}
+      </select>
+      <span class="field-error" data-error-for="service" aria-live="polite"></span>
+    </label>
+
+    <label class="full">Message / Project details
+      <textarea required name="message" rows="4"></textarea>
+      <span class="field-error" data-error-for="message" aria-live="polite"></span>
+    </label>
+  </div>
+
+  <label class="sr-only" aria-hidden="true">
+    Leave this field blank
+    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  </label>
+
+  <div class="captcha-wrap">
+    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
+    <input type="hidden" name="cf-turnstile-response" value="" />
+    <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
+  </div>
+
+  <div class="form-status" data-form-status aria-live="polite"></div>
+  <button class="btn btn-primary" type="submit" data-submit-text={submitText} data-track="form_submit">{submitText}</button>
+</form>
+
+<style>
+  .compact-form { gap: .6rem; padding: clamp(1rem, 1.9vw, 1.3rem); }
+  .compact-grid {
+    display: grid;
+    gap: .6rem .8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .compact-form label { gap: .24rem; font-size: .9rem; }
+  .compact-form input,
+  .compact-form select,
+  .compact-form textarea { padding: .6rem .68rem; }
+  .compact-form textarea { min-height: 96px; }
+  .full { grid-column: 1 / -1; }
+
+  @media (max-width: 720px) {
+    .compact-grid { grid-template-columns: 1fr; }
+  }
+</style>
