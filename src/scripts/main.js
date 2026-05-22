@@ -8,7 +8,114 @@ document.querySelectorAll('[data-track]').forEach((el)=>el.addEventListener('cli
 const nav = document.querySelector('.nav');
 const toggle = document.querySelector('.menu-toggle');
 const header = document.querySelector('[data-header]');
+
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const setupGlobalLoading = () => {
+  if (window.RaceHubLoading) return;
+
+  const bar = document.querySelector('[data-route-loading-bar]');
+  if (!bar) return;
+
+  let active = false;
+  let progress = 0;
+  let tickerId = 0;
+  let resetId = 0;
+
+  const applyState = () => {
+    bar.style.setProperty('--loading-progress', `${progress}%`);
+  };
+
+  const stopTicker = () => {
+    if (tickerId) {
+      window.clearInterval(tickerId);
+      tickerId = 0;
+    }
+  };
+
+  const queueReset = () => {
+    window.clearTimeout(resetId);
+    resetId = window.setTimeout(() => {
+      bar.classList.remove('is-active', 'is-fail');
+      progress = 0;
+      applyState();
+    }, reducedMotion ? 60 : 240);
+  };
+
+  const start = () => {
+    if (active) return;
+    active = true;
+    window.clearTimeout(resetId);
+    bar.classList.add('is-active');
+    bar.classList.remove('is-fail');
+    progress = 8;
+    applyState();
+
+    if (reducedMotion) {
+      progress = 40;
+      applyState();
+      return;
+    }
+
+    stopTicker();
+    tickerId = window.setInterval(() => {
+      progress = Math.min(80, progress + (progress < 45 ? 9 : progress < 65 ? 4 : 1.2));
+      applyState();
+      if (progress >= 80) stopTicker();
+    }, 180);
+  };
+
+  const finish = (failed = false) => {
+    if (!active && progress === 0) return;
+
+    active = false;
+    stopTicker();
+    bar.classList.add('is-active');
+    bar.classList.toggle('is-fail', failed);
+    progress = 100;
+    applyState();
+    queueReset();
+  };
+
+  window.RaceHubLoading = { start, done: () => finish(false), fail: () => finish(true) };
+
+  document.addEventListener('astro:before-preparation', () => window.RaceHubLoading.start());
+  document.addEventListener('astro:before-swap', () => window.RaceHubLoading.start());
+  document.addEventListener('astro:after-swap', () => window.RaceHubLoading.done());
+  document.addEventListener('astro:page-load', () => window.RaceHubLoading.done());
+
+  document.addEventListener('click', (event) => {
+    if (event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const target = event.target;
+    if (!(target instanceof Element) || target.closest('[data-no-loading]')) return;
+
+    const anchor = target.closest('a[href]');
+    if (!(anchor instanceof HTMLAnchorElement)) return;
+
+    if (anchor.hasAttribute('download') || anchor.hasAttribute('data-no-loading')) return;
+    if (anchor.getAttribute('target') === '_blank') return;
+
+    const rawHref = anchor.getAttribute('href') || '';
+    if (!rawHref || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) return;
+
+    const url = new URL(anchor.href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (url.pathname === window.location.pathname && url.hash && url.search === window.location.search) return;
+
+    window.RaceHubLoading.start();
+  }, { capture: true });
+
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement) || form.hasAttribute('data-no-loading')) return;
+    window.RaceHubLoading.start();
+  }, { capture: true });
+};
+
+setupGlobalLoading();
+
 
 if (toggle && nav) {
   toggle.addEventListener('click', () => {
