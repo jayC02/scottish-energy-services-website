@@ -28,6 +28,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         <label>Message/project details<textarea required name="message" rows="4"></textarea></label>
         <p class="lead" style="font-size:.95rem">Upload support is not yet available in this form. Please email drawings/specifications to <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
         <div class="captcha-wrap"><div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div><input type="hidden" name="cf-turnstile-response" value="" /></div>
+        <p class="field-error" data-error-for="turnstileToken" aria-live="polite"></p>
         <div class="form-status" data-form-status aria-live="polite"></div>
         <button class="btn btn-primary" type="submit" data-submit-text="Send enquiry" data-track="form_submit">Send enquiry</button>
       </form>
