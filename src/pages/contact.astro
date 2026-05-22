@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { siteConfig } from '../data/site';
-import { services } from '../data/services';
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+import QuoteRequestForm from '../components/QuoteRequestForm.astro';
 ---
 <BaseLayout title="Contact" description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability.">
   <section class="section">
@@ -14,24 +13,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
         <p class="lead">For the quickest quote, please include the property address, service required, project stage and any drawings/specifications available. We will confirm scope, fee and likely timescale before instruction.</p>
         <div class="contact-card card"><p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p><p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p></div>
       </div>
-      <form class="form-shell form-grid" data-reveal data-ajax-form name="contact" method="post" action="/api/forms" novalidate>
-        <input type="hidden" name="formType" value="contact" />
-        <label>Name<input required type="text" name="name" /></label>
-        <label>Business name<input type="text" name="businessName" /></label>
-        <label>Email<input required type="email" name="email" /></label>
-        <label>Phone number<input type="tel" name="phone" /></label>
-        <label>Service required<select name="service" required><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select></label>
-        <label>Property address or project location<input name="propertyLocation" type="text" /></label>
-        <label>Property type<select name="propertyType"><option>domestic</option><option>non-domestic</option><option>mixed-use</option><option>portfolio</option><option>new build</option><option>conversion</option><option>existing building</option></select></label>
-        <label>Reason for assessment<select name="assessmentReason"><option>sale</option><option>lease</option><option>building warrant</option><option>planning</option><option>compliance</option><option>landlord requirement</option><option>other</option></select></label>
-        <label>Target deadline<input type="text" name="targetDeadline" /></label>
-        <label>Message/project details<textarea required name="message" rows="4"></textarea></label>
-        <p class="lead" style="font-size:.95rem">Upload support is not yet available in this form. Please email drawings/specifications to <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
-        <div class="captcha-wrap"><div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div><input type="hidden" name="cf-turnstile-response" value="" /></div>
-        <p class="field-error" data-error-for="turnstileToken" aria-live="polite"></p>
-        <div class="form-status" data-form-status aria-live="polite"></div>
-        <button class="btn btn-primary" type="submit" data-submit-text="Send enquiry" data-track="form_submit">Send enquiry</button>
-      </form>
+      <QuoteRequestForm formType="contact" submitText="Send enquiry" reveal={true} />
     </div>
   </section>
 </BaseLayout>

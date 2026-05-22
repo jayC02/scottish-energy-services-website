@@ -1,0 +1,98 @@
+---
+import { services } from '../data/services';
+
+interface Props {
+  formType: 'contact' | 'quote';
+  submitText?: string;
+  reveal?: boolean;
+}
+
+const { formType, submitText = formType === 'quote' ? 'Submit quote request' : 'Send enquiry', reveal = false } = Astro.props;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+<form class="form-shell form-grid" data-reveal={reveal ? "" : undefined} data-ajax-form name={formType} method="post" action="/api/forms" novalidate>
+  <input type="hidden" name="formType" value={formType} />
+  <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
+
+  <label>Name
+    <input required type="text" name="name" autocomplete="name" />
+    <span class="field-error" data-error-for="name" aria-live="polite"></span>
+  </label>
+  <label>Business name
+    <input required type="text" name="businessName" autocomplete="organization" />
+    <span class="field-error" data-error-for="businessName" aria-live="polite"></span>
+  </label>
+  <label>Email
+    <input required type="email" name="email" autocomplete="email" />
+    <span class="field-error" data-error-for="email" aria-live="polite"></span>
+  </label>
+  <label>Phone number
+    <input required type="tel" name="phone" autocomplete="tel" />
+    <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+  </label>
+  <label>Service required
+    <select name="service" required>
+      <option value="">Select a service</option>
+      {services.map((service) => <option value={service.title}>{service.title}</option>)}
+    </select>
+    <span class="field-error" data-error-for="service" aria-live="polite"></span>
+  </label>
+  <label>Property address or project location
+    <input required name="propertyLocation" type="text" autocomplete="street-address" />
+    <span class="field-error" data-error-for="propertyLocation" aria-live="polite"></span>
+  </label>
+  <label>Property type
+    <select name="propertyType" required>
+      <option value="">Select property type</option>
+      <option value="domestic">domestic</option>
+      <option value="non-domestic">non-domestic</option>
+      <option value="mixed-use">mixed-use</option>
+      <option value="portfolio">portfolio</option>
+      <option value="new build">new build</option>
+      <option value="conversion">conversion</option>
+      <option value="existing building">existing building</option>
+    </select>
+    <span class="field-error" data-error-for="propertyType" aria-live="polite"></span>
+  </label>
+  <label>Reason for assessment
+    <select name="assessmentReason" required>
+      <option value="">Select reason</option>
+      <option value="sale">sale</option>
+      <option value="lease">lease</option>
+      <option value="building warrant">building warrant</option>
+      <option value="planning">planning</option>
+      <option value="compliance">compliance</option>
+      <option value="landlord requirement">landlord requirement</option>
+      <option value="other">other</option>
+    </select>
+    <span class="field-error" data-error-for="assessmentReason" aria-live="polite"></span>
+  </label>
+  <label>Target deadline
+    <input required type="text" name="targetDeadline" />
+    <span class="field-error" data-error-for="targetDeadline" aria-live="polite"></span>
+  </label>
+  <label>Message/project details
+    <textarea required name="message" rows="4"></textarea>
+    <span class="field-error" data-error-for="message" aria-live="polite"></span>
+  </label>
+
+  <p class="lead form-guidance">For the quickest quote, please include the property address, service required, project stage and any drawings/specifications available. We will confirm scope, fee and likely timescale before instruction.</p>
+
+  <label class="sr-only" aria-hidden="true">
+    Leave this field blank
+    <input type="text" name="website" tabindex="-1" autocomplete="off" />
+  </label>
+
+  <div class="captcha-wrap">
+    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
+    <input type="hidden" name="cf-turnstile-response" value="" />
+    <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
+  </div>
+
+  <div class="form-status" data-form-status aria-live="polite"></div>
+  <button class="btn btn-primary" type="submit" data-submit-text={submitText} data-track="form_submit">{submitText}</button>
+</form>
+
+<style>
+  .form-guidance { font-size: .95rem; margin: 0; }
+</style>

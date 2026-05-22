@@ -55,6 +55,13 @@ const animateCounter = (el) => {
   requestAnimationFrame(tick);
 };
 
+if (reducedMotion && counters.length) {
+  counters.forEach((counter) => {
+    const target = Number(counter.dataset.count || 0);
+    counter.textContent = target.toLocaleString();
+  });
+}
+
 if (!reducedMotion && counters.length) {
   const counterObserver = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
@@ -244,7 +251,11 @@ const validateClientValues = (values, options = { captchaRequired: true }) => {
   if (!values.service) errors.service = 'Please select the service you need.';
   if (!values.message || values.message.trim().length < 12) errors.message = 'Please provide a bit more detail (at least 12 characters).';
   if (values.phone && !PHONE_REGEX.test(values.phone.trim())) errors.phone = 'Please enter a valid phone number.';
-  if (values.formType === 'quote' && !values.postcode) errors.postcode = 'Please enter the property postcode.';
+  if (!values.businessName || values.businessName.length < 2) errors.businessName = 'Please enter your business name.';
+  if (!values.propertyLocation) errors.propertyLocation = 'Please enter the property address or project location.';
+  if (!values.propertyType) errors.propertyType = 'Please select the property type.';
+  if (!values.assessmentReason) errors.assessmentReason = 'Please select the reason for assessment.';
+  if (!values.targetDeadline) errors.targetDeadline = 'Please enter your target deadline.';
   if (options.captchaRequired && !values['cf-turnstile-response']) errors.turnstileToken = 'Please complete the captcha check.';
 
   return errors;
@@ -264,7 +275,7 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
     const formData = new FormData(form);
     const values = collectValues(formData);
 
-    ['name', 'email', 'service', 'phone', 'postcode', 'message', 'turnstileToken'].forEach((field) => setFieldError(form, field, ''));
+    ['name','businessName','email','service','phone','propertyLocation','propertyType','assessmentReason','targetDeadline','message','turnstileToken'].forEach((field) => setFieldError(form, field, ''));
     if (statusEl) statusEl.textContent = '';
 
     const captchaWidget = form.querySelector('[data-turnstile-widget]');

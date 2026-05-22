@@ -14,6 +14,20 @@
         <a class="btn btn-outline" href="tel:01412551360">Call 0141 255 1360</a>
         <a class="btn btn-ghost" href="/services">Explore Services</a>
       </div>
+      <div class="hero-metrics" aria-label="Scottish Energy Services key metrics">
+        <div class="metric">
+          <strong data-count="3200">0</strong>
+          <span>Projects delivered</span>
+        </div>
+        <div class="metric">
+          <strong data-count="32">0</strong>
+          <span>Scottish local authority areas supported</span>
+        </div>
+        <div class="metric">
+          <strong>72 hrs</strong>
+          <span>Typical lead time for standard appointments</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -134,8 +148,16 @@
     backdrop-filter: blur(4px);
   }
 
+  .hero-metrics {
+    margin-top: 1.4rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .72rem;
+    max-width: 880px;
+  }
+
   .metric {
-    padding: 1rem;
+    padding: .9rem 1rem;
     border-radius: 14px;
     background: rgba(255, 255, 255, 0.76);
     border: 1px solid rgba(214, 225, 236, 0.8);
@@ -165,6 +187,11 @@
   }
 
   @media (max-width: 860px) {
+    .hero-metrics {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+    }
+
     .hero-grid {
       grid-template-columns: 1fr;
     }
