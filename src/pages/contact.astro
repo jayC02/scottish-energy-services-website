@@ -11,61 +11,26 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
       <div data-reveal>
         <p class="eyebrow">Contact</p>
         <h1 class="section-title">Talk to our team</h1>
-        <p class="lead">Tell us what you need and we will provide clear scope, delivery timescales, and a straightforward quotation.</p>
-        <div class="contact-card card">
-          <p><strong>Phone:</strong> <a href={phoneHref}>{siteConfig.phone}</a></p>
-          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a></p>
-          <p><strong>Office:</strong> {siteConfig.address}</p>
-          <p><strong>Coverage:</strong> Based in Scotland, delivering across the UK</p>
-        </div>
+        <p class="lead">For the quickest quote, please include the property address, service required, project stage and any drawings/specifications available. We will confirm scope, fee and likely timescale before instruction.</p>
+        <div class="contact-card card"><p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p><p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p></div>
       </div>
       <form class="form-shell form-grid" data-reveal data-ajax-form name="contact" method="post" action="/api/forms" novalidate>
         <input type="hidden" name="formType" value="contact" />
-        <label>
-          Name
-          <input required type="text" name="name" placeholder="Your full name" autocomplete="name" />
-          <span class="field-error" data-error-for="name" aria-live="polite"></span>
-        </label>
-        <label>
-          Email
-          <input required type="email" name="email" placeholder="name@company.co.uk" autocomplete="email" />
-          <span class="field-error" data-error-for="email" aria-live="polite"></span>
-        </label>
-        <label>
-          Service needed
-          <select name="service" required>
-            <option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}
-          </select>
-          <span class="field-error" data-error-for="service" aria-live="polite"></span>
-        </label>
-        <label>
-          Phone number (optional)
-          <input type="tel" name="phone" placeholder="Best number to reach you" autocomplete="tel" />
-          <span class="field-error" data-error-for="phone" aria-live="polite"></span>
-        </label>
-        <label>
-          Message
-          <textarea required name="message" rows="4" placeholder="Briefly describe the property, location, and your timeframe"></textarea>
-          <span class="field-error" data-error-for="message" aria-live="polite"></span>
-        </label>
-        <label class="sr-only" aria-hidden="true">
-          Leave this field blank
-          <input type="text" name="website" tabindex="-1" autocomplete="off" />
-        </label>
-        <div class="captcha-wrap">
-          <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
-          <input type="hidden" name="cf-turnstile-response" value="" />
-          <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
-        </div>
+        <label>Name<input required type="text" name="name" /></label>
+        <label>Business name<input type="text" name="businessName" /></label>
+        <label>Email<input required type="email" name="email" /></label>
+        <label>Phone number<input type="tel" name="phone" /></label>
+        <label>Service required<select name="service" required><option value="">Select a service</option>{services.map((service) => <option value={service.title}>{service.title}</option>)}</select></label>
+        <label>Property address or project location<input name="propertyLocation" type="text" /></label>
+        <label>Property type<select name="propertyType"><option>domestic</option><option>non-domestic</option><option>mixed-use</option><option>portfolio</option><option>new build</option><option>conversion</option><option>existing building</option></select></label>
+        <label>Reason for assessment<select name="assessmentReason"><option>sale</option><option>lease</option><option>building warrant</option><option>planning</option><option>compliance</option><option>landlord requirement</option><option>other</option></select></label>
+        <label>Target deadline<input type="text" name="targetDeadline" /></label>
+        <label>Message/project details<textarea required name="message" rows="4"></textarea></label>
+        <p class="lead" style="font-size:.95rem">Upload support is not yet available in this form. Please email drawings/specifications to <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>.</p>
+        <div class="captcha-wrap"><div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div><input type="hidden" name="cf-turnstile-response" value="" /></div>
         <div class="form-status" data-form-status aria-live="polite"></div>
-        <button class="btn btn-primary" type="submit" data-submit-text="Send enquiry">Send enquiry</button>
+        <button class="btn btn-primary" type="submit" data-submit-text="Send enquiry" data-track="form_submit">Send enquiry</button>
       </form>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .contact-card { margin-top: 1rem; display: grid; gap: .25rem; background: linear-gradient(180deg, #ffffff 0%, #f5f9fd 100%); }
-  .contact-card p { margin: .1rem 0; }
-  .contact-card a { color: var(--brand-strong); }
-</style>

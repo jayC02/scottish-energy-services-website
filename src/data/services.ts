@@ -92,7 +92,7 @@ export const services: Service[] = [
   },
   {
     slug: 'domestic-epcs-and-legionellas',
-    title: 'Domestic EPCs and Legionellas',
+    title: 'Domestic EPCs & Legionella Risk Assessments',
     short: 'Domestic EPCs and Legionella risk assessments for residential properties.',
     intro: 'We support landlords, agents, and homeowners with efficient certification and water safety assessments, helping maintain compliance and reduce risk.',
     highlights: ['Fast turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],

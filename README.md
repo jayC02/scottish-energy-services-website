@@ -42,3 +42,5 @@ All validated form submissions currently route to:
 - Brand/system styling is in `src/styles/global.css`.
 - API handlers for deployment are in `api/`.
 - Replace placeholder assets in `public/images/` when final brand assets are available.
+
+- Favicon note: after deployment, Google Search may take days or weeks to recrawl and refresh the favicon shown in results.

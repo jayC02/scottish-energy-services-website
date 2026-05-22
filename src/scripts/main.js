@@ -1,3 +1,10 @@
+
+window.sesTrackEvent = (eventName, payload = {}) => {
+  if (window.gtag) window.gtag('event', eventName, payload);
+  if (window.dataLayer) window.dataLayer.push({ event: eventName, ...payload });
+};
+document.querySelectorAll('[data-track]').forEach((el)=>el.addEventListener('click',()=>window.sesTrackEvent(el.getAttribute('data-track')||'click')));
+
 const nav = document.querySelector('.nav');
 const toggle = document.querySelector('.menu-toggle');
 const header = document.querySelector('[data-header]');
