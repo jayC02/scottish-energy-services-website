@@ -17,8 +17,10 @@ const { title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO title={title} description={description} pathname={Astro.url.pathname} />
-    <link rel="icon" type="image/png" href="/images/ses-logo-icon.png" />
-    <link rel="apple-touch-icon" href="/images/ses-logo-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   </head>
   <body>
     <Header />

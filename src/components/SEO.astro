@@ -9,6 +9,7 @@ interface Props {
 
 const { title, description, pathname = '/' } = Astro.props;
 const canonical = new URL(pathname, Astro.site);
+const logoUrl = new URL('/images/ses-logo-icon.png', Astro.site).toString();
 const orgSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -24,7 +25,8 @@ const orgSchema = {
     postalCode: 'G2 4JR',
     addressCountry: 'GB'
   },
-  url: Astro.site
+  url: Astro.site,
+  logo: logoUrl
 };
 ---
 <title>{title} | Scottish Energy Services</title>

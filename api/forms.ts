@@ -129,7 +129,6 @@ export default async function handler(req: { method?: string; body?: unknown; he
     if (!turnstileSecret) {
       return res.status(500).json({ ok: false, message: 'Captcha is not configured on the server. Please contact support.' });
     }
-
     if (!values.turnstileToken) {
       return res.status(400).json({ ok: false, errors: { turnstileToken: 'Please complete the captcha check.' } });
     }
