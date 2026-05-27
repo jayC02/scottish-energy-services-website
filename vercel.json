@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "scottishenergyservices.co.uk"
+        }
+      ],
+      "destination": "https://www.scottishenergyservices.co.uk/:path*",
+      "permanent": true
+    }
+  ]
+}
