@@ -1,0 +1,191 @@
+---
+const clients = [
+  { name: 'M&S', src: '/images/client-logos/marks-and-spencer.jpg' },
+  { name: 'Savills', src: '/images/client-logos/savills.svg' },
+  { name: 'Glasgow City Council', src: '/images/client-logos/glasgow-city-council.gif' },
+  { name: 'Hilton', src: '/images/client-logos/hilton.png' },
+  { name: 'The University of Edinburgh', src: '/images/client-logos/university-of-edinburgh.png' },
+  { name: 'Max Fordham', src: '/images/client-logos/max-fordham.svg' },
+  { name: 'Aldi', src: '/images/client-logos/aldi.svg' },
+  { name: 'Knight Frank', src: '/images/client-logos/knight-frank.svg' },
+  { name: 'AGS Airports', src: '/images/client-logos/ags-airports.png' },
+  { name: 'IHG Hotels & Resorts', src: '/images/client-logos/ihg-hotels-resorts.svg' },
+  { name: 'University of Glasgow', src: '/images/client-logos/university-of-glasgow.svg' },
+  { name: 'Glasgow Life', src: '/images/client-logos/glasgow-life.svg' },
+  { name: 'Praxis Real Estate Management', src: '/images/client-logos/praxis-real-estate-management.png' },
+  { name: 'Southside Housing Association', src: '/images/client-logos/southside-housing-association.png' },
+  { name: 'Marine & Lawn Hotels & Resorts', src: '/images/client-logos/marine-lawn-hotels-resorts.png' },
+  { name: 'Peel Retail & Leisure', src: '/images/client-logos/peel-retail-leisure.svg' },
+  { name: 'University of the West of Scotland', src: '/images/client-logos/university-of-the-west-of-scotland.svg' },
+  { name: 'Keegans', src: '/images/client-logos/keegans.svg' },
+  { name: 'Estama', src: '/images/client-logos/estama.svg' },
+  { name: 'Cairn Group', src: '/images/client-logos/cairn-group.webp' }
+];
+---
+
+<section class="section client-logo-section" aria-labelledby="client-logo-heading">
+  <div class="container" data-reveal>
+    <div class="client-logo-heading">
+      <p class="eyebrow">Client Experience</p>
+      <h2 id="client-logo-heading" class="section-title">Trusted across the property sector</h2>
+      <p class="lead">Supporting leading organisations, consultants and property teams throughout the UK.</p>
+    </div>
+
+    <div class="client-logo-marquee" tabindex="0" aria-label="Trusted client organisations">
+      <div class="client-logo-track">
+        <ul class="client-logo-list">
+          {clients.map((client) => (
+            <li class="client-logo-item">
+              <img src={client.src} alt={client.name} width="320" height="100" decoding="async" />
+            </li>
+          ))}
+        </ul>
+        <ul class="client-logo-list" aria-hidden="true">
+          {clients.map((client) => (
+            <li class="client-logo-item">
+              <img src={client.src} alt="" width="320" height="100" decoding="async" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .client-logo-section {
+    padding-top: clamp(2.2rem, 4vw, 3.4rem);
+    padding-bottom: clamp(2.8rem, 5vw, 4.2rem);
+    background: #ffffff;
+  }
+
+  .client-logo-heading {
+    max-width: 68ch;
+    margin-bottom: 1.8rem;
+  }
+
+  .client-logo-heading :global(.lead) {
+    margin-bottom: 0;
+  }
+
+  .client-logo-marquee {
+    --logo-gap: clamp(1.8rem, 4vw, 3rem);
+    --logo-width: clamp(7.6rem, 12vw, 10.5rem);
+    --logo-height: clamp(2.5rem, 4vw, 3.6rem);
+    position: relative;
+    overflow: hidden;
+    padding: .65rem 0;
+    outline: none;
+  }
+
+  .client-logo-marquee::before,
+  .client-logo-marquee::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    width: clamp(3rem, 9vw, 7rem);
+    pointer-events: none;
+  }
+
+  .client-logo-marquee::before {
+    left: 0;
+    background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .client-logo-marquee::after {
+    right: 0;
+    background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+  }
+
+  .client-logo-marquee:focus-visible {
+    border-radius: var(--radius-sm);
+    outline: 3px solid var(--ring);
+    outline-offset: 4px;
+  }
+
+  .client-logo-track {
+    display: flex;
+    gap: var(--logo-gap);
+    width: max-content;
+    animation: client-logo-scroll 40s linear infinite;
+    will-change: transform;
+  }
+
+  .client-logo-marquee:hover .client-logo-track,
+  .client-logo-marquee:focus-visible .client-logo-track,
+  .client-logo-marquee:focus-within .client-logo-track {
+    animation-play-state: paused;
+  }
+
+  .client-logo-list {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: var(--logo-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .client-logo-item {
+    display: flex;
+    flex: 0 0 var(--logo-width);
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .client-logo-item img {
+    width: 100%;
+    height: var(--logo-height);
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: .58;
+    transition: filter .25s ease, opacity .25s ease, transform .25s ease;
+  }
+
+  .client-logo-item img:hover {
+    filter: grayscale(0);
+    opacity: .9;
+    transform: translateY(-1px);
+  }
+
+  @keyframes client-logo-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(calc(-50% - (var(--logo-gap) / 2)), 0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .client-logo-marquee {
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .client-logo-track {
+      animation: none;
+      padding-bottom: .45rem;
+    }
+
+    .client-logo-list[aria-hidden="true"] {
+      display: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .client-logo-section {
+      padding-top: 2rem;
+    }
+
+    .client-logo-marquee {
+      --logo-gap: 2rem;
+      --logo-width: clamp(8rem, 36vw, 9rem);
+      --logo-height: 2.35rem;
+    }
+  }
+</style>
