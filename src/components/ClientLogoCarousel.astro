@@ -1,8 +1,8 @@
 ---
 const clients = [
-  { name: 'M&S', src: '/images/client-logos/marks-and-spencer.jpg' },
+  { name: 'M&S', src: '/images/client-logos/marks-and-spencer.png' },
   { name: 'Savills', src: '/images/client-logos/savills.svg' },
-  { name: 'Glasgow City Council', src: '/images/client-logos/glasgow-city-council.gif' },
+  { name: 'Glasgow City Council', src: '/images/client-logos/glasgow-city-council.png' },
   { name: 'Hilton', src: '/images/client-logos/hilton.png' },
   { name: 'The University of Edinburgh', src: '/images/client-logos/university-of-edinburgh.png' },
   { name: 'Max Fordham', src: '/images/client-logos/max-fordham.svg' },
@@ -19,7 +19,7 @@ const clients = [
   { name: 'University of the West of Scotland', src: '/images/client-logos/university-of-the-west-of-scotland.svg' },
   { name: 'Keegans', src: '/images/client-logos/keegans.svg' },
   { name: 'Estama', src: '/images/client-logos/estama.svg' },
-  { name: 'Cairn Group', src: '/images/client-logos/cairn-group.webp' }
+  { name: 'Cairn Group', src: '/images/client-logos/cairn-group.png' }
 ];
 ---
 
@@ -54,8 +54,8 @@ const clients = [
 
 <style>
   .client-logo-section {
-    padding-top: clamp(2.2rem, 4vw, 3.4rem);
-    padding-bottom: clamp(2.8rem, 5vw, 4.2rem);
+    padding-top: clamp(2rem, 3.5vw, 3rem);
+    padding-bottom: clamp(2.2rem, 4vw, 3.5rem);
     background: #ffffff;
   }
 
@@ -70,10 +70,12 @@ const clients = [
 
   .client-logo-marquee {
     --logo-gap: clamp(1.8rem, 4vw, 3rem);
-    --logo-width: clamp(7.6rem, 12vw, 10.5rem);
     --logo-height: clamp(2.5rem, 4vw, 3.6rem);
+    --logo-max-width: clamp(8.5rem, 15vw, 13.5rem);
     position: relative;
     overflow: hidden;
+    max-width: 920px;
+    margin-inline: auto;
     padding: .65rem 0;
     outline: none;
   }
@@ -85,18 +87,18 @@ const clients = [
     top: 0;
     bottom: 0;
     z-index: 2;
-    width: clamp(3rem, 9vw, 7rem);
+    width: clamp(1.5rem, 4vw, 3.5rem);
     pointer-events: none;
   }
 
   .client-logo-marquee::before {
     left: 0;
-    background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, .58) 0%, rgba(255, 255, 255, 0) 100%);
   }
 
   .client-logo-marquee::after {
     right: 0;
-    background: linear-gradient(270deg, #ffffff 0%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(270deg, rgba(255, 255, 255, .58) 0%, rgba(255, 255, 255, 0) 100%);
   }
 
   .client-logo-marquee:focus-visible {
@@ -131,24 +133,22 @@ const clients = [
 
   .client-logo-item {
     display: flex;
-    flex: 0 0 var(--logo-width);
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     min-width: 0;
   }
 
   .client-logo-item img {
-    width: 100%;
+    width: auto;
+    max-width: var(--logo-max-width);
     height: var(--logo-height);
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: .58;
-    transition: filter .25s ease, opacity .25s ease, transform .25s ease;
+    opacity: 1;
+    transition: transform .25s ease;
   }
 
   .client-logo-item img:hover {
-    filter: grayscale(0);
-    opacity: .9;
     transform: translateY(-1px);
   }
 
@@ -184,8 +184,9 @@ const clients = [
 
     .client-logo-marquee {
       --logo-gap: 2rem;
-      --logo-width: clamp(8rem, 36vw, 9rem);
       --logo-height: 2.35rem;
+      --logo-max-width: 9.6rem;
+      max-width: 320px;
     }
   }
 </style>

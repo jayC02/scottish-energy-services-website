@@ -75,6 +75,33 @@ if (!reducedMotion && counters.length) {
   counters.forEach((counter) => counterObserver.observe(counter));
 }
 
+const heroStats = document.querySelectorAll('.hero-panel .metric');
+if (!reducedMotion && heroStats.length) {
+  heroStats.forEach((stat) => {
+    stat.addEventListener(
+      'pointermove',
+      (event) => {
+        const rect = stat.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+
+        stat.style.setProperty('--stat-glow-x', `${Math.round(x * 100)}%`);
+        stat.style.setProperty('--stat-glow-y', `${Math.round(y * 100)}%`);
+        stat.style.setProperty('--tilt-y', `${((x - 0.5) * 4).toFixed(2)}deg`);
+        stat.style.setProperty('--tilt-x', `${((0.5 - y) * 3).toFixed(2)}deg`);
+      },
+      { passive: true }
+    );
+
+    stat.addEventListener('pointerleave', () => {
+      stat.style.removeProperty('--stat-glow-x');
+      stat.style.removeProperty('--stat-glow-y');
+      stat.style.removeProperty('--tilt-x');
+      stat.style.removeProperty('--tilt-y');
+    });
+  });
+}
+
 const heroCanvas = document.querySelector('#hero-field');
 if (heroCanvas && !reducedMotion) {
   const ctx = heroCanvas.getContext('2d', { alpha: true });
