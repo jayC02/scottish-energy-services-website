@@ -1,49 +1,63 @@
-<section class="section process-section">
+---
+import SpotlightSurface from './bits/SpotlightSurface.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Brief & quote',
+    text: 'Share the property, location and service requirement. We confirm scope, cost and timing.'
+  },
+  {
+    number: '02',
+    title: 'Site visit',
+    text: 'An assessor attends at the agreed time and gathers the information needed efficiently.'
+  },
+  {
+    number: '03',
+    title: 'Assessment',
+    text: 'We complete the required calculations, review and certificate lodgement where applicable.'
+  },
+  {
+    number: '04',
+    title: 'Report & next steps',
+    text: 'You receive clear outputs with practical actions and support on what happens next.'
+  }
+];
+---
+
+<section class="section ses-process">
   <div class="container">
-    <div class="process-heading" data-reveal>
+    <div class="ses-process-heading" data-reveal>
       <div>
         <p class="eyebrow">How it works</p>
-        <h2 class="section-title">From enquiry to final report, without the usual friction.</h2>
+        <h2 class="section-title">A clear route from enquiry to final report.</h2>
       </div>
       <p class="lead">
-        A simple four-stage process keeps scope, timing and next steps clear from the start.
+        Four straightforward stages keep scope, timing and responsibilities clear from the start.
       </p>
     </div>
 
-    <div class="process-track" data-reveal>
-      <article class="process-step">
-        <span class="process-number">01</span>
-        <h3>Brief & quote</h3>
-        <p>Share the property, location and service requirement. We confirm scope, cost and timing.</p>
-      </article>
+    <div class="ses-process-track" data-reveal>
+      <div class="ses-process-line" aria-hidden="true"></div>
 
-      <article class="process-step">
-        <span class="process-number">02</span>
-        <h3>Site visit</h3>
-        <p>An assessor attends at the agreed time and gathers the information needed efficiently.</p>
-      </article>
-
-      <article class="process-step">
-        <span class="process-number">03</span>
-        <h3>Assessment</h3>
-        <p>We complete the required calculations, review and certificate lodgement where applicable.</p>
-      </article>
-
-      <article class="process-step">
-        <span class="process-number">04</span>
-        <h3>Report & next steps</h3>
-        <p>You receive clear outputs with practical actions and support on what happens next.</p>
-      </article>
+      {steps.map((step) => (
+        <SpotlightSurface class="ses-process-step" spotlightColor="rgba(76, 184, 229, 0.13)">
+          <span class="ses-process-node" aria-hidden="true"></span>
+          <span class="ses-process-number">{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </SpotlightSurface>
+      ))}
     </div>
   </div>
 </section>
 
-<style>
-  .process-section {
+<style is:global>
+  .ses-process {
     background: #fff;
   }
 
-  .process-heading {
+  .ses-process-heading {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr);
     gap: clamp(2rem, 5vw, 5rem);
@@ -51,122 +65,125 @@
     margin-bottom: 2rem;
   }
 
-  .process-heading .section-title {
-    max-width: 18ch;
+  .ses-process-heading .section-title {
+    max-width: 17ch;
     margin-bottom: 0;
   }
 
-  .process-heading .lead {
+  .ses-process-heading .lead {
     margin: 0;
-    max-width: 40ch;
+    max-width: 42ch;
   }
 
-  .process-track {
+  .ses-process-track {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-top: 1px solid #ccd8e3;
-    border-bottom: 1px solid #ccd8e3;
+    gap: .8rem;
+    padding-top: 1.4rem;
   }
 
-  .process-step {
-    position: relative;
-    min-height: 250px;
-    padding: 1.65rem 1.45rem 1.8rem 0;
+  .ses-process-line {
+    position: absolute;
+    top: 1.75rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, #b9d9e9, #d5e1ea);
   }
 
-  .process-step + .process-step {
-    padding-left: 1.45rem;
-    border-left: 1px solid #dbe4ec;
+  .ses-process-step {
+    min-height: 255px;
+    padding: 2.25rem 1.25rem 1.35rem;
+    border: 1px solid #d8e2eb;
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,250,253,.98));
+    box-shadow: 0 8px 26px rgba(17,39,61,.045);
+    transition:
+      transform .25s ease,
+      border-color .25s ease,
+      box-shadow .25s ease;
   }
 
-  .process-number {
-    display: inline-block;
-    margin-bottom: 2.2rem;
+  .ses-process-step:hover {
+    transform: translateY(-4px);
+    border-color: #b7cedd;
+    box-shadow: 0 16px 38px rgba(17,39,61,.085);
+  }
+
+  .ses-process-node {
+    position: absolute;
+    top: .98rem;
+    left: 1.2rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 0 6px #fff;
+  }
+
+  .ses-process-number {
+    display: block;
+    margin-bottom: 1.5rem;
     color: var(--brand);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: .78rem;
-    font-weight: 700;
+    font-size: .74rem;
+    font-weight: 800;
   }
 
-  .process-step h3 {
+  .ses-process-step h3 {
     margin: 0 0 .65rem;
     color: var(--text-strong);
-    font-size: 1.14rem;
+    font-size: 1.12rem;
+    line-height: 1.3;
   }
 
-  .process-step p {
+  .ses-process-step p {
     margin: 0;
     color: var(--muted);
-    font-size: .94rem;
+    font-size: .92rem;
     line-height: 1.55;
   }
 
-  .process-step::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 0;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--brand);
-    box-shadow: 0 0 0 5px #fff;
-  }
-
-  .process-step + .process-step::before {
-    left: 1.45rem;
-  }
-
-  @media (max-width: 900px) {
-    .process-heading {
+  @media (max-width: 960px) {
+    .ses-process-heading {
       grid-template-columns: 1fr;
       gap: .8rem;
     }
 
-    .process-track {
+    .ses-process-track {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .process-step:nth-child(3) {
-      border-left: 0;
-      border-top: 1px solid #dbe4ec;
-      padding-left: 0;
+    .ses-process-line {
+      display: none;
     }
 
-    .process-step:nth-child(4) {
-      border-top: 1px solid #dbe4ec;
-    }
-
-    .process-step:nth-child(3)::before {
-      left: 0;
+    .ses-process-step {
+      min-height: 220px;
     }
   }
 
   @media (max-width: 640px) {
-    .process-track {
+    .ses-process-track {
       grid-template-columns: 1fr;
-      border-bottom: 0;
+      gap: .7rem;
+      padding-top: 0;
     }
 
-    .process-step,
-    .process-step + .process-step,
-    .process-step:nth-child(3) {
+    .ses-process-step {
       min-height: 0;
-      padding: 1.35rem 0 1.35rem 2.6rem;
-      border-left: 0;
-      border-top: 0;
-      border-bottom: 1px solid #dbe4ec;
+      padding: 1.25rem 1.1rem 1.15rem 3.2rem;
     }
 
-    .process-number {
-      margin-bottom: .35rem;
+    .ses-process-node {
+      top: 1.45rem;
+      left: 1rem;
     }
 
-    .process-step::before,
-    .process-step + .process-step::before,
-    .process-step:nth-child(3)::before {
-      top: 1.7rem;
-      left: .3rem;
+    .ses-process-number {
+      margin-bottom: .45rem;
     }
   }
 </style>
