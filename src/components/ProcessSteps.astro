@@ -1,18 +1,172 @@
-<section class="section surface-band">
+<section class="section process-section">
   <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">Simple Process</p>
-      <h2 class="section-title">A clear, managed workflow from first contact to final report.</h2>
+    <div class="process-heading" data-reveal>
+      <div>
+        <p class="eyebrow">How it works</p>
+        <h2 class="section-title">From enquiry to final report, without the usual friction.</h2>
+      </div>
+      <p class="lead">
+        A simple four-stage process keeps scope, timing and next steps clear from the start.
+      </p>
     </div>
-    <div class="grid grid-2 process-grid">
-      <article class="card" data-reveal><h3>1. Brief & quote</h3><p>Share your property type, location, and service need. We return a clear scope, cost, and timeframe.</p></article>
-      <article class="card" data-reveal><h3>2. Site visit</h3><p>An assessor attends at the agreed time and gathers required information efficiently with minimal disruption.</p></article>
-      <article class="card" data-reveal><h3>3. Assessment & lodgement</h3><p>We complete calculations, risk review, and certificate lodgement where required by the relevant scheme.</p></article>
-      <article class="card" data-reveal><h3>4. Report & next steps</h3><p>You receive a clear report with recommended actions to maintain compliance and support planning decisions.</p></article>
+
+    <div class="process-track" data-reveal>
+      <article class="process-step">
+        <span class="process-number">01</span>
+        <h3>Brief & quote</h3>
+        <p>Share the property, location and service requirement. We confirm scope, cost and timing.</p>
+      </article>
+
+      <article class="process-step">
+        <span class="process-number">02</span>
+        <h3>Site visit</h3>
+        <p>An assessor attends at the agreed time and gathers the information needed efficiently.</p>
+      </article>
+
+      <article class="process-step">
+        <span class="process-number">03</span>
+        <h3>Assessment</h3>
+        <p>We complete the required calculations, review and certificate lodgement where applicable.</p>
+      </article>
+
+      <article class="process-step">
+        <span class="process-number">04</span>
+        <h3>Report & next steps</h3>
+        <p>You receive clear outputs with practical actions and support on what happens next.</p>
+      </article>
     </div>
   </div>
 </section>
 
 <style>
-  .process-grid .card { border-left: 4px solid var(--brand-soft); }
+  .process-section {
+    background: #fff;
+  }
+
+  .process-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .process-heading .section-title {
+    max-width: 18ch;
+    margin-bottom: 0;
+  }
+
+  .process-heading .lead {
+    margin: 0;
+    max-width: 40ch;
+  }
+
+  .process-track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid #ccd8e3;
+    border-bottom: 1px solid #ccd8e3;
+  }
+
+  .process-step {
+    position: relative;
+    min-height: 250px;
+    padding: 1.65rem 1.45rem 1.8rem 0;
+  }
+
+  .process-step + .process-step {
+    padding-left: 1.45rem;
+    border-left: 1px solid #dbe4ec;
+  }
+
+  .process-number {
+    display: inline-block;
+    margin-bottom: 2.2rem;
+    color: var(--brand);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .78rem;
+    font-weight: 700;
+  }
+
+  .process-step h3 {
+    margin: 0 0 .65rem;
+    color: var(--text-strong);
+    font-size: 1.14rem;
+  }
+
+  .process-step p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .94rem;
+    line-height: 1.55;
+  }
+
+  .process-step::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 0 5px #fff;
+  }
+
+  .process-step + .process-step::before {
+    left: 1.45rem;
+  }
+
+  @media (max-width: 900px) {
+    .process-heading {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .process-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .process-step:nth-child(3) {
+      border-left: 0;
+      border-top: 1px solid #dbe4ec;
+      padding-left: 0;
+    }
+
+    .process-step:nth-child(4) {
+      border-top: 1px solid #dbe4ec;
+    }
+
+    .process-step:nth-child(3)::before {
+      left: 0;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .process-track {
+      grid-template-columns: 1fr;
+      border-bottom: 0;
+    }
+
+    .process-step,
+    .process-step + .process-step,
+    .process-step:nth-child(3) {
+      min-height: 0;
+      padding: 1.35rem 0 1.35rem 2.6rem;
+      border-left: 0;
+      border-top: 0;
+      border-bottom: 1px solid #dbe4ec;
+    }
+
+    .process-number {
+      margin-bottom: .35rem;
+    }
+
+    .process-step::before,
+    .process-step + .process-step::before,
+    .process-step:nth-child(3)::before {
+      top: 1.7rem;
+      left: .3rem;
+    }
+  }
 </style>
