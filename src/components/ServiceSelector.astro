@@ -1,0 +1,188 @@
+---
+const options = [
+  {
+    prompt: 'Selling or leasing a commercial property?',
+    service: 'Commercial EPC',
+    href: '/commercial-epc-glasgow-scotland'
+  },
+  {
+    prompt: 'Working on a new domestic development?',
+    service: 'SAP calculations',
+    href: '/sap-calculations-scotland'
+  },
+  {
+    prompt: 'Working on a non-domestic new build or conversion?',
+    service: 'SBEM / BRUKL',
+    href: '/sbem-calculations-scotland'
+  },
+  {
+    prompt: 'Managing shared residential or commercial premises?',
+    service: 'Fire Risk Assessment',
+    href: '/fire-risk-assessments-scotland'
+  },
+  {
+    prompt: 'Selling or leasing a qualifying non-domestic building in Scotland?',
+    service: 'Section 63 assessment',
+    href: '/section-63-assessments-scotland'
+  }
+];
+---
+
+<section class="section selector-section">
+  <div class="container selector-layout">
+    <div class="selector-copy" data-reveal>
+      <p class="eyebrow">Find the right service</p>
+      <h2 class="section-title">Not sure what you need?</h2>
+      <p class="lead">
+        Start with what you are trying to do. We will point you towards the most likely assessment
+        or calculation and confirm the exact scope before instruction.
+      </p>
+      <a href="/quote" class="selector-contact">Still unsure? Ask us directly <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="selector-list" data-reveal>
+      {options.map((option, index) => (
+        <a class="selector-row" href={option.href}>
+          <span class="selector-number">{String(index + 1).padStart(2, '0')}</span>
+          <span class="selector-question">{option.prompt}</span>
+          <strong>{option.service}</strong>
+          <span class="selector-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .selector-section {
+    background: #f6f9fc;
+    border-top: 1px solid #e2e8ef;
+    border-bottom: 1px solid #e2e8ef;
+  }
+
+  .selector-layout {
+    display: grid;
+    grid-template-columns: minmax(0, .78fr) minmax(480px, 1.22fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .selector-copy {
+    position: sticky;
+    top: 7rem;
+  }
+
+  .selector-copy .section-title {
+    max-width: 9ch;
+  }
+
+  .selector-copy .lead {
+    max-width: 46ch;
+  }
+
+  .selector-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    margin-top: .55rem;
+    color: var(--brand-strong);
+    font-weight: 700;
+  }
+
+  .selector-contact span,
+  .selector-arrow {
+    transition: transform .2s ease;
+  }
+
+  .selector-contact:hover span {
+    transform: translateX(4px);
+  }
+
+  .selector-list {
+    border-top: 1px solid #cbd7e3;
+  }
+
+  .selector-row {
+    display: grid;
+    grid-template-columns: 2.6rem minmax(0, 1fr) minmax(160px, auto) 1.5rem;
+    gap: 1rem;
+    align-items: center;
+    min-height: 92px;
+    padding: 1.05rem .35rem;
+    border-bottom: 1px solid #cbd7e3;
+    transition: background-color .2s ease, padding .2s ease;
+  }
+
+  .selector-row:hover {
+    background: #ffffff;
+    padding-inline: 1rem;
+  }
+
+  .selector-number {
+    color: var(--brand);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    font-weight: 700;
+  }
+
+  .selector-question {
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .selector-row strong {
+    color: var(--text-strong);
+    font-size: 1rem;
+    text-align: right;
+  }
+
+  .selector-arrow {
+    color: var(--brand);
+    font-size: 1.25rem;
+    justify-self: end;
+  }
+
+  .selector-row:hover .selector-arrow {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 900px) {
+    .selector-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .selector-copy {
+      position: static;
+    }
+
+    .selector-copy .section-title {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .selector-row {
+      grid-template-columns: 2.2rem 1fr 1.3rem;
+      gap: .7rem;
+      min-height: 0;
+      padding: 1rem 0;
+    }
+
+    .selector-question {
+      grid-column: 2 / 3;
+      font-size: .9rem;
+    }
+
+    .selector-row strong {
+      grid-column: 2 / 3;
+      text-align: left;
+      margin-top: -.35rem;
+    }
+
+    .selector-arrow {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+  }
+</style>
