@@ -1,0 +1,110 @@
+---
+import AccordionGallery from './AccordionGallery/AccordionGallery.jsx';
+
+const items = [
+  {
+    image: 'https://picsum.photos/id/1015/900/1200',
+    label: 'University estate programme',
+    link: '#projects'
+  },
+  {
+    image: 'https://picsum.photos/id/1018/900/1200',
+    label: 'Commercial property portfolio',
+    link: '#projects'
+  },
+  {
+    image: 'https://picsum.photos/id/1039/900/1200',
+    label: 'Building performance modelling',
+    link: '#projects'
+  },
+  {
+    image: 'https://picsum.photos/id/1043/900/1200',
+    label: 'Public sector estate',
+    link: '#projects'
+  },
+  {
+    image: 'https://picsum.photos/id/1044/900/1200',
+    label: 'Multi-site compliance programme',
+    link: '#projects'
+  }
+];
+---
+
+<section id="projects" class="section projects-showcase">
+  <div class="container">
+    <div class="projects-heading">
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 class="section-title">Projects that show the scale of what we do.</h2>
+      </div>
+      <p class="lead">
+        A snapshot of larger commissions, technical modelling and multi-site work.
+        These images are temporary while we prepare the real project photography and DesignBuilder visuals.
+      </p>
+    </div>
+
+    <div class="projects-gallery-shell">
+      <AccordionGallery
+        client:load
+        items={items}
+        defaultIndex={2}
+        expandRatio={0.52}
+        trigger="hover"
+      />
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .projects-showcase {
+    background: #0d1d2d;
+    color: #fff;
+    padding-block: clamp(3.25rem, 6vw, 5.5rem);
+  }
+
+  .projects-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .projects-heading .eyebrow {
+    color: #74c8ef;
+  }
+
+  .projects-heading .section-title {
+    max-width: 15ch;
+    margin-bottom: 0;
+    color: #fff;
+  }
+
+  .projects-heading .lead {
+    margin: 0;
+    max-width: 46ch;
+    color: #bccbd7;
+  }
+
+  .projects-gallery-shell {
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    padding-top: 1.4rem;
+  }
+
+  .projects-gallery-shell .accordion-gallery {
+    --ag-accent: #74c8ef;
+    --ag-overlay: #07121d;
+    --ag-text: #ffffff;
+  }
+
+  @media (max-width: 900px) {
+    .projects-heading {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .projects-heading .section-title {
+      max-width: 18ch;
+    }
+  }
+</style>
