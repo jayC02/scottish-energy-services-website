@@ -1,0 +1,70 @@
+---
+const {
+  class: className = '',
+  spotlightColor = 'rgba(95, 190, 232, 0.20)'
+} = Astro.props;
+---
+
+<div
+  class={`rb-spotlight ${className}`}
+  data-rb-spotlight
+  style={`--rb-spotlight-color: ${spotlightColor};`}
+>
+  <slot />
+</div>
+
+<script>
+  const initSpotlights = () => {
+    document.querySelectorAll('[data-rb-spotlight]').forEach((card) => {
+      if (card.dataset.rbSpotlightReady === 'true') return;
+      card.dataset.rbSpotlightReady = 'true';
+
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--rb-mouse-x', `${event.clientX - rect.left}px`);
+        card.style.setProperty('--rb-mouse-y', `${event.clientY - rect.top}px`);
+      });
+    });
+  };
+
+  initSpotlights();
+  document.addEventListener('astro:page-load', initSpotlights);
+</script>
+
+<style is:global>
+  .rb-spotlight {
+    --rb-mouse-x: 50%;
+    --rb-mouse-y: 50%;
+    --rb-spotlight-color: rgba(95, 190, 232, 0.20);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .rb-spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(
+        circle at var(--rb-mouse-x) var(--rb-mouse-y),
+        var(--rb-spotlight-color),
+        transparent 72%
+      );
+    transition: opacity .35s ease;
+  }
+
+  .rb-spotlight:hover::before,
+  .rb-spotlight:focus-within::before {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rb-spotlight::before {
+      display: none;
+    }
+  }
+</style>
