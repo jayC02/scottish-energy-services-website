@@ -1,16 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/home-sections.css';
 import Hero from '../components/Hero.astro';
-import TrustStrip from '../components/TrustStrip.astro';
-import ClientLogoCarousel from '../components/ClientLogoCarousel.astro';
 import ServiceCards from '../components/ServiceCards.astro';
+import ProjectsShowcase from '../components/ProjectsShowcase.astro';
+import ClientLogoCarousel from '../components/ClientLogoCarousel.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
-import ServiceSelector from '../components/ServiceSelector.astro';
-import ProcessSteps from '../components/ProcessSteps.astro';
-import CoverageMap from '../components/CoverageMap.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
-import CTASection from '../components/CTASection.astro';
 ---
 
 <BaseLayout
@@ -18,24 +13,14 @@ import CTASection from '../components/CTASection.astro';
   description="Scottish Energy Services provides practical energy, compliance and fire safety support across Scotland and the UK."
 >
   <Hero />
-  <ClientLogoCarousel />
-  <TrustStrip />
 
   <ServiceCards preview={true} />
 
+  <ProjectsShowcase />
+
+  <ClientLogoCarousel />
+
   <WhyChooseUs />
 
-  <ServiceSelector />
-
-  <ProcessSteps />
-
-  <CoverageMap />
-
   <FAQAccordion limit={6} />
-
-  <CTASection
-    title="Ready to scope your requirement?"
-    text="Share your building type, project stage and target date. We will confirm the right service, scope and available delivery window."
-    button="Request a quote"
-  />
 </BaseLayout>
