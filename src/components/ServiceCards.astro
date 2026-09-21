@@ -1,135 +1,90 @@
 ---
-import { services } from "../data/services";
-const primary = [
-  "commercial-epcs",
-  "sbem-calculations",
-  "saps",
-  "section-63-assessments",
-  "fras",
-  "dynamic-simulation-modelling-dsm",
-].map((slug) => services.find((s) => s.slug === slug)!);
-const extra = services.filter(
-  (s) => !primary.includes(s) && s.slug !== "domestic-epcs-and-legionellas",
-);
+import { services } from '../data/services';
+const preview = Astro.props.preview ?? false;
+const list = preview ? services : services;
 ---
-
-<section class="section" id="services">
+<section class="section service-band">
   <div class="container">
-    <p class="eyebrow">Our expertise</p>
-    <div class="section-heading wide">
-      <h2>Clarity for every stage of your building.</h2>
-      <p class="lead">
-        From a property transaction to a new development. The right assessment,
-        a clear scope and reporting your team can use.
-      </p>
+    <div class="section-heading">
+      <p class="eyebrow">Core Services</p>
+      <h2 class="section-title">Nine specialist services delivered with technical discipline and clear communication.</h2>
+      <p class="lead">From one-off assessments to portfolio instruction programmes, every service is structured for practical delivery, dependable compliance, and commercially useful reporting.</p>
     </div>
     <div class="service-grid">
-      {primary.map((s, i) => (
-        <a
-          href={`/services/${s.slug}`}
-          class="service-item"
-          data-track="service_cta_clicked"
-          data-service={s.slug}
-        >
-          <span class="number">0{i + 1}</span>
-          <h3>{s.title}</h3>
-          <p>{s.short}</p>
-          <span class="service-arrow" aria-hidden="true">
-            ↗
-          </span>
-        </a>
-      ))}
-    </div>
-    <div class="supplementary">
-      <p class="eyebrow">Further specialist services</p>
-      {extra.map((s) => (
-        <a
-          class="text-link"
-          href={`/services/${s.slug}`}
-          data-track="service_cta_clicked"
-          data-service={s.slug}
-        >
-          {s.title} ↗
-        </a>
+      {list.map((service, index) => (
+        <article class="card service-card" data-reveal style={`--index:${index};`}>
+          <p class="service-index">{String(index + 1).padStart(2, '0')}</p>
+          <h3>{service.title}</h3>
+          <p class="service-description">{service.short}</p>
+          <ul class="service-highlights">
+            {service.highlights.slice(0, 2).map((item) => <li>{item}</li>)}
+          </ul>
+          <a href={`/services/${service.slug}`} class="service-link">View service <span aria-hidden="true">→</span></a>
+        </article>
       ))}
     </div>
   </div>
 </section>
+
 <style>
+  .service-band { position: relative; }
   .service-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid var(--border);
-  }
-  .service-item {
-    padding: 2rem 2.5rem 2rem 0;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    display: block;
-  }
-  .service-item:not(:nth-child(3n + 1)) {
-    padding-left: 2rem;
-    border-left: 1px solid var(--border);
-  }
-  .service-item h3 {
-    font-size: 1.5rem;
-    margin: 1.5rem 0 0.8rem;
-    max-width: 23ch;
-  }
-  .service-item p {
-    font-size: 0.88rem;
-    color: var(--muted);
-    max-width: 31ch;
-    margin-bottom: 1.3rem;
-  }
-  .service-item:hover h3 {
-    color: var(--brand);
-  }
-  .service-arrow {
-    font-size: 1.5rem;
-    color: var(--brand);
-  }
-  .supplementary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1.4rem;
     margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.1rem;
   }
-  .supplementary .eyebrow {
-    width: 100%;
+  .service-card {
+    grid-column: span 4;
+    display: grid;
+    gap: .82rem;
+    padding: 1.55rem;
+    min-height: 286px;
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .3s ease;
+    background: linear-gradient(170deg, rgba(255,255,255,.98), rgba(246,251,255,.94));
+    border-color: #d5e0eb;
+    position: relative;
+  }
+  .service-card:hover { transform: translateY(-5px); border-color: #b7cde0; box-shadow: var(--shadow); }
+  .service-index {
     margin: 0;
+    color: color-mix(in oklab, var(--brand) 75%, white);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-weight: 700;
+    letter-spacing: .03em;
+    font-size: .8rem;
   }
-  .supplementary a {
-    font-size: 0.8rem;
+  h3 { margin: 0; color: var(--text-strong); font-size: 1.17rem; line-height: 1.3; }
+  .service-description { color: var(--muted); margin: 0; }
+  .service-highlights {
+    margin: .15rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: .34rem;
   }
-  @media (max-width: 760px) {
-    .service-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-    .service-item,
-    .service-item:not(:nth-child(3n + 1)) {
-      padding: 1.5rem 1rem 1.5rem 0;
-      border-left: 0;
-    }
-    .service-item:nth-child(even) {
-      padding-left: 1rem;
-      border-left: 1px solid var(--border);
-    }
-    .service-item h3 {
-      font-size: 1.2rem;
-    }
-    .service-item p {
-      font-size: 0.8rem;
-    }
+  .service-highlights li {
+    color: #52657a;
+    font-size: .9rem;
+    padding-left: 1rem;
+    position: relative;
   }
-  @media (max-width: 380px) {
-    .service-grid {
-      grid-template-columns: 1fr;
-    }
-    .service-item:nth-child(even) {
-      padding-left: 0;
-      border-left: 0;
-    }
+  .service-highlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: .48rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--brand) 70%, white);
+  }
+  .service-link { color: var(--brand-strong); font-weight: 600; margin-top: auto; }
+
+  @media (max-width: 1080px) {
+    .service-card { grid-column: span 6; min-height: 270px; }
+  }
+  @media (max-width: 700px) {
+    .service-card { grid-column: 1 / -1; min-height: unset; }
   }
 </style>

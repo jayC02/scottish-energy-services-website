@@ -1,105 +1,26 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ClientLogoCarousel from "../components/ClientLogoCarousel.astro";
-import WhyChooseUs from "../components/WhyChooseUs.astro";
-import CTASection from "../components/CTASection.astro";
-import Sectors from "../components/Sectors.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
 ---
-
-<BaseLayout
-  title="About Our Energy & Compliance Consultancy"
-  description="Glasgow-based Scottish Energy Services supports property owners, architects, developers and estates teams with energy assessments and building compliance across the UK."
->
-  <section class="page-intro">
-    <div class="container">
-      <p class="eyebrow">About Scottish Energy Services</p>
-      <h1>
-        Understanding buildings.
-        <br />
-        Supporting the people behind them.
-      </h1>
-      <p class="lead">
-        We are a Glasgow-based energy and building compliance consultancy
-        working with property owners, design teams and estates managers across
-        the UK.
-      </p>
-    </div>
-  </section>
+<BaseLayout title="About" description="Learn about Scottish Energy Services and our practical approach to compliance assessments delivered across the UK.">
   <section class="section">
     <div class="container grid grid-2">
-      <img
-        src="/images/architecture-960.webp"
-        alt="The River Clyde and Glasgow waterfront, the city where SES is based"
-        width="960"
-        height="540"
-      />
-      <div>
-        <p class="eyebrow">Our practice</p>
-        <h2>From an individual assessment to an ongoing programme.</h2>
-        <p>
-          Our work brings together energy certification, design-stage
-          calculations, building performance modelling and property risk
-          assessments. We help clients establish the right scope and organise
-          the information needed to move an instruction forward.
-        </p>
-        <p>
-          For a building owner, that might mean preparing for a transaction. For
-          an architect, it might mean testing a specification. For an estates
-          team, it might mean coordinating assessments across several occupied
-          sites.
-        </p>
-        <!-- OWNER TODO: Add verified company history, founding date and experience milestones. -->
+      <div data-reveal>
+        <h1 class="section-title">About Scottish Energy Services</h1>
+        <p class="lead">We deliver technical compliance and building performance services with a straightforward commercial approach.</p>
+        <p>Based in Glasgow, we support clients throughout the UK, including landlords, developers, design teams, managing agents, and public sector estates teams. Our role is to keep projects moving with accurate assessments, clear reporting, and dependable communication from instruction to issue.</p>
+        <p>Whether the requirement is a one-off certificate or a phased multi-site programme, we focus on practical delivery standards and outputs that are actually useful to the people managing the property.</p>
       </div>
-    </div>
-  </section>
-  <WhyChooseUs />
-  <section class="section surface-band">
-    <div class="container grid grid-2">
-      <div>
-        <p class="eyebrow">People & technical capability</p>
-        <h2>The right assessment starts with the right scope.</h2>
-        <p class="lead">
-          Accredited assessments, technical modelling and clear reporting for
-          residential and non-domestic buildings.
-        </p>
-      </div>
-      <div>
-        <h3>Discuss your assessor requirements</h3>
-        <p>
-          Tell us about your building and any qualification or procurement
-          requirements. We can discuss the appropriate assessment approach
-          before instruction.
-        </p>
-        <!-- OWNER TODO: Add assessor names, biographies, approved headshots and current accreditation details. Level 5 claim withheld pending evidence. -->
-        <ul class="rule-list">
-          <li>Commercial and domestic energy assessments</li>
-          <li>SAP, SBEM and dynamic simulation modelling</li>
-          <li>Section 63 and building compliance reporting</li>
-          <li>Fire and water safety risk assessments</li>
+      <div class="card" data-reveal>
+        <h2>How we work</h2>
+        <ul>
+          <li>Clear scope and fee proposal before instruction</li>
+          <li>Planned survey and modelling workflow with realistic dates</li>
+          <li>Reports written for action, not just compliance filing</li>
+          <li>Consistent support for repeat instructions and portfolios</li>
         </ul>
       </div>
     </div>
   </section>
-  <Sectors />
-  <ClientLogoCarousel all />
-  <section class="section">
-    <div class="container grid grid-2">
-      <h2>
-        Based in Glasgow.
-        <br />
-        Working across the UK.
-      </h2>
-      <div>
-        <p>
-          We coordinate surveys and technical work across Scotland, England,
-          Wales and Northern Ireland, subject to the service and project
-          requirements.
-        </p>
-        <a href="/areas" class="text-link">
-          Explore our coverage ↗
-        </a>
-      </div>
-    </div>
-  </section>
-  <CTASection />
+  <CTASection title="Need a reliable technical partner?" text="Call 0141 255 1360 or email info@scottishenergyservices.co.uk and we will confirm scope and availability." button="Contact us" />
 </BaseLayout>

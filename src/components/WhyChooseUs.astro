@@ -1,59 +1,14 @@
 <section class="section">
-  <div class="container grid grid-2">
-    <div>
-      <p class="eyebrow">Why Scottish Energy Services</p>
-      <h2>
-        Technical detail.
-        <br />
-        Straightforward advice.
-      </h2>
-      <p class="lead">
-        You need to know what is required, what it will cost and when it will be
-        ready. We make those decisions easier.
-      </p>
-      <a class="text-link" href="/about">
-        Get to know SES ↗
-      </a>
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Why choose us</p>
+      <h2 class="section-title">A practical delivery partner for compliance-led projects.</h2>
     </div>
-    <div class="reasons">
-      {[
-        [
-          "A clear scope before you commit",
-          "Understand the assessment, information required, fee and expected reporting date before instruction.",
-        ],
-        [
-          "Advice your project team can use",
-          "Clear explanations of findings and practical next steps for owners, agents and design teams.",
-        ],
-        [
-          "Support that fits your portfolio",
-          "Coordinate a single building or plan a programme across multiple sites.",
-        ],
-        [
-          "Survey and modelling expertise together",
-          "Bring energy assessment, building performance and compliance requirements into one conversation.",
-        ],
-      ].map(([title, text]) => (
-        <article>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </article>
-      ))}
+    <div class="grid grid-2">
+      <article class="card" data-reveal><h3>Clear scope before instruction</h3><p>Know what is included, what information is needed, and when to expect your report.</p></article>
+      <article class="card" data-reveal><h3>Practical reports</h3><p>Outputs are written for real decisions and implementation, not just technical filing.</p></article>
+      <article class="card" data-reveal><h3>Responsive coordination</h3><p>Suitable for landlords, agents, architects, developers and wider project teams.</p></article>
+      <article class="card" data-reveal><h3>Scotland-based, UK-wide support</h3><p>Glasgow office with wider UK project delivery where service scope allows.</p></article>
     </div>
   </div>
 </section>
-<style>
-  .reasons article {
-    border-top: 1px solid var(--border);
-    padding: 1.4rem 0;
-  }
-  .reasons h3 {
-    font-size: 1.2rem;
-    margin: 0 0 0.7rem;
-  }
-  .reasons p {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin: 0;
-  }
-</style>

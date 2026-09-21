@@ -1,70 +1,18 @@
----
-const steps = [
-  [
-    "Send project details",
-    "Share the address, drawings or existing EPC, together with your target date.",
-  ],
-  [
-    "Confirm scope & fee",
-    "We confirm the assessment, information needed, fee and delivery programme.",
-  ],
-  [
-    "Survey / modelling",
-    "We arrange access or work from the agreed drawings and specifications.",
-  ],
-  [
-    "Report & compliance",
-    "Receive the agreed reports, certificates and clear advice on next steps.",
-  ],
-];
----
-
 <section class="section surface-band">
   <div class="container">
-    <p class="eyebrow">How it works</p>
-    <h2>From first enquiry to final report.</h2>
-    <ol class="process">
-      {steps.map(([title, text], i) => (
-        <li>
-          <span class="number">0{i + 1}</span>
-          <h3>{title}</h3>
-          <p>{text}</p>
-        </li>
-      ))}
-    </ol>
+    <div class="section-heading">
+      <p class="eyebrow">Simple Process</p>
+      <h2 class="section-title">A clear, managed workflow from first contact to final report.</h2>
+    </div>
+    <div class="grid grid-2 process-grid">
+      <article class="card" data-reveal><h3>1. Brief & quote</h3><p>Share your property type, location, and service need. We return a clear scope, cost, and timeframe.</p></article>
+      <article class="card" data-reveal><h3>2. Site visit</h3><p>An assessor attends at the agreed time and gathers required information efficiently with minimal disruption.</p></article>
+      <article class="card" data-reveal><h3>3. Assessment & lodgement</h3><p>We complete calculations, risk review, and certificate lodgement where required by the relevant scheme.</p></article>
+      <article class="card" data-reveal><h3>4. Report & next steps</h3><p>You receive a clear report with recommended actions to maintain compliance and support planning decisions.</p></article>
+    </div>
   </div>
 </section>
+
 <style>
-  .process {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    list-style: none;
-    gap: 2.5rem;
-    padding: 0;
-    margin: 3rem 0 0;
-  }
-  .process li {
-    border-top: 1px solid var(--border-strong);
-    padding-top: 1.3rem;
-  }
-  .process h3 {
-    font-size: 1.2rem;
-    margin: 1.6rem 0 1rem;
-  }
-  .process p {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin: 0;
-  }
-  @media (max-width: 760px) {
-    .process {
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-  }
-  @media (max-width: 400px) {
-    .process {
-      grid-template-columns: 1fr;
-    }
-  }
+  .process-grid .card { border-left: 4px solid var(--brand-soft); }
 </style>

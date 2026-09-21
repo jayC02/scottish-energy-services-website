@@ -1,230 +1,91 @@
 ---
-import { services } from "../data/services";
 interface Props {
-  formType: "contact" | "quote";
+  formType: 'contact' | 'quote';
   submitText?: string;
   reveal?: boolean;
-  selectedService?: string;
 }
-const {
-  formType,
-  submitText = "Send enquiry",
-  selectedService = "",
-} = Astro.props;
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
-const options = [...services.map((s) => s.title), "Not sure – please advise"];
-const fields = [
-  {
-    name: "postcode",
-    label: "Property postcode",
-    type: "text",
-    autocomplete: "postal-code",
-    required: true,
-  },
-  {
-    name: "floorArea",
-    label: "Approximate floor area, m² (optional)",
-    type: "number",
-    autocomplete: "off",
-    required: false,
-  },
-  {
-    name: "name",
-    label: "Name",
-    type: "text",
-    autocomplete: "name",
-    required: true,
-  },
-  {
-    name: "email",
-    label: "Email",
-    type: "email",
-    autocomplete: "email",
-    required: true,
-  },
-  {
-    name: "phone",
-    label: "Phone (optional)",
-    type: "tel",
-    autocomplete: "tel",
-    required: false,
-  },
-] as const;
----
 
-<form
-  class="form-shell form-grid"
-  data-ajax-form
-  name={formType}
-  method="post"
-  action="/api/forms"
->
+const { formType, submitText = 'Send enquiry', reveal = false } = Astro.props;
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+
+const serviceOptions = [
+  'Commercial EPCs',
+  'Domestic EPCs',
+  'Legionella Risk Assessments',
+  'SAPs',
+  'SBEM Calculations',
+  'Fire Risk Assessments (FRAs)',
+  'Section 63 Assessments',
+  'DECs',
+  'Overheating Assessments (TM59)',
+  'Dynamic Simulation Modelling (DSM)',
+  'Other'
+];
+---
+<form class="form-shell form-grid compact-form" data-reveal={reveal ? '' : undefined} data-ajax-form name={formType} method="post" action="/api/forms" novalidate>
   <input type="hidden" name="formType" value={formType} />
   <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
-  <p class="form-help">
-    Not sure what you need? Send what you have and we’ll advise.
-  </p>
+
   <div class="compact-grid">
-    <label class="full" for={`${formType}-service`}>
-      Service required
-      <select
-        id={`${formType}-service`}
-        name="service"
-        required
-        aria-describedby={`${formType}-service-error`}
-      >
+    <label>Name
+      <input required type="text" name="name" autocomplete="name" />
+      <span class="field-error" data-error-for="name" aria-live="polite"></span>
+    </label>
+
+    <label>Email
+      <input required type="email" name="email" autocomplete="email" />
+      <span class="field-error" data-error-for="email" aria-live="polite"></span>
+    </label>
+
+    <label>Phone number
+      <input required type="tel" name="phone" autocomplete="tel" />
+      <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+    </label>
+
+    <label>Service required
+      <select name="service" required>
         <option value="">Select a service</option>
-        {options.map((o) => (
-          <option value={o} selected={o === selectedService}>
-            {o}
-          </option>
-        ))}
+        {serviceOptions.map((option) => <option value={option}>{option}</option>)}
       </select>
-      <span
-        id={`${formType}-service-error`}
-        class="field-error"
-        data-error-for="service"
-      />
+      <span class="field-error" data-error-for="service" aria-live="polite"></span>
     </label>
-    {fields.slice(0, 2).map((f) => (
-      <label for={`${formType}-${f.name}`}>
-        {f.label}
-        <input
-          id={`${formType}-${f.name}`}
-          name={f.name}
-          type={f.type}
-          required={f.required}
-          autocomplete={f.autocomplete}
-          min={f.type === "number" ? "1" : undefined}
-          maxlength={f.name === "postcode" ? 12 : undefined}
-          aria-describedby={`${formType}-${f.name}-error`}
-        />
-        <span
-          id={`${formType}-${f.name}-error`}
-          class="field-error"
-          data-error-for={f.name}
-        />
-      </label>
-    ))}
-    <label>
-      Property type
-      <select name="propertyType">
-        <option value="">Select if known</option>
-        {[
-          "Office",
-          "Retail",
-          "Industrial / warehouse",
-          "Hospitality",
-          "Education / public building",
-          "Residential",
-          "Mixed use",
-          "Other",
-        ].map((o) => (
-          <option>{o}</option>
-        ))}
-      </select>
-    </label>
-    <label>
-      Required timeframe
-      <select name="timeframe">
-        <option value="">Select if known</option>
-        {[
-          "As soon as possible",
-          "Within 2 weeks",
-          "Within a month",
-          "Planning ahead",
-          "Date to be confirmed",
-        ].map((o) => (
-          <option>{o}</option>
-        ))}
-      </select>
-    </label>
-    {fields.slice(2).map((f) => (
-      <label for={`${formType}-${f.name}`}>
-        {f.label}
-        <input
-          id={`${formType}-${f.name}`}
-          name={f.name}
-          type={f.type}
-          required={f.required}
-          autocomplete={f.autocomplete}
-          maxlength="200"
-          aria-describedby={`${formType}-${f.name}-error`}
-        />
-        <span
-          id={`${formType}-${f.name}-error`}
-          class="field-error"
-          data-error-for={f.name}
-        />
-      </label>
-    ))}
-    <label class="full" for={`${formType}-message`}>
-      Additional information
-      <textarea
-        id={`${formType}-message`}
-        name="message"
-        required
-        minlength="12"
-        maxlength="8000"
-        rows="4"
-        aria-describedby={`${formType}-message-error`}
-        placeholder="Property address, project stage and anything else we should know."
-      ></textarea>
-      <span
-        id={`${formType}-message-error`}
-        class="field-error"
-        data-error-for="message"
-      />
+
+    <label class="full">Message / Project details
+      <textarea required name="message" rows="4"></textarea>
+      <span class="field-error" data-error-for="message" aria-live="polite"></span>
     </label>
   </div>
-  <p class="caption">
-    Have drawings or an existing EPC? Email them to{" "}
-    <a href="mailto:info@scottishenergyservices.co.uk">
-      info@scottishenergyservices.co.uk
-    </a>
-    .
-  </p>
+
   <label class="sr-only" aria-hidden="true">
-    Leave this blank
+    Leave this field blank
     <input type="text" name="website" tabindex="-1" autocomplete="off" />
   </label>
+
   <div class="captcha-wrap">
-    <div
-      data-turnstile-widget
-      data-sitekey={turnstileSiteKey}
-      data-theme="light"
-    />
+    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
     <input type="hidden" name="cf-turnstile-response" value="" />
-    <span
-      class="field-error"
-      data-error-for="turnstileToken"
-      aria-live="polite"
-    />
+    <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
   </div>
-  <noscript>
-    <p>
-      Please call <a href="tel:01412551360">0141 255 1360</a> or email us to
-      enquire. The spam-protected form needs JavaScript.
-    </p>
-  </noscript>
-  <div class="form-status" data-form-status role="status" tabindex="-1" />
-  <button type="submit" class="btn btn-primary" data-submit-text={submitText}>
-    {submitText} ↗
-  </button>
-  <p class="caption">
-    We use your details to respond to your enquiry.{" "}
-    <a href="/privacy">Read our privacy notice.</a>
-  </p>
+
+  <div class="form-status" data-form-status aria-live="polite"></div>
+  <button class="btn btn-primary" type="submit" data-submit-text={submitText} data-track="form_submit">{submitText}</button>
 </form>
+
 <style>
-  .form-help {
-    font-size: 0.95rem;
-    margin: 0 0 0.6rem;
+  .compact-form { gap: .6rem; padding: clamp(1rem, 1.9vw, 1.3rem); }
+  .compact-grid {
+    display: grid;
+    gap: .6rem .8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .form-shell .caption {
-    margin: 0;
-  }
-  .form-shell .btn {
-    justify-self: start;
+  .compact-form label { gap: .24rem; font-size: .9rem; }
+  .compact-form input,
+  .compact-form select,
+  .compact-form textarea { padding: .6rem .68rem; }
+  .compact-form textarea { min-height: 96px; }
+  .full { grid-column: 1 / -1; }
+
+  @media (max-width: 720px) {
+    .compact-grid { grid-template-columns: 1fr; }
   }
 </style>

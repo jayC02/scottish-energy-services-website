@@ -10,8 +10,3 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
-
-interface Window {
-  sesTrackEvent: (name: string, payload?: Record<string, unknown>) => void;
-  sesAnalyticsConsent: boolean;
-}

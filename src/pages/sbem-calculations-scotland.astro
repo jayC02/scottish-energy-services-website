@@ -1,18 +1,100 @@
 ---
-import LandingPage from "../components/LandingPage.astro";
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<LandingPage
-  slug={"sbem-calculations"}
-  title={"SBEM Calculations Scotland"}
-  heading={"SBEM Calculations in Scotland"}
-  description={
-    "SBEM calculations and BRUKL reporting for non-domestic projects, with clear design feedback and agreed completion-stage outputs."
-  }
-  intro={
-    "SBEM calculations and BRUKL reporting for non-domestic projects, with clear design feedback and agreed completion-stage outputs."
-  }
-  area={
-    "We work from drawings and specifications for projects across Scotland. Tell us the local authority, application stage and intended handover date so the reporting scope can be aligned with your Scottish project."
-  }
-/>
+<BaseLayout
+  title="SBEM Calculations Scotland"
+  description="SBEM calculations for commercial and non-domestic buildings across Scotland. Support for building warrant, energy compliance, EPCs and project design review."
+>
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">SBEM Calculations in Scotland</h1>
+      <p class="lead">
+        SBEM calculations for commercial and non-domestic buildings across Scotland. We support architects, developers, contractors, landlords and project teams with energy performance calculations for Building Standards, design review and completion-stage requirements.
+      </p>
+      <a class="btn btn-primary" href="/quote">Request SBEM calculations</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Who needs SBEM calculations?</h2>
+      <p>
+        SBEM calculations are used for many new-build, extended or altered non-domestic buildings. They help assess the energy performance of a building and are commonly required as part of the Building Standards process for commercial property projects in Scotland.
+      </p>
+      <p>
+        This service is typically used by architects, developers, commercial landlords, contractors, consultants and property teams working on offices, retail units, industrial premises, community buildings, hospitality spaces and other non-domestic projects.
+      </p>
+
+      <h2>What is included?</h2>
+      <p>
+        We review the building design, construction specification and services information, then prepare SBEM calculations to assess whether the proposed building meets the required energy performance standards. If changes are needed, we can provide practical feedback for the design team.
+      </p>
+      <ul>
+        <li>Design-stage SBEM calculations for non-domestic buildings</li>
+        <li>Review of drawings, layouts, elevations and building fabric details</li>
+        <li>Assessment of heating, cooling, lighting, ventilation and hot water systems</li>
+        <li>Energy performance feedback for Building Standards compliance</li>
+        <li>Support with completion-stage information where required</li>
+        <li>Clear reporting with practical recommendations if improvements are needed</li>
+      </ul>
+
+      <h2>When should SBEM be arranged?</h2>
+      <p>
+        SBEM calculations are best arranged during the design stage, before the main construction specification is fixed. Early review gives the project team time to adjust insulation, glazing, lighting, ventilation or heating systems if the initial design does not meet the required performance level.
+      </p>
+      <p>
+        SBEM can also be reviewed later in the project, but late-stage changes may be more disruptive and can affect programme, cost or specification.
+      </p>
+
+      <h2>Information we usually need</h2>
+      <ul>
+        <li>Floor plans, elevations and sections</li>
+        <li>Building use, zoning and occupancy details</li>
+        <li>Construction build-ups for walls, roof, floors and glazing</li>
+        <li>Heating, cooling, ventilation and hot water specifications</li>
+        <li>Lighting layouts or lighting efficiency information</li>
+        <li>Renewable technology details, if included</li>
+      </ul>
+
+      <h2>SBEM for commercial EPCs</h2>
+      <p>
+        SBEM is also used to support the energy assessment process for many non-domestic EPCs. If your project also requires a commercial EPC, we can confirm what information is needed and whether the SBEM work can support the wider compliance process.
+      </p>
+
+      <h2>FAQs</h2>
+
+      <h3>How quickly can SBEM calculations be arranged?</h3>
+      <p>
+        Timescales depend on the size and complexity of the building, the quality of the drawings and whether the services specification is complete. If you are working to a building warrant, completion or handover deadline, send the information as early as possible.
+      </p>
+
+      <h3>Can SBEM calculations be done before construction starts?</h3>
+      <p>
+        Yes. Design-stage SBEM calculations are often the best time to identify energy performance issues because the design can still be adjusted before work begins on site.
+      </p>
+
+      <h3>Do you cover all of Scotland?</h3>
+      <p>
+        Yes. We support SBEM calculation work for projects across Glasgow, Edinburgh, central Scotland and wider Scottish locations. Much of the work can be progressed remotely using drawings and specification information.
+      </p>
+
+      <p>
+        <a href="/commercial-epc-glasgow-scotland/">View commercial EPC services</a>
+      </p>
+      <p>
+        <a href="/services">Explore related services</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Send us your drawings for an SBEM quote</h2>
+      <p>
+        Share your drawings, building type, services specification and project stage, and we will confirm the scope, timescale and cost.
+      </p>
+      <a class="btn btn-primary" href="/quote">Get a quote</a>
+    </div>
+  </section>
+</BaseLayout>

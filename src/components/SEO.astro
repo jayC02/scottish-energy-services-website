@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from "../data/site";
+import { siteConfig } from '../data/site';
 
 interface Props {
   title: string;
@@ -7,31 +7,28 @@ interface Props {
   pathname?: string;
 }
 
-const { title, description, pathname = "/" } = Astro.props;
+const { title, description, pathname = '/' } = Astro.props;
 const canonical = new URL(pathname, Astro.site);
-const logoUrl = new URL("/images/ses-logo-icon.png", Astro.site).toString();
+const logoUrl = new URL('/images/ses-logo-icon.png', Astro.site).toString();
 const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "@id": new URL("/#organisation", Astro.site).toString(),
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
   name: siteConfig.name,
-  description:
-    "Energy assessments, building compliance and performance modelling across Scotland and the UK.",
+  description,
   telephone: siteConfig.phone,
   email: siteConfig.email,
-  areaServed: "United Kingdom",
+  areaServed: 'United Kingdom',
   address: {
-    "@type": "PostalAddress",
-    streetAddress: "272 Bath St",
-    addressLocality: "Glasgow",
-    postalCode: "G2 4JR",
-    addressCountry: "GB",
+    '@type': 'PostalAddress',
+    streetAddress: '272 Bath St',
+    addressLocality: 'Glasgow',
+    postalCode: 'G2 4JR',
+    addressCountry: 'GB'
   },
   url: Astro.site,
-  logo: logoUrl,
+  logo: logoUrl
 };
 ---
-
 <title>{title} | Scottish Energy Services</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical.toString()} />
@@ -40,27 +37,4 @@ const orgSchema = {
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonical.toString()} />
 <meta name="twitter:card" content="summary_large_image" />
-<script
-  type="application/ld+json"
-  is:inline
-  set:html={JSON.stringify(orgSchema).replaceAll("<", "\\u003c")}
-></script>
-<meta property="og:site_name" content={siteConfig.name} />
-<meta property="og:locale" content="en_GB" />
-<meta
-  property="og:image"
-  content={new URL("/images/architecture-1440.webp", Astro.site).href}
-/>
-<meta
-  property="og:image:alt"
-  content="The River Clyde and Glasgow waterfront"
-/>
-<meta name="twitter:title" content={`${title} | Scottish Energy Services`} />
-<meta name="twitter:description" content={description} />
-<meta
-  name="twitter:image"
-  content={new URL("/images/architecture-1440.webp", Astro.site).href}
-/>
-{pathname === "/404" || pathname === "/404/" ? (
-  <meta name="robots" content="noindex, follow" />
-) : null}
+<script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />

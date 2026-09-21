@@ -1,25 +1,15 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import ServiceCards from "../../components/ServiceCards.astro";
-import CTASection from "../../components/CTASection.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCards from '../../components/ServiceCards.astro';
+import CTASection from '../../components/CTASection.astro';
 ---
-
-<BaseLayout
-  title="Services"
-  description="Commercial EPCs, SAP, SBEM, fire risk assessments and specialist building modelling across Scotland and the UK."
->
+<BaseLayout title="Services" description="Explore nine premium technical compliance services delivered by Scottish Energy Services across the UK.">
   <section class="section">
     <div class="container" data-reveal>
-      <h1 class="section-title">Energy & building compliance services</h1>
-      <p class="lead">
-        Assessments and technical reporting for property transactions,
-        development projects and ongoing estate management.
-      </p>
+      <h1 class="section-title">Technical services portfolio</h1>
+      <p class="lead">Our nine-service structure supports transactions, development programmes, statutory obligations, and ongoing portfolio compliance across the UK.</p>
     </div>
   </section>
   <ServiceCards />
-  <CTASection
-    title="Need help selecting the right scope?"
-    text="Tell us where your project is now and what you need to evidence. We will advise the most efficient service path."
-  />
+  <CTASection title="Need help selecting the right scope?" text="Tell us where your project is now and what you need to evidence. We will advise the most efficient service path." />
 </BaseLayout>

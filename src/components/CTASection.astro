@@ -1,75 +1,25 @@
 ---
-import { siteConfig } from "../data/site";
-const {
-  title = "Have a project to discuss?",
-  text = "Send us the address, drawings or existing EPC and we’ll confirm what you need.",
-  button = "Request a quote",
-} = Astro.props;
+const { title = 'Need a dependable compliance partner?', text = 'Speak with our team for practical advice, transparent pricing, and quick scheduling.', button = 'Get in touch' } = Astro.props;
 ---
-
-<section class="closing section">
-  <div class="container closing-grid">
-    <div>
-      <p class="eyebrow">Let’s talk about your building</p>
+<section class="section">
+  <div class="container cta-wrap" data-reveal>
+    <div class="card cta">
+      <p class="eyebrow">Start a Conversation</p>
       <h2>{title}</h2>
       <p>{text}</p>
-    </div>
-    <div>
-      <a class="btn" href="/quote" data-track="primary_cta_clicked">
-        {button} <span aria-hidden="true">↗</span>
-      </a>
-      <a
-        class="closing-phone"
-        href={`tel:${siteConfig.phone.replaceAll(" ", "")}`}
-      >
-        {siteConfig.phone}
-      </a>
+      <a class="btn btn-primary" href="/quote">{button}</a>
     </div>
   </div>
 </section>
+
 <style>
-  .closing {
-    background: var(--text-strong);
-    color: #e5e9e1;
-  }
-  .closing-grid {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-    gap: 3rem;
-  }
-  .closing h2 {
-    color: white;
-    max-width: 22ch;
-  }
-  .closing p {
-    max-width: 52ch;
-    margin-bottom: 0;
-  }
-  .closing .eyebrow {
-    color: #b7cb9c;
-    margin-bottom: 1.5rem;
-  }
-  .closing .btn {
-    background: #dbe6cc;
-    color: var(--text-strong);
-    min-width: 205px;
-  }
-  .closing .btn:hover {
-    background: white;
-  }
-  .closing-phone {
-    display: block;
+  .cta-wrap { max-width: 960px; }
+  .cta {
     text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
+    padding: clamp(1.6rem, 3vw, 2.3rem);
+    background: linear-gradient(120deg, #ffffff 0%, #edf5fc 56%, #f1faf7 100%);
+    border-color: #cfe0ee;
   }
-  @media (max-width: 760px) {
-    .closing-grid {
-      grid-template-columns: 1fr;
-    }
-    .closing-grid > div:last-child {
-      justify-self: start;
-    }
-  }
+  h2 { margin: 0; color: var(--text-strong); }
+  p { color: var(--muted); max-width: 62ch; margin: .75rem auto 1.2rem; }
 </style>
