@@ -52,39 +52,45 @@ const shortTitle = service.title
   </section>
 
   <section id="service-details" class="section service-details">
-    <div class="container service-details__layout">
-      <div class="service-details__intro" data-reveal>
+    <div class="container">
+      <div class="service-section-heading" data-reveal>
         <p class="eyebrow">What is included</p>
-        <h2 class="section-title">A clear scope, built around the project.</h2>
+        <h2 class="section-title">What you get with this service</h2>
         <p class="lead">
-          We keep the service focused on the information, assessment and reporting needed to move the project forward.
+          A clear, practical scope covering the assessment, technical work and final outputs needed for the project.
         </p>
       </div>
 
       <div class="service-deliverables" data-reveal>
         {service.whatIncluded.map((item, index) => (
-          <div class="service-deliverable">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{item}</strong>
-          </div>
+          <article class="service-deliverable">
+            <span class="service-deliverable__number">{String(index + 1).padStart(2, '0')}</span>
+            <div class="service-deliverable__body">
+              <strong>{item}</strong>
+              <span class="service-deliverable__line" aria-hidden="true"></span>
+            </div>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
   <section class="service-audience">
-    <div class="container service-audience__layout">
-      <div data-reveal>
+    <div class="container">
+      <div class="service-section-heading service-section-heading--light" data-reveal>
         <p class="eyebrow service-audience__eyebrow">Who this is for</p>
-        <h2>Support for the people responsible for getting the building or project over the line.</h2>
+        <h2 class="section-title">Designed for the teams responsible for delivery and compliance</h2>
+        <p class="lead">
+          We work directly with the people who need clear answers, dependable reporting and a straightforward route to completion.
+        </p>
       </div>
 
-      <div class="service-audience__list" data-reveal>
+      <div class="service-audience__grid" data-reveal>
         {service.forWho.map((item, index) => (
-          <div class="service-audience__item">
+          <article class="service-audience__card">
             <span>{String(index + 1).padStart(2, '0')}</span>
-            <p>{item}</p>
-          </div>
+            <strong>{item}</strong>
+          </article>
         ))}
       </div>
     </div>
@@ -300,99 +306,115 @@ const shortTitle = service.title
     background: #fff;
   }
 
-  .service-details__layout {
-    display: grid;
-    grid-template-columns: minmax(0, .75fr) minmax(430px, 1.25fr);
-    gap: clamp(3rem, 7vw, 7rem);
-    align-items: start;
+  .service-section-heading {
+    max-width: 760px;
+    margin-bottom: 2rem;
   }
 
-  .service-details__intro {
-    position: sticky;
-    top: 7rem;
+  .service-section-heading .section-title {
+    max-width: 18ch;
   }
 
-  .service-details__intro .section-title {
-    max-width: 14ch;
+  .service-section-heading .lead {
+    max-width: 58ch;
+    margin-bottom: 0;
   }
 
   .service-deliverables {
-    border-top: 1px solid #ccd8e3;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
   }
 
   .service-deliverable {
-    display: grid;
-    grid-template-columns: 3rem 1fr;
-    gap: 1rem;
-    align-items: center;
-    min-height: 100px;
-    padding: 1.15rem .15rem;
-    border-bottom: 1px solid #ccd8e3;
+    position: relative;
+    min-height: 220px;
+    padding: 1.4rem 1.35rem;
+    border: 1px solid #d8e2eb;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 10px 30px rgba(17,39,61,.05);
   }
 
-  .service-deliverable > span {
-    color: var(--brand);
+  .service-deliverable__number {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-bottom: 2.2rem;
+    border-radius: 7px;
+    background: var(--brand-soft);
+    color: var(--brand-strong);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: .72rem;
     font-weight: 800;
+  }
+
+  .service-deliverable__body {
+    display: grid;
+    gap: 1rem;
   }
 
   .service-deliverable strong {
     color: var(--text-strong);
-    font-size: clamp(1rem, 1.5vw, 1.18rem);
+    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
     line-height: 1.35;
   }
 
-  .service-audience {
-    padding: clamp(3.3rem, 6vw, 5.3rem) 0;
-    background: #f5f8fb;
-    border-top: 1px solid #e0e7ee;
-    border-bottom: 1px solid #e0e7ee;
+  .service-deliverable__line {
+    display: block;
+    width: 42px;
+    height: 2px;
+    background: var(--brand);
+    opacity: .7;
   }
 
-  .service-audience__layout {
-    display: grid;
-    grid-template-columns: minmax(0, .95fr) minmax(400px, 1.05fr);
-    gap: clamp(3rem, 7vw, 7rem);
-    align-items: start;
+  .service-audience {
+    padding: clamp(3.4rem, 6vw, 5rem) 0;
+    background: linear-gradient(135deg, #0f2234 0%, #14344d 100%);
+  }
+
+  .service-section-heading--light .section-title {
+    color: #fff;
+    max-width: 22ch;
+  }
+
+  .service-section-heading--light .lead {
+    color: #b9c9d5;
   }
 
   .service-audience__eyebrow {
-    margin-bottom: .8rem;
+    color: #7bc9ed;
   }
 
-  .service-audience h2 {
-    margin: 0;
-    max-width: 14ch;
-    color: var(--text-strong);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    line-height: 1.05;
-    letter-spacing: -.035em;
-  }
-
-  .service-audience__list {
-    border-top: 1px solid #cbd7e2;
-  }
-
-  .service-audience__item {
+  .service-audience__grid {
     display: grid;
-    grid-template-columns: 3rem 1fr;
-    gap: 1rem;
-    padding: 1.15rem 0;
-    border-bottom: 1px solid #cbd7e2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .9rem;
   }
 
-  .service-audience__item span {
-    color: var(--brand);
+  .service-audience__card {
+    min-height: 150px;
+    padding: 1.25rem;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,.045);
+  }
+
+  .service-audience__card span {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: #78c6ea;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: .72rem;
     font-weight: 800;
   }
 
-  .service-audience__item p {
-    margin: 0;
-    color: #35475a;
+  .service-audience__card strong {
+    display: block;
+    color: #fff;
     font-size: 1rem;
+    line-height: 1.4;
   }
 
   .service-next {
@@ -448,8 +470,6 @@ const shortTitle = service.title
 
   @media (max-width: 920px) {
     .service-hero__layout,
-    .service-details__layout,
-    .service-audience__layout,
     .service-next__layout {
       grid-template-columns: 1fr;
     }
@@ -458,14 +478,15 @@ const shortTitle = service.title
       min-height: 0;
     }
 
-    .service-details__intro {
-      position: static;
+    .service-deliverables,
+    .service-audience__grid {
+      grid-template-columns: 1fr;
     }
 
-    .service-details__intro .section-title,
-    .service-audience h2,
+    .service-section-heading .section-title,
+    .service-section-heading--light .section-title,
     .service-next .section-title {
-      max-width: 18ch;
+      max-width: 20ch;
     }
   }
 
@@ -482,10 +503,14 @@ const shortTitle = service.title
       font-size: clamp(2.4rem, 13vw, 4.1rem);
     }
 
-    .service-summary__item,
     .service-deliverable,
-    .service-audience__item {
-      grid-template-columns: 2.35rem 1fr;
+    .service-audience__card {
+      min-height: 0;
+    }
+
+    .service-deliverable__number,
+    .service-audience__card span {
+      margin-bottom: 1rem;
     }
 
     .service-next__layout {
