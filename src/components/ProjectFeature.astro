@@ -1,0 +1,106 @@
+---
+import { publishedProjects } from "../data/projects";
+const { service } = Astro.props;
+const project = publishedProjects.find(
+  (p) => !service || p.services.includes(service),
+);
+---
+
+<section class="section project-feature">
+  <div class="container">
+    <p class="eyebrow">
+      {project ? "Selected project" : "Buildings & portfolios"}
+    </p>
+    <div class="feature-grid">
+      <figure>
+        <img
+          src={project?.image || "/images/architecture-960.webp"}
+          alt={
+            project?.imageAlt ||
+            "Glasgow waterfront, showing the River Clyde and surrounding buildings"
+          }
+          width="960"
+          height="540"
+          loading="lazy"
+        />
+        <figcaption>
+          {project
+            ? project.location
+            : "Glasgow waterfront · location imagery, not a featured client project"}
+        </figcaption>
+      </figure>
+      <div class="feature-copy">
+        <p class="eyebrow">
+          {project?.sector || "From single assets to multi-site programmes"}
+        </p>
+        <h2>
+          {project?.title || "A considered approach to complex property."}
+        </h2>
+        <p>
+          {project?.summary ||
+            "Commercial buildings rarely come with a simple brief. We help property and project teams establish the right scope, coordinate the information and move towards clear reporting."}
+        </p>
+        {!project && (
+          <ul class="rule-list">
+            <li>Commercial property & mixed-use buildings</li>
+            <li>Development & refurbishment programmes</li>
+            <li>Public-sector & education estates</li>
+          </ul>
+        )}
+        <a
+          class="text-link"
+          href={project ? `/projects/${project.slug}` : "/projects"}
+        >
+          {project
+            ? "Read the case study"
+            : "Discuss relevant project experience"}{" "}
+          ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .project-feature {
+    background: #edf0e8;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .feature-grid figure {
+    margin: 0;
+  }
+  .feature-grid img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+  }
+  .feature-grid figcaption {
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+  .feature-copy p,
+  .feature-copy li {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .feature-copy .eyebrow {
+    font-size: 0.68rem;
+  }
+  .feature-copy .text-link {
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 760px) {
+    .feature-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .feature-grid img {
+      height: 270px;
+    }
+  }
+</style>

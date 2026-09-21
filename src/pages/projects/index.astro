@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectFeature from "../../components/ProjectFeature.astro";
+import CTASection from "../../components/CTASection.astro";
+import { publishedProjects } from "../../data/projects";
+---
+
+<BaseLayout
+  title="Projects & Property Experience"
+  description="Discuss Scottish Energy Services experience supporting commercial property, development programmes and multi-site energy and compliance instructions."
+>
+  <section class="page-intro">
+    <div class="container">
+      <p class="eyebrow">Projects & experience</p>
+      <h1>Every building has its own brief.</h1>
+      <p class="lead">
+        Energy, compliance and building performance support for individual
+        properties, developments and managed portfolios.
+      </p>
+    </div>
+  </section>
+  {publishedProjects.length > 0 ? (
+    <section class="section">
+      <div class="container">
+        <div class="project-filters" hidden data-project-filters>
+          <label>
+            Service
+            <select data-filter-service>
+              <option value="">All services</option>
+              {[...new Set(publishedProjects.flatMap((p) => p.services))].map(
+                (s) => (
+                  <option>{s}</option>
+                ),
+              )}
+            </select>
+          </label>
+          <label>
+            Sector
+            <select data-filter-sector>
+              <option value="">All sectors</option>
+              {[...new Set(publishedProjects.map((p) => p.sector))].map((s) => (
+                <option>{s}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <p data-filter-status aria-live="polite"></p>
+        {publishedProjects.map((p) => (
+          <article
+            class="project-row"
+            data-project
+            data-services={p.services.join("|")}
+            data-sector={p.sector}
+          >
+            <img
+              src={p.image}
+              alt={p.imageAlt}
+              width="960"
+              height="540"
+              loading="lazy"
+            />
+            <div>
+              <p class="eyebrow">
+                {p.sector} · {p.location}
+              </p>
+              <h2>
+                <a href={`/projects/${p.slug}`}>{p.title}</a>
+              </h2>
+              <p>{p.summary}</p>
+              <a class="text-link" href={`/projects/${p.slug}`}>
+                Read case study ↗
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ) : (
+    <>
+      <ProjectFeature />
+      <section class="section">
+        <div class="container prose">
+          <h2>Discuss experience relevant to your project.</h2>
+          <p>
+            Detailed case studies are being prepared for publication. Contact us
+            with your building type, service requirement and location to discuss
+            relevant experience and the approach to your instruction.
+          </p>
+          <!-- OWNER TODO: Publish approved records in src/data/projects.ts. -->
+          <a class="text-link" href="/contact">
+            Talk to our team ↗
+          </a>
+        </div>
+      </section>
+    </>
+  )}
+  <CTASection />
+</BaseLayout>
+<script>
+  const filters = document.querySelector("[data-project-filters]");
+  if (filters) {
+    filters.removeAttribute("hidden");
+    const update = () => {
+      const service = (
+        document.querySelector("[data-filter-service]") as HTMLSelectElement
+      ).value;
+      const sector = (
+        document.querySelector("[data-filter-sector]") as HTMLSelectElement
+      ).value;
+      let count = 0;
+      document.querySelectorAll<HTMLElement>("[data-project]").forEach((p) => {
+        p.hidden = !!(
+          (service && !p.dataset.services?.split("|").includes(service)) ||
+          (sector && p.dataset.sector !== sector)
+        );
+        if (!p.hidden) count++;
+      });
+      document.querySelector("[data-filter-status]")!.textContent =
+        `${count} projects shown`;
+    };
+    filters.addEventListener("change", update);
+    update();
+  }
+</script>
+<style>
+  .project-filters:not([hidden]) {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .project-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding: 3rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .project-row[hidden] {
+    display: none;
+  }
+  @media (max-width: 760px) {
+    .project-row {
+      grid-template-columns: 1fr;
+    }
+    .project-filters:not([hidden]) {
+      display: grid;
+    }
+  }
+</style>

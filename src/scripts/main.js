@@ -1,200 +1,59 @@
-
-window.sesTrackEvent = (eventName, payload = {}) => {
-  if (window.gtag) window.gtag('event', eventName, payload);
-  if (window.dataLayer) window.dataLayer.push({ event: eventName, ...payload });
+import "./tracking.js";
+const navigation = document.querySelector("[data-navigation]");
+const desktop = window.matchMedia("(min-width: 961px)");
+const syncNavigation = () => {
+  if (navigation) navigation.open = desktop.matches;
 };
-document.querySelectorAll('[data-track]').forEach((el)=>el.addEventListener('click',()=>window.sesTrackEvent(el.getAttribute('data-track')||'click')));
-
-const nav = document.querySelector('.nav');
-const toggle = document.querySelector('.menu-toggle');
-const header = document.querySelector('[data-header]');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const isOpen = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
-  });
-}
-
-if (header) {
-  const handleHeader = () => header.classList.toggle('compact', window.scrollY > 10);
-  handleHeader();
-  window.addEventListener('scroll', handleHeader, { passive: true });
-}
-
-if (!reducedMotion) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('in-view');
-      });
-    },
-    { threshold: 0.15 }
-  );
-
-  document.querySelectorAll('[data-reveal]').forEach((el) => observer.observe(el));
-} else {
-  document.querySelectorAll('[data-reveal]').forEach((el) => el.classList.add('in-view'));
-}
-
-const counters = document.querySelectorAll('[data-count]');
-const animateCounter = (el) => {
-  const target = Number(el.dataset.count || 0);
-  let current = 0;
-  const step = Math.max(1, Math.round(target / 80));
-  const tick = () => {
-    current += step;
-    if (current >= target) {
-      el.textContent = target.toLocaleString();
-      return;
-    }
-    el.textContent = current.toLocaleString();
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-};
-
-if (reducedMotion && counters.length) {
-  counters.forEach((counter) => {
-    const target = Number(counter.dataset.count || 0);
-    counter.textContent = target.toLocaleString();
-  });
-}
-
-if (!reducedMotion && counters.length) {
-  const counterObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        animateCounter(entry.target);
-        obs.unobserve(entry.target);
-      }
+syncNavigation();
+desktop.addEventListener("change", syncNavigation);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".services-menu[open]").forEach((menu) => {
+      menu.open = false;
+      menu.querySelector("summary")?.focus();
     });
-  });
-
-  counters.forEach((counter) => counterObserver.observe(counter));
-}
-
-const heroStats = document.querySelectorAll('.hero-panel .metric');
-if (!reducedMotion && heroStats.length) {
-  heroStats.forEach((stat) => {
-    stat.addEventListener(
-      'pointermove',
-      (event) => {
-        const rect = stat.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width;
-        const y = (event.clientY - rect.top) / rect.height;
-
-        stat.style.setProperty('--stat-glow-x', `${Math.round(x * 100)}%`);
-        stat.style.setProperty('--stat-glow-y', `${Math.round(y * 100)}%`);
-        stat.style.setProperty('--tilt-y', `${((x - 0.5) * 4).toFixed(2)}deg`);
-        stat.style.setProperty('--tilt-x', `${((0.5 - y) * 3).toFixed(2)}deg`);
-      },
-      { passive: true }
-    );
-
-    stat.addEventListener('pointerleave', () => {
-      stat.style.removeProperty('--stat-glow-x');
-      stat.style.removeProperty('--stat-glow-y');
-      stat.style.removeProperty('--tilt-x');
-      stat.style.removeProperty('--tilt-y');
-    });
-  });
-}
-
-const heroCanvas = document.querySelector('#hero-field');
-if (heroCanvas && !reducedMotion) {
-  const ctx = heroCanvas.getContext('2d', { alpha: true });
-  const pointer = { x: 0.5, y: 0.5 };
-  const pointerTarget = { x: 0.5, y: 0.5 };
-
-  const getHeroBounds = () => {
-    const section = heroCanvas.closest('.hero');
-    if (!section) return { width: window.innerWidth, height: Math.max(420, window.innerHeight * 0.72) };
-    const rect = section.getBoundingClientRect();
-    return { width: Math.max(1, rect.width), height: Math.max(1, rect.height) };
-  };
-
-  const resize = () => {
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    const { width, height } = getHeroBounds();
-    heroCanvas.width = Math.floor(width * ratio);
-    heroCanvas.height = Math.floor(height * ratio);
-    heroCanvas.style.width = `${width}px`;
-    heroCanvas.style.height = `${height}px`;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  };
-
-  const render = (time) => {
-    const elapsed = time * 0.001;
-    const width = heroCanvas.clientWidth;
-    const height = heroCanvas.clientHeight;
-
-    pointer.x += (pointerTarget.x - pointer.x) * 0.035;
-    pointer.y += (pointerTarget.y - pointer.y) * 0.035;
-
-    ctx.clearRect(0, 0, width, height);
-
-    const lines = Math.max(11, Math.floor(height / 56));
-    const segments = Math.max(20, Math.floor(width / 56));
-
-    for (let row = 0; row < lines; row += 1) {
-      const rowProgress = row / Math.max(1, lines - 1);
-      const baseY = height * (0.12 + rowProgress * 0.78);
-      const alpha = 0.045 + (1 - rowProgress) * 0.04;
-
-      ctx.beginPath();
-      for (let i = 0; i <= segments; i += 1) {
-        const x = (i / segments) * width;
-        const waveA = Math.sin((x * 0.006) + (elapsed * 0.12) + row * 0.42) * 7;
-        const waveB = Math.cos((x * 0.0028) - (elapsed * 0.08) + row * 0.2) * 5;
-        const parallax = (pointer.x - 0.5) * 20 * Math.sin((x / width) * Math.PI);
-        const y = baseY + waveA + waveB + parallax;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.strokeStyle = `rgba(31, 79, 124, ${alpha.toFixed(3)})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
+    if (navigation?.open && !desktop.matches) {
+      navigation.open = false;
+      navigation.querySelector("summary")?.focus();
     }
-
-    requestAnimationFrame(render);
-  };
-
-  window.addEventListener('pointermove', (event) => {
-    pointerTarget.x = event.clientX / window.innerWidth;
-    pointerTarget.y = event.clientY / window.innerHeight;
-  }, { passive: true });
-
-  window.addEventListener('resize', resize, { passive: true });
-  resize();
-  requestAnimationFrame(render);
+  }
+});
+document.addEventListener("click", (event) => {
+  document.querySelectorAll(".services-menu[open]").forEach((menu) => {
+    if (!menu.contains(event.target)) menu.open = false;
+  });
+});
+if (document.querySelector("[data-turnstile-widget][data-sitekey]")) {
+  const script = document.createElement("script");
+  script.src =
+    "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  script.async = true;
+  document.head.appendChild(script);
 }
-
 const createToast = () => {
-  const existing = document.querySelector('[data-form-toast]');
+  const existing = document.querySelector("[data-form-toast]");
   if (existing) return existing;
 
-  const toast = document.createElement('div');
-  toast.className = 'form-toast';
-  toast.setAttribute('data-form-toast', '');
-  toast.setAttribute('role', 'status');
-  toast.setAttribute('aria-live', 'polite');
+  const toast = document.createElement("div");
+  toast.className = "form-toast";
+  toast.setAttribute("data-form-toast", "");
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
   toast.hidden = true;
   document.body.appendChild(toast);
   return toast;
 };
 
-const showToast = (message, variant = 'success') => {
+const showToast = (message, variant = "success") => {
   const toast = createToast();
   toast.textContent = message;
   toast.dataset.variant = variant;
   toast.hidden = false;
-  toast.classList.add('is-visible');
+  toast.classList.add("is-visible");
 
   window.clearTimeout(showToast.timeoutId);
   showToast.timeoutId = window.setTimeout(() => {
-    toast.classList.remove('is-visible');
+    toast.classList.remove("is-visible");
     window.setTimeout(() => {
       toast.hidden = true;
     }, 220);
@@ -204,12 +63,14 @@ const showToast = (message, variant = 'success') => {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 const PHONE_REGEX = /^[+\d\s().-]{7,20}$/;
 
-const setFieldError = (form, fieldName, message = '') => {
+const setFieldError = (form, fieldName, message = "") => {
   const field = form.querySelector(`[name="${fieldName}"]`);
-  const errorSlot = form.querySelector(`[data-error-for="${fieldName === 'cf-turnstile-response' ? 'turnstileToken' : fieldName}"]`);
+  const errorSlot = form.querySelector(
+    `[data-error-for="${fieldName === "cf-turnstile-response" ? "turnstileToken" : fieldName}"]`,
+  );
 
   if (field) {
-    field.setAttribute('aria-invalid', message ? 'true' : 'false');
+    field.setAttribute("aria-invalid", message ? "true" : "false");
   }
 
   if (errorSlot) {
@@ -218,41 +79,54 @@ const setFieldError = (form, fieldName, message = '') => {
 };
 
 const initializeTurnstile = (form) => {
-  const widget = form.querySelector('[data-turnstile-widget]');
+  const widget = form.querySelector("[data-turnstile-widget]");
   const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
   const submitButton = form.querySelector('button[type="submit"]');
-  const statusEl = form.querySelector('[data-form-status]');
+  const statusEl = form.querySelector("[data-form-status]");
   if (!widget || !tokenInput) return;
 
-  const siteKey = widget.getAttribute('data-sitekey')?.trim();
+  const siteKey = widget.getAttribute("data-sitekey")?.trim();
   if (!siteKey) {
-    setFieldError(form, 'turnstileToken', 'Captcha is currently unavailable. Please try again shortly or call us directly.');
-    if (statusEl) statusEl.textContent = 'Captcha is currently unavailable. Please try again shortly or call us directly.';
+    setFieldError(
+      form,
+      "turnstileToken",
+      "Captcha is currently unavailable. Please try again shortly or call us directly.",
+    );
+    if (statusEl)
+      statusEl.textContent =
+        "Captcha is currently unavailable. Please try again shortly or call us directly.";
     if (submitButton) submitButton.disabled = true;
     return;
   }
 
   const renderWidget = () => {
-    if (!window.turnstile || typeof window.turnstile.render !== 'function') return false;
-    if (widget.dataset.rendered === 'true') return true;
+    if (!window.turnstile || typeof window.turnstile.render !== "function")
+      return false;
+    if (widget.dataset.rendered === "true") return true;
 
-    window.turnstile.render(widget, {
+    const widgetId = window.turnstile.render(widget, {
+      "response-field": false,
       sitekey: siteKey,
-      theme: widget.getAttribute('data-theme') || 'light',
+      theme: widget.getAttribute("data-theme") || "light",
       callback: (token) => {
         tokenInput.value = token;
-        setFieldError(form, 'turnstileToken', '');
+        setFieldError(form, "turnstileToken", "");
       },
-      'expired-callback': () => {
-        tokenInput.value = '';
+      "expired-callback": () => {
+        tokenInput.value = "";
       },
-      'error-callback': () => {
-        tokenInput.value = '';
-        setFieldError(form, 'turnstileToken', 'Captcha failed to load. Please refresh and try again.');
-      }
+      "error-callback": () => {
+        tokenInput.value = "";
+        setFieldError(
+          form,
+          "turnstileToken",
+          "Captcha failed to load. Please refresh and try again.",
+        );
+      },
     });
 
-    widget.dataset.rendered = 'true';
+    widget.dataset.widgetId = widgetId;
+    widget.dataset.rendered = "true";
     return true;
   };
 
@@ -263,8 +137,12 @@ const initializeTurnstile = (form) => {
     attempts += 1;
     if (renderWidget() || attempts >= 40) {
       window.clearInterval(poll);
-      if (attempts >= 40 && widget.dataset.rendered !== 'true') {
-        setFieldError(form, 'turnstileToken', 'Captcha failed to load. Please refresh and try again.');
+      if (attempts >= 40 && widget.dataset.rendered !== "true") {
+        setFieldError(
+          form,
+          "turnstileToken",
+          "Captcha failed to load. Please refresh and try again.",
+        );
       }
     }
   }, 150);
@@ -273,37 +151,78 @@ const initializeTurnstile = (form) => {
 const validateClientValues = (values, options = { captchaRequired: true }) => {
   const errors = {};
 
-  if (!values.name || values.name.trim().length < 2) errors.name = 'Please enter your full name.';
-  if (!values.email || !EMAIL_REGEX.test(values.email.trim())) errors.email = 'Please enter a valid email address.';
-  if (!values.service) errors.service = 'Please select the service you need.';
-  if (!values.message || values.message.trim().length < 12) errors.message = 'Please provide a bit more detail (at least 12 characters).';
-  if (values.phone && !PHONE_REGEX.test(values.phone.trim())) errors.phone = 'Please enter a valid phone number.';
-  if (options.captchaRequired && !values['cf-turnstile-response']) errors.turnstileToken = 'Please complete the captcha check.';
+  if (!values.name || values.name.trim().length < 2)
+    errors.name = "Please enter your full name.";
+  if (!values.email || !EMAIL_REGEX.test(values.email.trim()))
+    errors.email = "Please enter a valid email address.";
+  if (!values.service) errors.service = "Please select the service you need.";
+  if (!values.message || values.message.trim().length < 12)
+    errors.message =
+      "Please provide a bit more detail (at least 12 characters).";
+  if (values.phone && !PHONE_REGEX.test(values.phone.trim()))
+    errors.phone = "Please enter a valid phone number.";
+  if (options.captchaRequired && !values["cf-turnstile-response"])
+    errors.turnstileToken = "Please complete the captcha check.";
 
+  if (
+    !values.postcode ||
+    !/^(?:[A-Z]{1,2}[0-9][A-Z0-9]?\s*[0-9][A-Z]{2}|GIR\s*0AA)$/i.test(
+      values.postcode.trim(),
+    )
+  )
+    errors.postcode = "Please enter a valid UK postcode.";
+  if (
+    values.floorArea &&
+    (!Number.isFinite(Number(values.floorArea)) ||
+      Number(values.floorArea) <= 0)
+  )
+    errors.floorArea = "Enter a floor area greater than zero.";
   return errors;
 };
 
 const collectValues = (formData) => Object.fromEntries(formData.entries());
 
-document.querySelectorAll('[data-ajax-form]').forEach((form) => {
+document.querySelectorAll("[data-ajax-form]").forEach((form) => {
   const submitButton = form.querySelector('button[type="submit"]');
-  const statusEl = form.querySelector('[data-form-status]');
+  const statusEl = form.querySelector("[data-form-status]");
 
+  form.noValidate = true;
   initializeTurnstile(form);
+  let started = false;
+  form.addEventListener("input", () => {
+    if (!started) {
+      started = true;
+      window.sesTrackEvent("quote_form_started", { form_type: form.name });
+    }
+  });
 
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (form.dataset.submitting === "true") return;
 
     const formData = new FormData(form);
     const values = collectValues(formData);
 
-    ['name','email','service','phone','message','turnstileToken'].forEach((field) => setFieldError(form, field, ''));
-    if (statusEl) statusEl.textContent = '';
+    [
+      "name",
+      "email",
+      "service",
+      "phone",
+      "message",
+      "postcode",
+      "floorArea",
+      "turnstileToken",
+    ].forEach((field) => setFieldError(form, field, ""));
+    if (statusEl) statusEl.textContent = "";
 
-    const captchaWidget = form.querySelector('[data-turnstile-widget]');
-    const captchaRequired = Boolean(captchaWidget && captchaWidget.getAttribute('data-sitekey'));
+    const captchaWidget = form.querySelector("[data-turnstile-widget]");
+    const captchaRequired = Boolean(
+      captchaWidget && captchaWidget.getAttribute("data-sitekey"),
+    );
     const clientErrors = validateClientValues(values, { captchaRequired });
-    Object.entries(clientErrors).forEach(([field, message]) => setFieldError(form, field, message));
+    Object.entries(clientErrors).forEach(([field, message]) =>
+      setFieldError(form, field, message),
+    );
 
     if (Object.keys(clientErrors).length > 0) {
       const firstErrorField = form.querySelector('[aria-invalid="true"]');
@@ -311,55 +230,86 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
       return;
     }
 
-    const defaultText = submitButton?.dataset.submitText || submitButton?.textContent || 'Submit';
+    form.dataset.submitting = "true";
+    const defaultText =
+      submitButton?.dataset.submitText || submitButton?.textContent || "Submit";
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.textContent = 'Sending...';
+      submitButton.textContent = "Sending...";
     }
 
-    if (statusEl) statusEl.textContent = 'Submitting your request...';
+    if (statusEl) statusEl.textContent = "Submitting your request...";
 
     try {
       const response = await fetch(form.action, {
-        method: 'POST',
+        method: "POST",
+        signal: AbortSignal.timeout(30000),
         body: JSON.stringify(values),
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
       });
 
       const payload = await response.json();
 
-      if (!response.ok) {
-        if (payload?.errors && typeof payload.errors === 'object') {
+      if (!response.ok || payload.ok !== true) {
+        if (payload?.errors && typeof payload.errors === "object") {
           Object.entries(payload.errors).forEach(([field, message]) => {
-            if (typeof message === 'string') setFieldError(form, field, message);
+            if (typeof message === "string")
+              setFieldError(form, field, message);
           });
         }
 
-        const message = payload?.message || 'We could not submit your request. Please try again.';
+        const message =
+          payload?.message ||
+          "We could not submit your request. Please try again.";
         if (statusEl) statusEl.textContent = message;
-        showToast(message, 'error');
+        showToast(message, "error");
+        form.querySelector('[aria-invalid="true"]')?.focus();
+        const widget = form.querySelector("[data-turnstile-widget]");
+        if (window.turnstile && widget?.dataset.widgetId)
+          window.turnstile.reset(widget.dataset.widgetId);
+        form.querySelector('[name="cf-turnstile-response"]').value = "";
         return;
       }
 
+      window.sesTrackEvent("quote_form_submitted", {
+        form_type: form.name,
+        service: values.service,
+      });
+      started = false;
       form.reset();
       const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
-      if (tokenInput) tokenInput.value = '';
-      if (window.turnstile && typeof window.turnstile.reset === 'function') {
-        const captchaWidget = form.querySelector('[data-turnstile-widget]');
-        if (captchaWidget) window.turnstile.reset(captchaWidget);
+      if (tokenInput) tokenInput.value = "";
+      if (window.turnstile && typeof window.turnstile.reset === "function") {
+        const captchaWidget = form.querySelector("[data-turnstile-widget]");
+        if (captchaWidget)
+          window.turnstile.reset(captchaWidget.dataset.widgetId);
       }
 
-      const successMessage = 'Thanks — your form was submitted successfully. We will get back to you shortly.';
-      if (statusEl) statusEl.textContent = successMessage;
-      showToast(successMessage, 'success');
+      const successMessage =
+        "Thank you. Your enquiry has been received. We will get back to you shortly.";
+      if (statusEl) {
+        statusEl.textContent = successMessage;
+        statusEl.focus();
+      }
+      showToast(successMessage, "success");
     } catch (error) {
-      if (statusEl) statusEl.textContent = 'Unable to send right now. Please try again in a moment.';
-      showToast('Unable to send right now. Please try again in a moment.', 'error');
+      if (statusEl)
+        statusEl.textContent =
+          "Unable to send right now. Please try again in a moment.";
+      showToast(
+        "Unable to send right now. Please try again in a moment.",
+        "error",
+      );
+      const widget = form.querySelector("[data-turnstile-widget]");
+      if (window.turnstile && widget?.dataset.widgetId)
+        window.turnstile.reset(widget.dataset.widgetId);
+      form.querySelector('[name="cf-turnstile-response"]').value = "";
       console.error(error);
     } finally {
+      form.dataset.submitting = "false";
       if (submitButton) {
         submitButton.disabled = false;
         submitButton.textContent = defaultText;

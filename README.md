@@ -33,7 +33,7 @@ Both `/contact` and `/quote` submit to the production-safe Vercel serverless fun
 
 All validated form submissions currently route to:
 
-- `jay@scottishenergyservices.co.uk`
+- `info@scottishenergyservices.co.uk`
 
 ## Notes
 
@@ -44,3 +44,7 @@ All validated form submissions currently route to:
 - Replace placeholder assets in `public/images/` when final brand assets are available.
 
 - Favicon note: after deployment, Google Search may take days or weeks to recrawl and refresh the favicon shown in results.
+
+## Redesign handover
+
+See [REDESIGN.md](REDESIGN.md) for content ownership, architecture, tracking, verification and launch requirements. Run `npm run test:forms` to verify the form backend without sending emails.

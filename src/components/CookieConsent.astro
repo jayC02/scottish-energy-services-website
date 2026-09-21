@@ -1,0 +1,68 @@
+<aside
+  class="consent"
+  data-consent-banner
+  hidden
+  aria-label="Cookie preferences"
+>
+  <div>
+    <strong>Your privacy choices</strong>
+    <p>
+      We use essential technology to operate this site and protect enquiry
+      forms. With your permission, Google Ads helps us measure enquiries.{" "}
+      <a href="/cookies">About cookies</a>
+    </p>
+  </div>
+  <div class="consent-buttons">
+    <button class="btn btn-ghost" data-consent-reject>
+      Reject optional
+    </button>
+    <button class="btn btn-primary" data-consent-accept>
+      Accept measurement
+    </button>
+  </div>
+</aside>
+<style>
+  .consent {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    z-index: 110;
+    max-width: 540px;
+    background: white;
+    border: 1px solid var(--border-strong);
+    padding: 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .consent[hidden] {
+    display: none;
+  }
+  .consent strong {
+    font-size: 0.95rem;
+  }
+  .consent p {
+    font-size: 0.8rem;
+    margin: 0.5rem 0 1rem;
+    color: var(--muted);
+  }
+  .consent p a {
+    text-decoration: underline;
+  }
+  .consent-buttons {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .consent .btn {
+    font-size: 0.75rem;
+    padding: 0.7rem 1rem;
+  }
+  @media (max-width: 760px) {
+    .consent {
+      bottom: 80px;
+      left: 10px;
+      right: 10px;
+      max-width: none;
+      padding: 1rem;
+    }
+  }
+</style>

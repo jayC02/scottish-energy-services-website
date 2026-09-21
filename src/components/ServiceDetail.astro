@@ -1,56 +1,232 @@
 ---
-import type { Service } from '../data/services';
-const { service } = Astro.props as { service: Service };
+import type { Service } from "../data/services";
+import { services } from "../data/services";
+import { serviceContent } from "../data/service-content";
+import { siteConfig } from "../data/site";
+import ProcessSteps from "./ProcessSteps.astro";
+import ProjectFeature from "./ProjectFeature.astro";
+import QuoteRequestForm from "./QuoteRequestForm.astro";
+import Breadcrumbs from "./Breadcrumbs.astro";
+import Testimonial from "./Testimonial.astro";
+interface Props {
+  service: Service;
+  heading?: string;
+  intro?: string;
+  area?: string;
+  landing?: boolean;
+}
+const { service, heading, intro, area, landing = false } = Astro.props;
+const content = serviceContent[service.slug];
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: heading || content.heading,
+  description: service.short,
+  serviceType: service.title,
+  provider: { "@id": new URL("/#organisation", Astro.site).href },
+  areaServed: area ? "Scotland" : "United Kingdom",
+  url: new URL(Astro.url.pathname, Astro.site).href,
+};
 ---
-<section class="section">
-  <div class="container grid grid-2">
-    <div data-reveal>
-      <p class="eyebrow">Service Overview</p>
-      <h1 class="section-title">{service.title}</h1>
-      <p class="lead">{service.intro}</p>
-      <ul class="highlights">
-        {service.highlights.map((item) => <li>{item}</li>)}
-      </ul>
-      <p><strong>Typical turnaround:</strong> {service.turnaround}</p>
-      <a class="btn btn-primary" href="/quote">Request a quote</a>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(schema).replaceAll("<", "\u003c")}
+></script>
+<section class="page-intro">
+  <div class="container">
+    <Breadcrumbs title={heading || content.heading} />
+    <div class="grid grid-2">
+      <div>
+        <p class="eyebrow">Energy & building compliance</p>
+        <h1>{heading || content.heading}</h1>
+        <p class="lead">{intro || service.intro}</p>
+        <div class="actions">
+          <a
+            href="#enquire"
+            class="btn btn-primary"
+            data-track="service_cta_clicked"
+            data-service={service.slug}
+          >
+            Request a quote ↗
+          </a>
+          <a
+            href={`tel:${siteConfig.phone.replaceAll(" ", "")}`}
+            class="text-link"
+          >
+            {siteConfig.phone}
+          </a>
+        </div>
+      </div>
+      <aside class="scope-panel">
+        <p class="eyebrow">Your instruction, clearly defined</p>
+        <h2>
+          Know what you need.
+          <br />
+          Plan your next step.
+        </h2>
+        <ul class="rule-list">
+          <li>Clear scope and fee before instruction</li>
+          <li>Support for property and project teams</li>
+          <li>Scotland-based, UK-wide coordination</li>
+        </ul>
+        <p class="caption">
+          {service.turnaround} Timing is confirmed with your quotation.
+        </p>
+      </aside>
     </div>
-    <aside class="card detail" data-reveal>
-      <h2>Who this is for</h2>
-      <ul>
-        {service.forWho.map((item) => <li>{item}</li>)}
-      </ul>
-      <h2>What is included</h2>
-      <ul>
-        {service.whatIncluded.map((item) => <li>{item}</li>)}
-      </ul>
-    </aside>
   </div>
 </section>
-
+<section class="section">
+  <div class="container service-body">
+    <aside aria-label="On this page">
+      <p class="eyebrow">In this service</p>
+      <a href="#overview">Overview</a>
+      <a href="#required">When to arrange it</a>
+      <a href="#deliverables">What you receive</a>
+      <a href="#information">Information needed</a>
+      <a href="#questions">Your questions</a>
+      <a href="#enquire">Request a quote ↗</a>
+    </aside>
+    <div class="prose">
+      <h2 id="overview">Understanding the assessment.</h2>
+      <p>{content.overview}</p>
+      <h2 id="required">When to arrange it</h2>
+      <p>{content.when}</p>
+      {content.source && (
+        <p class="caption">
+          Further guidance:{" "}
+          <a href={content.source}>
+            official requirements and assessment guidance ↗
+          </a>
+        </p>
+      )}
+      <h2 id="deliverables">What we assess and deliver</h2>
+      <ul>
+        {content.deliver.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <h2>Who we work with</h2>
+      <ul>
+        {service.forWho.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <h2 id="information">Information to get started</h2>
+      <p>
+        Send what you already have. We will identify any gaps and confirm the
+        information required before proceeding.
+      </p>
+      <ul>
+        {content.evidence.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+      <h2>Why work with Scottish Energy Services?</h2>
+      <p>
+        We agree the deliverables, information requirements and programme before
+        instruction. Your property manager, architect or project team can
+        coordinate with us directly, so the assessment is based on the right
+        information and the report reaches the people who need it.
+      </p>
+      {area && (
+        <>
+          <h2>Service area</h2>
+          <p>{area}</p>
+        </>
+      )}
+      <h2 id="questions">Frequently asked questions</h2>
+      <details>
+        <summary>{content.question}</summary>
+        <p>{content.answer}</p>
+      </details>
+      <details>
+        <summary>How long will the assessment take?</summary>
+        <p>
+          {service.turnaround} Access, building complexity and complete
+          information affect the programme. Tell us your deadline when
+          enquiring.
+        </p>
+      </details>
+      <details>
+        <summary>What will it cost?</summary>
+        <p>
+          The fee depends on the building, available information and agreed
+          outputs. Send the address, approximate floor area and project details
+          for a scoped quotation. No price is assumed before we review the
+          instruction.
+        </p>
+      </details>
+      <details>
+        <summary>Can you help with a portfolio?</summary>
+        <p>
+          Yes. Send a schedule of properties, services required and target
+          dates. We can discuss survey coordination, phased outputs and the
+          information needed for each site.
+        </p>
+      </details>
+      <Testimonial />
+    </div>
+  </div>
+</section>
+<ProcessSteps />
+{!landing && <ProjectFeature service={service.slug} />}
+<section class="section quote-section" id="enquire">
+  <div class="container grid grid-2">
+    <div>
+      <p class="eyebrow">Start your enquiry</p>
+      <h2>Let’s confirm what your project needs.</h2>
+      <p class="lead">
+        Share the address, project stage and target date. We will confirm the
+        scope, fee and next steps.
+      </p>
+      <p>
+        <a href={`tel:${siteConfig.phone.replaceAll(" ", "")}`}>
+          {siteConfig.phone}
+        </a>
+        <br />
+        <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+      </p>
+    </div>
+    <QuoteRequestForm formType="quote" selectedService={service.title} />
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">Related expertise</p>
+    <div class="related-links">
+      {content.related.map((slug) => (
+        <a class="text-link" href={`/services/${slug}`}>
+          {services.find((s) => s.slug === slug)?.title} ↗
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
 <style>
-  .highlights {
-    list-style: none;
-    margin: 0 0 1rem;
-    padding: 0;
-    display: grid;
-    gap: .35rem;
+  .scope-panel {
+    padding: 2rem 0 2rem 3rem;
+    border-left: 1px solid var(--border);
+    align-self: center;
   }
-  .highlights li {
-    color: var(--muted);
-    position: relative;
-    padding-left: 1rem;
+  .scope-panel h2 {
+    font-size: 2rem;
   }
-  .highlights li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: .6rem;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--accent);
+  .scope-panel li {
+    font-size: 0.9rem;
   }
-  .detail h2 { margin: 0 0 .6rem; font-size: 1.12rem; color: var(--text-strong); }
-  .detail ul { margin: 0 0 1rem; padding-left: 1rem; color: var(--muted); }
-  .detail li { margin-bottom: .35rem; }
+  .related-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  @media (max-width: 760px) {
+    .scope-panel {
+      padding: 1.5rem 0 0;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+  }
 </style>

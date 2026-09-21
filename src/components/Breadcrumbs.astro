@@ -1,0 +1,31 @@
+---
+const { title, parent = "Services", parentHref = "/services" } = Astro.props;
+const items = [
+  { name: "Home", url: new URL("/", Astro.site).href },
+  { name: parent, url: new URL(parentHref, Astro.site).href },
+  { name: title, url: new URL(Astro.url.pathname, Astro.site).href },
+];
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.name,
+    item: item.url,
+  })),
+};
+---
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span aria-hidden="true">/</span>
+  <a href={parentHref}>{parent}</a>
+  <span aria-hidden="true">/</span>
+  <span aria-current="page">{title}</span>
+</nav>
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify(schema).replaceAll("<", "\u003c")}
+></script>

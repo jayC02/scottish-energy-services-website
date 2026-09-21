@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { insights } from "../../data/insights";
+import CTASection from "../../components/CTASection.astro";
+---
+
+<BaseLayout
+  title="Insights & Assessment Preparation Guides"
+  description="Practical guides for preparing property information, drawings and specifications for energy assessments and building compliance enquiries."
+>
+  <section class="page-intro">
+    <div class="container">
+      <p class="eyebrow">Insights & resources</p>
+      <h1>
+        Better information.
+        <br />
+        Clearer decisions.
+      </h1>
+      <p class="lead">
+        Practical guidance to help you prepare an instruction and work with your
+        assessment team.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      {insights.map((a, i) => (
+        <article class="insight-row">
+          <span class="number">0{i + 1} / Practical guide</span>
+          <div>
+            <h2>
+              <a href={`/insights/${a.slug}`}>{a.title}</a>
+            </h2>
+            <p class="lead">{a.summary}</p>
+            <a class="text-link" href={`/insights/${a.slug}`}>
+              Read the guide ↗
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <CTASection />
+</BaseLayout>
+<style>
+  .insight-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .insight-row h2 {
+    font-size: 2.2rem;
+  }
+  @media (max-width: 760px) {
+    .insight-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>

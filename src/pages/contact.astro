@@ -1,27 +1,52 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { siteConfig } from '../data/site';
-import QuoteRequestForm from '../components/QuoteRequestForm.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig } from "../data/site";
+import QuoteRequestForm from "../components/QuoteRequestForm.astro";
 
-const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, "")}`;
 ---
-<BaseLayout title="Contact" description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability.">
+
+<BaseLayout
+  title="Contact"
+  description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability."
+>
   <section class="section">
     <div class="container grid grid-2 form-layout">
       <div data-reveal>
         <p class="eyebrow">CONTACT</p>
         <h1 class="section-title">Talk to our team</h1>
-        <p class="lead">For the quickest quote, please include the service required and a short description of the property or project. We will confirm scope, fee and likely timescale before instruction.</p>
+        <p class="lead">
+          For the quickest quote, please include the service required and a
+          short description of the property or project. We will confirm scope,
+          fee and likely timescale before instruction.
+        </p>
         <div class="contact-card card">
-          <p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p>
-          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p>
+          <p>
+            <strong>Phone:</strong>{" "}
+            <a href={phoneHref} data-track="phone_click">
+              {siteConfig.phone}
+            </a>
+          </p>
+          <p>
+            <strong>Email:</strong>{" "}
+            <a href={`mailto:${siteConfig.email}`} data-track="email_click">
+              {siteConfig.email}
+            </a>
+          </p>
         </div>
       </div>
-      <QuoteRequestForm formType="contact" submitText="Send enquiry" reveal={true} />
+      <QuoteRequestForm
+        formType="contact"
+        submitText="Send enquiry"
+        reveal={true}
+      />
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .form-layout { align-items: start; gap: 1rem 1.2rem; }
+  .form-layout {
+    align-items: start;
+    gap: 1rem 1.2rem;
+  }
 </style>

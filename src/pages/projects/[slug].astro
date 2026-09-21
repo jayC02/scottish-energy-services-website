@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTASection from "../../components/CTASection.astro";
+import { publishedProjects } from "../../data/projects";
+export function getStaticPaths() {
+  return publishedProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+const { project } = Astro.props;
+---
+
+<BaseLayout title={project.title} description={project.summary}>
+  <section class="page-intro">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <a href="/projects">Projects</a> /{" "}
+        <span>{project.title}</span>
+      </nav>
+      <p class="eyebrow">
+        {project.sector} · {project.location}
+      </p>
+      <h1>{project.title}</h1>
+      <p class="lead">{project.summary}</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <img
+        src={project.image}
+        alt={project.imageAlt}
+        width="1280"
+        height="720"
+      />
+      <div class="prose">
+        {project.client && <p>Client: {project.client}</p>}
+        <h2>The challenge</h2>
+        <p>{project.challenge}</p>
+        <h2>Our approach</h2>
+        <p>{project.approach}</p>
+        <h2>The outcome</h2>
+        <p>{project.outcome}</p>
+        {project.statistics?.map((s) => (
+          <p>
+            <strong>{s.value}</strong> {s.label}
+          </p>
+        ))}
+        <h2>Services delivered</h2>
+        <ul>
+          {project.services.map((s) => (
+            <li>
+              <a href={`/services/${s}`}>{s.replaceAll("-", " ")}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+  <CTASection />
+</BaseLayout>

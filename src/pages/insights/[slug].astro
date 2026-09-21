@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import CTASection from "../../components/CTASection.astro";
+import { insights } from "../../data/insights";
+export function getStaticPaths() {
+  return insights.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+const { article } = Astro.props;
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: article.title,
+  description: article.summary,
+  author: { "@type": "Organization", name: "Scottish Energy Services" },
+  publisher: { "@id": new URL("/#organisation", Astro.site).href },
+  mainEntityOfPage: Astro.url.href,
+};
+---
+
+<BaseLayout title={article.title} description={article.summary}>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(schema).replaceAll("<", "\u003c")}
+  ></script>
+  <section class="page-intro">
+    <div class="container">
+      <Breadcrumbs
+        title={article.title}
+        parent="Insights"
+        parentHref="/insights"
+      />
+      <p class="eyebrow">Practical guide</p>
+      <h1>{article.title}</h1>
+      <p class="lead">{article.summary}</p>
+    </div>
+  </section>
+  <section class="section">
+    <article class="container prose">
+      {article.sections.map((s) => (
+        <section>
+          <h2>{s.heading}</h2>
+          <p>{s.text}</p>
+        </section>
+      ))}
+      <a href={`/services/${article.service}`} class="text-link">
+        Explore the related service ↗
+      </a>
+    </article>
+  </section>
+  <CTASection />
+</BaseLayout>

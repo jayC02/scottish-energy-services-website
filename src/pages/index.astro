@@ -1,34 +1,92 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import TrustStrip from '../components/TrustStrip.astro';
-import ClientLogoCarousel from '../components/ClientLogoCarousel.astro';
-import ServiceCards from '../components/ServiceCards.astro';
-import WhyChooseUs from '../components/WhyChooseUs.astro';
-import ProcessSteps from '../components/ProcessSteps.astro';
-import CoverageMap from '../components/CoverageMap.astro';
-import FAQAccordion from '../components/FAQAccordion.astro';
-import CTASection from '../components/CTASection.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import ClientLogoCarousel from "../components/ClientLogoCarousel.astro";
+import ServiceCards from "../components/ServiceCards.astro";
+import ProjectFeature from "../components/ProjectFeature.astro";
+import Sectors from "../components/Sectors.astro";
+import WhyChooseUs from "../components/WhyChooseUs.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import CTASection from "../components/CTASection.astro";
+import Testimonial from "../components/Testimonial.astro";
 ---
-<BaseLayout title="Commercial EPCs, SAP, SBEM & Fire Risk Assessments" description="Scottish Energy Services provides practical energy, compliance and fire safety support across Scotland and the UK.">
+
+<BaseLayout
+  title="Commercial Energy & Building Compliance Specialists"
+  description="Commercial EPCs, SBEM, SAP, Section 63, fire risk assessments and building modelling. Glasgow-based technical support across Scotland and the UK."
+>
   <Hero />
-  <ClientLogoCarousel />
   <TrustStrip />
-  <section class="section"><div class="container" data-reveal><h2 class="section-title">Practical compliance support for residential and non-domestic properties</h2><p class="lead">Scottish Energy Services provides practical energy, compliance and fire safety assessment support for residential and non-domestic properties. From Commercial EPCs and Fire Risk Assessments to SAP, SBEM, Section 63 and DSM support, we help clients meet compliance requirements with clear reporting and dependable communication.</p></div></section>
-  <ServiceCards preview={true} />
+  <ClientLogoCarousel />
+  <ServiceCards />
+  <ProjectFeature />
+  <Sectors />
+  <section class="proof">
+    <div class="container proof-grid">
+      <div>
+        <strong>12,573</strong>
+        <span>Projects delivered</span>
+      </div>
+      <div>
+        <strong>4</strong>
+        <span>UK nations supported</span>
+      </div>
+      <div>
+        <strong>
+          One building.
+          <br />
+          Or a whole portfolio.
+        </strong>
+        <span>Support shaped around your instruction</span>
+      </div>
+    </div>
+  </section>
   <WhyChooseUs />
-  <section class="section"><div class="container" data-reveal>
-    <h2 class="section-title">Not sure what you need?</h2>
-    <ul>
-      <li>Selling or leasing a commercial property? You may need a <a href="/commercial-epc-glasgow-scotland">Commercial EPC</a>.</li>
-      <li>Working on a new domestic development? You may need <a href="/sap-calculations-scotland">SAP calculations</a>.</li>
-      <li>Working on a non-domestic new build or conversion? You may need <a href="/sbem-calculations-scotland">SBEM/BRUKL support</a>.</li>
-      <li>Managing shared residential or commercial premises? You may need a <a href="/fire-risk-assessments-scotland">Fire Risk Assessment</a>.</li>
-      <li>Selling or leasing a qualifying non-domestic building in Scotland? You may need <a href="/section-63-assessments-scotland">Section 63 support</a>.</li>
-    </ul>
-  </div></section>
   <ProcessSteps />
-  <CoverageMap />
-  <FAQAccordion limit={6} />
-  <CTASection title="Ready to scope your requirement?" text="Share your building type, project stage, and target date. We will return a clear proposal and available delivery window." button="Request a Quote" />
+  <div class="container">
+    <Testimonial />
+  </div>
+  <CTASection />
 </BaseLayout>
+<style>
+  .proof {
+    padding: 3.5rem 0;
+    border-block: 1px solid var(--border);
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.3fr;
+    gap: 3rem;
+  }
+  .proof strong {
+    display: block;
+    font-size: 3.8rem;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--brand-strong);
+  }
+  .proof span {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+  .proof-grid > div:last-child strong {
+    font-size: 2rem;
+    color: var(--text-strong);
+  }
+  @media (max-width: 760px) {
+    .proof-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .proof strong {
+      font-size: 2.6rem;
+    }
+    .proof-grid > div:last-child {
+      grid-column: 1/-1;
+    }
+  }
+</style>

@@ -4,3 +4,7 @@ dist
 .env
 .vscode
 .vercel
+
+# Local redesign verification
+output/
+.playwright-cli/
