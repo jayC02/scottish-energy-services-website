@@ -1,14 +1,173 @@
-<section class="section">
-  <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">Why choose us</p>
-      <h2 class="section-title">A practical delivery partner for compliance-led projects.</h2>
+<section class="why-section">
+  <div class="container why-layout">
+    <div class="why-copy" data-reveal>
+      <p class="eyebrow why-eyebrow">Why Scottish Energy Services</p>
+      <h2>A practical delivery partner from first brief to final report.</h2>
+      <p>
+        Clear scope, responsive coordination and technical reporting built around the needs of
+        landlords, agents, architects, developers and property teams.
+      </p>
+      <a class="btn why-cta" href="/quote">Request a quote <span aria-hidden="true">→</span></a>
     </div>
-    <div class="grid grid-2">
-      <article class="card" data-reveal><h3>Clear scope before instruction</h3><p>Know what is included, what information is needed, and when to expect your report.</p></article>
-      <article class="card" data-reveal><h3>Practical reports</h3><p>Outputs are written for real decisions and implementation, not just technical filing.</p></article>
-      <article class="card" data-reveal><h3>Responsive coordination</h3><p>Suitable for landlords, agents, architects, developers and wider project teams.</p></article>
-      <article class="card" data-reveal><h3>Scotland-based, UK-wide support</h3><p>Glasgow office with wider UK project delivery where service scope allows.</p></article>
+
+    <div class="why-points" data-reveal>
+      <div class="why-point">
+        <span>01</span>
+        <div>
+          <strong>Clear scope before instruction</strong>
+          <p>Know what is included, what information is needed and when to expect your report.</p>
+        </div>
+      </div>
+
+      <div class="why-point">
+        <span>02</span>
+        <div>
+          <strong>Practical reporting</strong>
+          <p>Outputs written for real project decisions, not just technical filing.</p>
+        </div>
+      </div>
+
+      <div class="why-point">
+        <span>03</span>
+        <div>
+          <strong>Responsive coordination</strong>
+          <p>Support that works across live projects, one-off instructions and larger programmes.</p>
+        </div>
+      </div>
+
+      <div class="why-point">
+        <span>04</span>
+        <div>
+          <strong>Scotland-based, UK-wide support</strong>
+          <p>Glasgow-based delivery with wider UK coverage where service scope allows.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .why-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 82% 18%, rgba(63, 160, 210, .14), transparent 28%),
+      linear-gradient(135deg, #0d1d2d 0%, #112b41 62%, #13364f 100%);
+    color: #fff;
+    padding: clamp(3.2rem, 5vw, 5rem) 0;
+  }
+
+  .why-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: linear-gradient(to left, black, transparent 72%);
+  }
+
+  .why-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, .92fr) minmax(420px, 1.08fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .why-copy {
+    max-width: 590px;
+  }
+
+  .why-eyebrow {
+    color: #74c8ef;
+  }
+
+  .why-copy h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2.2rem, 4.3vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -.035em;
+    max-width: 12ch;
+  }
+
+  .why-copy > p:not(.eyebrow) {
+    margin: 1.35rem 0 1.6rem;
+    color: #c4d2de;
+    max-width: 52ch;
+    font-size: 1.02rem;
+  }
+
+  .why-cta {
+    background: #fff;
+    color: #10263a;
+    border-color: #fff;
+  }
+
+  .why-cta:hover {
+    transform: translateY(-2px);
+  }
+
+  .why-points {
+    border-top: 1px solid rgba(255,255,255,.18);
+  }
+
+  .why-point {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.18);
+  }
+
+  .why-point > span {
+    color: #74c8ef;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .78rem;
+    font-weight: 700;
+    padding-top: .15rem;
+  }
+
+  .why-point strong {
+    display: block;
+    color: #fff;
+    font-size: 1.08rem;
+    margin-bottom: .3rem;
+  }
+
+  .why-point p {
+    margin: 0;
+    color: #b9c8d5;
+    font-size: .94rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .why-layout {
+      grid-template-columns: 1fr;
+      gap: 2.4rem;
+    }
+
+    .why-copy h2 {
+      max-width: 16ch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .why-section {
+      padding: 2.8rem 0;
+    }
+
+    .why-copy h2 {
+      font-size: clamp(2rem, 10vw, 3rem);
+    }
+
+    .why-point {
+      grid-template-columns: 2.3rem 1fr;
+    }
+  }
+</style>
