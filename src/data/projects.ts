@@ -16,13 +16,13 @@ export type Project = {
 // Add approved assessment scope, dates and results before creating individual case studies.
 export const projects: Project[] = [
   {
-    slug: 'glasgow-airport', type: 'image',
-    src: '/images/projects/glasgow-airport.webp',
-    thumbnail: '/images/projects/glasgow-airport-small.webp',
-    fallback: '/images/projects/glasgow-airport.jpg',
+    slug: 'glasgow-airport', type: 'video',
+    src: '/videos/projects/glasgow-airport.mp4',
+    poster: '/images/projects/glasgow-airport-poster.webp',
+    thumbnail: '/images/projects/glasgow-airport-poster-small.webp',
     label: 'Glasgow Airport', sector: 'Aviation',
-    summary: 'A major Scottish aviation estate, shown here in project photography.',
-    alt: 'Glasgow Airport in the supplied project photograph',
+    summary: 'A major Scottish aviation estate.',
+    alt: 'Glasgow Airport in the supplied project footage',
     link: '/projects#glasgow-airport'
   },
   {
