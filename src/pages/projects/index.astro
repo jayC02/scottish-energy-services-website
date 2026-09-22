@@ -11,9 +11,6 @@ import { projects } from '../../data/projects';
         <h1>Work across Scotland’s buildings and estates.</h1>
         <p class="lead">A selection of commercial, public-sector and institutional projects supported by Scottish Energy Services.</p>
       </div>
-      <nav class="project-index" aria-label="Selected projects">
-        {projects.map((project, index) => <a href={`#${project.slug}`}><span>{String(index + 1).padStart(2,'0')}</span>{project.label}</a>)}
-      </nav>
     </div>
   </section>
 
@@ -23,7 +20,6 @@ import { projects } from '../../data/projects';
         <article class:list={['project-row', {'project-row--reverse': index % 2 !== 0}]} id={project.slug}>
           <ProjectMedia project={project} priority={index === 0} />
           <div class="project-copy">
-            <p class="project-number">{String(index + 1).padStart(2,'0')} / Selected project</p>
             <p class="eyebrow">{project.sector}</p>
             <h2>{project.label}</h2>
             <p>{project.summary}</p>
@@ -48,20 +44,15 @@ import { projects } from '../../data/projects';
   .portfolio-intro-grid { display:grid;grid-template-columns:1.25fr .75fr;gap:3rem;align-items:end; }
   h1 { margin:0;max-width:19ch;font-size:clamp(2.5rem,4.6vw,4rem);line-height:1.08;letter-spacing:-.04em;color:#10263a; }
   .portfolio-intro .lead { margin:0;max-width:42ch; }
-  .project-index { display:flex;flex-wrap:wrap;gap:.8rem 1.5rem;margin-top:2rem;padding-top:1.4rem;border-top:1px solid var(--border); }
-  .project-index a { display:inline-flex;gap:.5rem;font-size:.78rem;min-height:36px;align-items:center; }
-  .project-index span { color:var(--brand);font-size:.7rem; }
-  .project-index a:hover { text-decoration:underline;text-underline-offset:4px; }
   .portfolio-work { padding:1rem 0 2rem; }
   .project-row { display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:clamp(2rem,4vw,4rem);padding:clamp(2rem,4vw,3.5rem) 0;border-bottom:1px solid var(--border);scroll-margin-top:110px; }
   .project-row:last-child { border-bottom:0; }
   .project-row--reverse { grid-template-columns:1fr 1.5fr; }
   .project-row--reverse :global(.project-media) { order:2; }
   .project-copy { min-width:0; }
-  .project-number { font-size:.7rem;color:var(--muted);margin:0 0 2rem;text-transform:uppercase;letter-spacing:.1em; }
   .project-copy .eyebrow { font-size:.7rem;margin-bottom:.65rem; }
   .project-copy h2 { color:#10263a;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.12;letter-spacing:-.035em;margin:0 0 1.2rem; }
-  .project-copy>p:not(.eyebrow):not(.project-number) { color:var(--muted);max-width:38ch;font-size:1rem; }
+  .project-copy>p:not(.eyebrow) { color:var(--muted);max-width:38ch;font-size:1rem; }
   .project-enquire { display:inline-flex;gap:1.3rem;align-items:center;padding:.7rem 0;border-bottom:1px solid var(--border-strong);font-size:.85rem;font-weight:600;color:var(--brand-strong); }
   .portfolio-cta { padding:clamp(2.5rem,4vw,4rem) 0;background:#0d1d2d;color:#c6d2dc; }
   .portfolio-cta .container { display:flex;justify-content:space-between;align-items:center;gap:2rem; }
@@ -69,5 +60,5 @@ import { projects } from '../../data/projects';
   .portfolio-cta h2 { font-size:clamp(1.9rem,3vw,2.6rem);line-height:1.15;color:white;margin:0 0 1rem; }
   .portfolio-cta p:last-child { max-width:58ch;margin:0; }
   .portfolio-cta .btn { flex-shrink:0; }
-  @media(max-width:760px){.portfolio-intro-grid,.project-row,.project-row--reverse{grid-template-columns:1fr;gap:1.5rem}.project-row--reverse :global(.project-media){order:0}.project-number{margin-bottom:1rem}.project-index{gap:.3rem 1rem}.portfolio-cta .container{display:block}.portfolio-cta .btn{margin-top:1.5rem}.project-copy h2{font-size:2rem}.project-copy>p:not(.eyebrow):not(.project-number){max-width:none}}
+  @media(max-width:760px){.portfolio-intro-grid,.project-row,.project-row--reverse{grid-template-columns:1fr;gap:1.5rem}.project-row--reverse :global(.project-media){order:0}.portfolio-cta .container{display:block}.portfolio-cta .btn{margin-top:1.5rem}.project-copy h2{font-size:2rem}.project-copy>p:not(.eyebrow){max-width:none}}
 </style>
