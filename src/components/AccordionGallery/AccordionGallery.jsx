@@ -28,6 +28,7 @@ const AccordionGallery = ({
   const rootRef = useRef(null);
   const videoRefs = useRef([]);
   const pointerTypeRef = useRef(null);
+  const tappedPanelRef = useRef(null);
   const panelRefs = useRef([]);
   const mediaRefs = useRef([]);
   const barRefs = useRef([]);
@@ -181,11 +182,26 @@ const AccordionGallery = ({
     []
   );
 
-  const handleEnter = i => {
-    if (trigger === 'hover' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) setActive(i);
+  const handleEnter = (i, event) => {
+    if (event.pointerType === 'mouse' && trigger === 'hover' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) setActive(i);
   };
 
   const handleClick = (i, e) => {
+    const pointerType = e.nativeEvent.pointerType || pointerTypeRef.current;
+    const touchTap = e.detail !== 0 && (pointerType === 'touch' || pointerType === 'pen' ||
+      window.matchMedia('(hover: none), (pointer: coarse)').matches);
+    pointerTypeRef.current = null;
+    // A focus/hover event must not count as the first deliberate tap.
+    // This also makes the initially expanded panel require two taps.
+    if (touchTap) {
+      if (tappedPanelRef.current !== i || i !== active) {
+        e.preventDefault();
+        tappedPanelRef.current = i;
+        setActive(i);
+      }
+      return;
+    }
+    tappedPanelRef.current = null;
     if (i !== active) {
       e.preventDefault();
       setActive(i);
@@ -193,6 +209,8 @@ const AccordionGallery = ({
   };
 
   const handleKeyDown = (i, e) => {
+    pointerTypeRef.current = null;
+    tappedPanelRef.current = null;
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
       const next = (i + 1) % count; setActive(next); panelRefs.current[next]?.focus();
@@ -236,11 +254,10 @@ const AccordionGallery = ({
             href={item.link || undefined}
             onClick={e => handleClick(i, e)}
             onPointerDown={event => { pointerTypeRef.current = event.pointerType; }}
-            onMouseEnter={() => handleEnter(i)}
+            onPointerEnter={event => handleEnter(i, event)}
             onFocus={() => {
               // Touch focus must not turn the first tap into immediate navigation.
               if (pointerTypeRef.current !== 'touch' && pointerTypeRef.current !== 'pen') setActive(i);
-              pointerTypeRef.current = null;
             }}
             onKeyDown={e => handleKeyDown(i, e)}
             tabIndex={0}
