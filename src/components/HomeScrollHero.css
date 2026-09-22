@@ -1,9 +1,18 @@
 .home-scroll-hero {
   position: relative;
+  min-height: 166svh;
   background: #ffffff;
 }
 
+/* Reserve the ScrollExpand layout before React hydrates so the services
+   section never flashes into the first viewport on initial load. */
+.home-scroll-hero .scroll-expand__track {
+  min-height: 166svh;
+}
+
 .home-scroll-hero .scroll-expand__stage {
+  height: 100svh;
+  min-height: 100svh;
   background: #ffffff;
 }
 
