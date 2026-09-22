@@ -1,0 +1,156 @@
+- generic [active] [ref=f5e1]:
+  - banner [ref=f5e2]:
+    - generic [ref=f5e3]:
+      - link "Scottish Energy Services home" [ref=f5e4] [cursor=pointer]:
+        - /url: /
+        - img "Scottish Energy Services" [ref=f5e5]
+      - navigation "Primary navigation" [ref=f5e6]:
+        - list [ref=f5e7]:
+          - listitem [ref=f5e8]:
+            - link "Home" [ref=f5e9] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=f5e10]:
+            - link "About" [ref=f5e11] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f5e12]:
+            - link "Services" [ref=f5e13] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=f5e14]:
+            - link "Projects" [ref=f5e15] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=f5e16]:
+            - link "FAQ" [ref=f5e17] [cursor=pointer]:
+              - /url: /faq
+          - listitem [ref=f5e18]:
+            - link "Contact" [ref=f5e19] [cursor=pointer]:
+              - /url: /contact
+        - link "0141 255 1360" [ref=f5e20] [cursor=pointer]:
+          - /url: tel:01412551360
+        - link "Get a Quote" [ref=f5e21] [cursor=pointer]:
+          - /url: /quote
+  - main [ref=f5e22]:
+    - generic [ref=f5e24]:
+      - paragraph [ref=f5e25]: Selected projects
+      - generic [ref=f5e26]:
+        - heading "Work across Scotland’s buildings and estates." [level=1] [ref=f5e27]
+        - paragraph [ref=f5e28]: A selection of commercial, public-sector and institutional projects supported by Scottish Energy Services.
+      - navigation "Selected projects" [ref=f5e29]:
+        - link "01 Glasgow Airport" [ref=f5e30] [cursor=pointer]:
+          - /url: "#glasgow-airport"
+          - generic [ref=f5e31]: "01"
+          - text: Glasgow Airport
+        - link "02 University of Edinburgh" [ref=f5e32] [cursor=pointer]:
+          - /url: "#university-of-edinburgh"
+          - generic [ref=f5e33]: "02"
+          - text: University of Edinburgh
+        - link "03 St James Quarter" [ref=f5e34] [cursor=pointer]:
+          - /url: "#st-james-quarter"
+          - generic [ref=f5e35]: "03"
+          - text: St James Quarter
+        - link "04 SEC Armadillo" [ref=f5e36] [cursor=pointer]:
+          - /url: "#sec-armadillo"
+          - generic [ref=f5e37]: "04"
+          - text: SEC Armadillo
+        - link "05 Kelvingrove Art Gallery" [ref=f5e38] [cursor=pointer]:
+          - /url: "#kelvingrove-art-gallery"
+          - generic [ref=f5e39]: "05"
+          - text: Kelvingrove Art Gallery
+    - region "Project portfolio" [ref=f5e40]:
+      - generic [ref=f5e41]:
+        - article [ref=f5e42]:
+          - figure [ref=f5e43]:
+            - img "Glasgow Airport in the supplied project photograph" [ref=f5e45]
+          - generic [ref=f5e46]:
+            - paragraph [ref=f5e47]: 01 / Selected project
+            - paragraph [ref=f5e48]: Aviation
+            - heading "Glasgow Airport" [level=2] [ref=f5e49]
+            - paragraph [ref=f5e50]: A major Scottish aviation estate, shown here in project photography.
+            - link "Discuss a similar project" [ref=f5e51] [cursor=pointer]:
+              - /url: /quote
+              - text: Discuss a similar project
+              - generic [aria-hidden] [ref=f5e52]: ↗
+        - article [ref=f5e53]:
+          - figure [ref=f5e54]:
+            - generic "University of Edinburgh buildings in the supplied project footage" [ref=f5e55]
+          - generic [ref=f5e56]:
+            - paragraph [ref=f5e57]: 02 / Selected project
+            - paragraph [ref=f5e58]: Education
+            - heading "University of Edinburgh" [level=2] [ref=f5e59]
+            - paragraph [ref=f5e60]: University buildings and public spaces in Edinburgh.
+            - link "Discuss a similar project" [ref=f5e61] [cursor=pointer]:
+              - /url: /quote
+              - text: Discuss a similar project
+              - generic [aria-hidden] [ref=f5e62]: ↗
+        - article [ref=f5e63]:
+          - figure [ref=f5e64]:
+            - generic "Aerial view of St James in Edinburgh from the supplied project footage" [ref=f5e65]
+          - generic [ref=f5e66]:
+            - paragraph [ref=f5e67]: 03 / Selected project
+            - paragraph [ref=f5e68]: Retail & mixed use
+            - heading "St James Quarter" [level=2] [ref=f5e69]
+            - paragraph [ref=f5e70]: A retail and mixed-use destination in Edinburgh.
+            - link "Discuss a similar project" [ref=f5e71] [cursor=pointer]:
+              - /url: /quote
+              - text: Discuss a similar project
+              - generic [aria-hidden] [ref=f5e72]: ↗
+        - article [ref=f5e73]:
+          - figure [ref=f5e74]:
+            - generic "The SEC Armadillo beside the River Clyde" [ref=f5e75]
+          - generic [ref=f5e76]:
+            - paragraph [ref=f5e77]: 04 / Selected project
+            - paragraph [ref=f5e78]: Events & entertainment
+            - heading "SEC Armadillo" [level=2] [ref=f5e79]
+            - paragraph [ref=f5e80]: A distinctive events venue on Glasgow’s River Clyde waterfront.
+            - link "Discuss a similar project" [ref=f5e81] [cursor=pointer]:
+              - /url: /quote
+              - text: Discuss a similar project
+              - generic [aria-hidden] [ref=f5e82]: ↗
+        - article [ref=f5e83]:
+          - figure [ref=f5e84]:
+            - generic "Kelvingrove Art Gallery and its grounds in the supplied project footage" [ref=f5e85]
+          - generic [ref=f5e86]:
+            - paragraph [ref=f5e87]: 05 / Selected project
+            - paragraph [ref=f5e88]: Arts & culture
+            - heading "Kelvingrove Art Gallery" [level=2] [ref=f5e89]
+            - paragraph [ref=f5e90]: A landmark gallery and museum in Glasgow.
+            - link "Discuss a similar project" [ref=f5e91] [cursor=pointer]:
+              - /url: /quote
+              - text: Discuss a similar project
+              - generic [aria-hidden] [ref=f5e92]: ↗
+    - generic [ref=f5e94]:
+      - generic [ref=f5e95]:
+        - paragraph [ref=f5e96]: Talk to our team
+        - heading "Have a project in mind?" [level=2] [ref=f5e97]
+        - paragraph [ref=f5e98]: Energy assessment, compliance and building-performance support for projects across Scotland and the wider UK.
+      - link "Discuss a project" [ref=f5e99] [cursor=pointer]:
+        - /url: /quote
+        - text: Discuss a project
+        - generic [aria-hidden] [ref=f5e100]: ↗
+  - contentinfo [ref=f5e101]:
+    - generic [ref=f5e102]:
+      - generic [ref=f5e103]:
+        - img "Scottish Energy Services" [ref=f5e104]
+        - paragraph [ref=f5e105]: Trusted assessments and technical compliance delivery for homeowners, landlords, letting agents, and commercial property teams across the UK.
+      - generic [ref=f5e106]:
+        - heading "Contact" [level=4] [ref=f5e107]
+        - paragraph [ref=f5e108]:
+          - link "0141 255 1360" [ref=f5e109] [cursor=pointer]:
+            - /url: tel:01412551360
+          - link "info@scottishenergyservices.co.uk" [ref=f5e110] [cursor=pointer]:
+            - /url: mailto:info@scottishenergyservices.co.uk
+          - text: 272 Bath St, Glasgow G2 4JR
+      - generic [ref=f5e111]:
+        - heading "Quick Links" [level=4] [ref=f5e112]
+        - paragraph [ref=f5e113]:
+          - link "All Services" [ref=f5e114] [cursor=pointer]:
+            - /url: /services
+          - link "Request a Quote" [ref=f5e115] [cursor=pointer]:
+            - /url: /quote
+          - link "Contact" [ref=f5e116] [cursor=pointer]:
+            - /url: /contact
+    - generic [ref=f5e117]: © 2026 Scottish Energy Services. All rights reserved.
+  - generic [ref=f5e120]:
+    - button [ref=f5e121]
+    - button [ref=f5e127]
+    - button [ref=f5e131]
+    - button [ref=f5e139]

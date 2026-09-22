@@ -1,57 +1,31 @@
 ---
 import AccordionGallery from './AccordionGallery/AccordionGallery.jsx';
 
-const items = [
-  {
-    image: 'https://picsum.photos/id/1015/900/1200',
-    label: 'University estate programme',
-    link: '#projects'
-  },
-  {
-    image: 'https://picsum.photos/id/1018/900/1200',
-    label: 'Commercial property portfolio',
-    link: '#projects'
-  },
-  {
-    image: 'https://picsum.photos/id/1039/900/1200',
-    label: 'Building performance modelling',
-    link: '#projects'
-  },
-  {
-    image: 'https://picsum.photos/id/1043/900/1200',
-    label: 'Public sector estate',
-    link: '#projects'
-  },
-  {
-    image: 'https://picsum.photos/id/1044/900/1200',
-    label: 'Multi-site compliance programme',
-    link: '#projects'
-  }
-];
+import { projects } from '../data/projects';
 ---
 
 <section id="projects" class="section projects-showcase">
   <div class="container">
     <div class="projects-heading">
       <div>
-        <p class="eyebrow">Selected work</p>
-        <h2 class="section-title">Projects that show the scale of what we do.</h2>
+        <p class="eyebrow">Selected projects</p>
+        <h2 class="section-title">Work across some of Scotland’s most recognisable buildings and estates.</h2>
       </div>
       <p class="lead">
-        A snapshot of larger commissions, technical modelling and multi-site work.
-        These images are temporary while we prepare the real project photography and DesignBuilder visuals.
+        A selection of commercial, public-sector and institutional projects supported by Scottish Energy Services.
       </p>
     </div>
 
     <div class="projects-gallery-shell">
       <AccordionGallery
-        client:only="react"
-        items={items}
-        defaultIndex={2}
+        client:visible
+        items={projects}
+        defaultIndex={0}
         expandRatio={0.52}
         trigger="hover"
       />
     </div>
+    <a class="projects-view-all" href="/projects">View all selected projects <span aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -75,7 +49,7 @@ const items = [
   }
 
   .projects-heading .section-title {
-    max-width: 15ch;
+    max-width: 23ch;
     margin-bottom: 0;
     color: #fff;
   }
@@ -85,6 +59,8 @@ const items = [
     max-width: 46ch;
     color: #bccbd7;
   }
+
+  .projects-view-all { display:inline-flex;gap:1.5rem;color:white;margin-top:1.5rem;padding:.4rem 0;border-bottom:1px solid #6f8599;font-size:.9rem; }
 
   .projects-gallery-shell {
     border-top: 1px solid rgba(255, 255, 255, .14);
@@ -104,7 +80,7 @@ const items = [
     }
 
     .projects-heading .section-title {
-      max-width: 18ch;
+      max-width: 25ch;
     }
   }
 </style>

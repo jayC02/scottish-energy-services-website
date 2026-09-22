@@ -1,0 +1,338 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Scottish Energy Services home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Scottish Energy Services" [ref=e5]
+      - navigation "Primary navigation" [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Home" [ref=e9] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e10]:
+            - link "About" [ref=e11] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e12]:
+            - link "Services" [ref=e13] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e14]:
+            - link "Projects" [ref=e15] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=e16]:
+            - link "FAQ" [ref=e17] [cursor=pointer]:
+              - /url: /faq
+          - listitem [ref=e18]:
+            - link "Contact" [ref=e19] [cursor=pointer]:
+              - /url: /contact
+        - link "0141 255 1360" [ref=e20] [cursor=pointer]:
+          - /url: tel:01412551360
+        - link "Get a Quote" [ref=e21] [cursor=pointer]:
+          - /url: /quote
+  - main [ref=e22]:
+    - generic [ref=e24]:
+      - generic [ref=e26]:
+        - paragraph [ref=e27]: Services We Offer
+        - heading "Specialist energy and compliance services" [level=2] [ref=e28]
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - paragraph [ref=e31]: "01"
+          - heading "Commercial EPCs" [level=3] [ref=e32]
+          - paragraph [ref=e33]: Energy Performance Certificates for commercial properties across the UK.
+          - list [ref=e34]:
+            - listitem [ref=e35]: Suitable for sales, lettings, and compliance
+            - listitem [ref=e36]: Fast turnaround across the UK
+          - link "View service" [ref=e37] [cursor=pointer]:
+            - /url: /services/commercial-epcs
+            - text: View service
+            - generic [aria-hidden] [ref=e38]: →
+        - article [ref=e39]:
+          - paragraph [ref=e40]: "02"
+          - heading "SAPs" [level=3] [ref=e41]
+          - paragraph [ref=e42]: SAP calculations for new builds and residential developments.
+          - list [ref=e43]:
+            - listitem [ref=e44]: Part L compliance support
+            - listitem [ref=e45]: As-designed and as-built SAPs
+          - link "View service" [ref=e46] [cursor=pointer]:
+            - /url: /services/saps
+            - text: View service
+            - generic [aria-hidden] [ref=e47]: →
+        - article [ref=e48]:
+          - paragraph [ref=e49]: "03"
+          - heading "SBEM Calculations" [level=3] [ref=e50]
+          - paragraph [ref=e51]: SBEM calculations for non-domestic buildings.
+          - list [ref=e52]:
+            - listitem [ref=e53]: New builds and conversions
+            - listitem [ref=e54]: Part L compliance
+          - link "View service" [ref=e55] [cursor=pointer]:
+            - /url: /services/sbem-calculations
+            - text: View service
+            - generic [aria-hidden] [ref=e56]: →
+        - article [ref=e57]:
+          - paragraph [ref=e58]: "04"
+          - heading "Fire Risk Assessments (FRAs)" [level=3] [ref=e59]
+          - paragraph [ref=e60]: Compliant fire risk assessments for residential and commercial properties.
+          - list [ref=e61]:
+            - listitem [ref=e62]: Residential and commercial properties
+            - listitem [ref=e63]: Clear, actionable reports
+          - link "View service" [ref=e64] [cursor=pointer]:
+            - /url: /services/fras
+            - text: View service
+            - generic [aria-hidden] [ref=e65]: →
+        - article [ref=e66]:
+          - paragraph [ref=e67]: "05"
+          - heading "Section 63 Assessments" [level=3] [ref=e68]
+          - paragraph [ref=e69]: Section 63 compliance support for non-domestic properties in Scotland.
+          - list [ref=e70]:
+            - listitem [ref=e71]: Full compliance guidance
+            - listitem [ref=e72]: Action plans and improvement options
+          - link "View service" [ref=e73] [cursor=pointer]:
+            - /url: /services/section-63-assessments
+            - text: View service
+            - generic [aria-hidden] [ref=e74]: →
+        - article [ref=e75]:
+          - paragraph [ref=e76]: "06"
+          - heading "DECs" [level=3] [ref=e77]
+          - paragraph [ref=e78]: Display Energy Certificates for applicable public buildings.
+          - list [ref=e79]:
+            - listitem [ref=e80]: Public sector compliance
+            - listitem [ref=e81]: Annual and advisory report support
+          - link "View service" [ref=e82] [cursor=pointer]:
+            - /url: /services/decs
+            - text: View service
+            - generic [aria-hidden] [ref=e83]: →
+        - article [ref=e84]:
+          - paragraph [ref=e85]: "07"
+          - heading "Overheating Assessments (TM59)" [level=3] [ref=e86]
+          - paragraph [ref=e87]: TM59 overheating assessments for residential developments.
+          - list [ref=e88]:
+            - listitem [ref=e89]: Required for many residential schemes
+            - listitem [ref=e90]: Dynamic modelling approach
+          - link "View service" [ref=e91] [cursor=pointer]:
+            - /url: /services/overheating-assessments-tm59
+            - text: View service
+            - generic [aria-hidden] [ref=e92]: →
+        - article [ref=e93]:
+          - paragraph [ref=e94]: "08"
+          - heading "Dynamic Simulation Modelling (DSM)" [level=3] [ref=e95]
+          - paragraph [ref=e96]: Advanced building performance analysis using dynamic simulation.
+          - list [ref=e97]:
+            - listitem [ref=e98]: High-level technical modelling
+            - listitem [ref=e99]: Supports complex developments
+          - link "View service" [ref=e100] [cursor=pointer]:
+            - /url: /services/dynamic-simulation-modelling-dsm
+            - text: View service
+            - generic [aria-hidden] [ref=e101]: →
+        - article [ref=e102]:
+          - paragraph [ref=e103]: "09"
+          - heading "Domestic EPCs & Legionella Risk Assessments" [level=3] [ref=e104]
+          - paragraph [ref=e105]: Domestic EPCs and Legionella risk assessments for residential properties.
+          - list [ref=e106]:
+            - listitem [ref=e107]: Fast turnaround
+            - listitem [ref=e108]: Ideal for landlords and agents
+          - link "View service" [ref=e109] [cursor=pointer]:
+            - /url: /services/domestic-epcs-and-legionellas
+            - text: View service
+            - generic [aria-hidden] [ref=e110]: →
+    - generic [ref=e112]:
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - paragraph [ref=e115]: Selected projects
+          - heading "Work across some of Scotland’s most recognisable buildings and estates." [level=2] [ref=e116]
+        - paragraph [ref=e117]: A selection of commercial, public-sector and institutional projects supported by Scottish Energy Services.
+      - generic [ref=e120]:
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: Explore a project. Tap once to expand, again to view.
+          - button "Play project videos" [ref=e123] [cursor=pointer]
+        - group "Selected project gallery" [ref=e124]:
+          - link "Glasgow Airport, Aviation – view project" [ref=e125] [cursor=pointer]:
+            - /url: /projects#glasgow-airport
+            - img "Glasgow Airport in the supplied project photograph" [ref=e128]
+            - generic [aria-hidden]:
+              - generic:
+                - generic: Aviation
+                - generic: Glasgow Airport ↗
+          - link "University of Edinburgh, Education – view project" [ref=e129] [cursor=pointer]:
+            - /url: /projects#university-of-edinburgh
+            - generic [aria-hidden]: University of Edinburgh
+            - generic [aria-hidden]:
+              - generic:
+                - generic: Education
+                - generic: University of Edinburgh ↗
+          - link "St James Quarter, Retail & mixed use – view project" [ref=e133] [cursor=pointer]:
+            - /url: /projects#st-james-quarter
+            - generic [aria-hidden]: St James Quarter
+            - generic [aria-hidden]:
+              - generic:
+                - generic: Retail & mixed use
+                - generic: St James Quarter ↗
+          - link "SEC Armadillo, Events & entertainment – view project" [ref=e137] [cursor=pointer]:
+            - /url: /projects#sec-armadillo
+            - generic [aria-hidden]: SEC Armadillo
+            - generic [aria-hidden]:
+              - generic:
+                - generic: Events & entertainment
+                - generic: SEC Armadillo ↗
+          - link "Kelvingrove Art Gallery, Arts & culture – view project" [ref=e141] [cursor=pointer]:
+            - /url: /projects#kelvingrove-art-gallery
+            - generic [aria-hidden]: Kelvingrove Art Gallery
+            - generic [aria-hidden]:
+              - generic:
+                - generic: Arts & culture
+                - generic: Kelvingrove Art Gallery ↗
+      - link "View all selected projects" [ref=e145] [cursor=pointer]:
+        - /url: /projects
+        - text: View all selected projects
+        - generic [aria-hidden] [ref=e146]: ↗
+    - region [ref=e147]:
+      - generic [ref=e148]:
+        - generic [ref=e149]:
+          - paragraph [ref=e150]: Who we work with
+          - heading "Working with property teams across the UK" [level=2] [ref=e151]
+          - paragraph [ref=e152]: From universities and public bodies to consultants, landlords, retailers and hospitality groups.
+        - generic "Trusted client organisations" [ref=e153]:
+          - generic [ref=e154]:
+            - list [ref=e155]:
+              - listitem [ref=e156]:
+                - img "M&S" [ref=e157]
+              - listitem [ref=e158]:
+                - img "Savills" [ref=e159]
+              - listitem [ref=e160]:
+                - img "Glasgow City Council" [ref=e161]
+              - listitem [ref=e162]:
+                - img "Hilton" [ref=e163]
+              - listitem [ref=e164]:
+                - img "The University of Edinburgh" [ref=e165]
+              - listitem [ref=e166]:
+                - img "Max Fordham" [ref=e167]
+              - listitem [ref=e168]:
+                - img "Aldi" [ref=e169]
+              - listitem [ref=e170]:
+                - img "Knight Frank" [ref=e171]
+              - listitem [ref=e172]:
+                - img "AGS Airports" [ref=e173]
+              - listitem [ref=e174]:
+                - img "IHG Hotels & Resorts" [ref=e175]
+              - listitem [ref=e176]:
+                - img "University of Glasgow" [ref=e177]
+              - listitem [ref=e178]:
+                - img "Glasgow Life" [ref=e179]
+              - listitem [ref=e180]:
+                - img "Praxis Real Estate Management" [ref=e181]
+              - listitem [ref=e182]:
+                - img "Southside Housing Association" [ref=e183]
+              - listitem [ref=e184]:
+                - img "Marine & Lawn Hotels & Resorts" [ref=e185]
+              - listitem [ref=e186]:
+                - img "Peel Retail & Leisure" [ref=e187]
+              - listitem [ref=e188]:
+                - img "University of the West of Scotland" [ref=e189]
+              - listitem [ref=e190]:
+                - img "Keegans" [ref=e191]
+              - listitem [ref=e192]:
+                - img "Estama" [ref=e193]
+              - listitem [ref=e194]:
+                - img "Cairn Group" [ref=e195]
+            - list [aria-hidden] [ref=e196]:
+              - listitem [ref=e197]
+              - listitem [ref=e198]
+              - listitem [ref=e199]
+              - listitem [ref=e200]
+              - listitem [ref=e201]
+              - listitem [ref=e202]
+              - listitem [ref=e203]
+              - listitem [ref=e204]
+              - listitem [ref=e205]
+              - listitem [ref=e206]
+              - listitem [ref=e207]
+              - listitem [ref=e208]
+              - listitem [ref=e209]
+              - listitem [ref=e210]
+              - listitem [ref=e211]
+              - listitem [ref=e212]
+              - listitem [ref=e213]
+              - listitem [ref=e214]
+              - listitem [ref=e215]
+              - listitem [ref=e216]
+    - generic [ref=e218]:
+      - generic [ref=e219]:
+        - paragraph [ref=e220]: Why Scottish Energy Services
+        - heading "A practical delivery partner from first brief to final report." [level=2] [ref=e221]
+        - paragraph [ref=e222]: Clear scope, responsive coordination and technical reporting built around the needs of landlords, agents, architects, developers and property teams.
+        - link "Request a quote" [ref=e223] [cursor=pointer]:
+          - /url: /quote
+          - text: Request a quote
+          - generic [aria-hidden] [ref=e224]: →
+      - generic [ref=e225]:
+        - generic [ref=e226]:
+          - generic [ref=e227]: "01"
+          - generic [ref=e228]:
+            - strong [ref=e229]: Clear scope before instruction
+            - paragraph [ref=e230]: Know what is included, what information is needed and when to expect your report.
+        - generic [ref=e231]:
+          - generic [ref=e232]: "02"
+          - generic [ref=e233]:
+            - strong [ref=e234]: Practical reporting
+            - paragraph [ref=e235]: Outputs written for real project decisions, not just technical filing.
+        - generic [ref=e236]:
+          - generic [ref=e237]: "03"
+          - generic [ref=e238]:
+            - strong [ref=e239]: Responsive coordination
+            - paragraph [ref=e240]: Support that works across live projects, one-off instructions and larger programmes.
+        - generic [ref=e241]:
+          - generic [ref=e242]: "04"
+          - generic [ref=e243]:
+            - strong [ref=e244]: Scotland-based, UK-wide support
+            - paragraph [ref=e245]: Glasgow-based delivery with wider UK coverage where service scope allows.
+    - generic [ref=e247]:
+      - generic [ref=e248]:
+        - paragraph [ref=e249]: FAQs
+        - heading "Practical answers before you instruct" [level=2] [ref=e250]
+        - paragraph [ref=e251]: Clear guidance on timescales, coverage, compliance requirements, and service scope.
+      - generic [ref=e252]:
+        - group [ref=e253]:
+          - generic "Do you cover the whole UK? General" [ref=e254] [cursor=pointer]:
+            - generic [ref=e255]: Do you cover the whole UK?
+            - emphasis [ref=e256]: General
+        - group [ref=e257]:
+          - generic "How quickly can you complete a job? General" [ref=e258] [cursor=pointer]:
+            - generic [ref=e259]: How quickly can you complete a job?
+            - emphasis [ref=e260]: General
+        - group [ref=e261]:
+          - generic "What types of clients do you work with? General" [ref=e262] [cursor=pointer]:
+            - generic [ref=e263]: What types of clients do you work with?
+            - emphasis [ref=e264]: General
+        - group [ref=e265]:
+          - generic "How do I get a quote? General" [ref=e266] [cursor=pointer]:
+            - generic [ref=e267]: How do I get a quote?
+            - emphasis [ref=e268]: General
+        - group [ref=e269]:
+          - generic "Do you work on both residential and commercial properties? General" [ref=e270] [cursor=pointer]:
+            - generic [ref=e271]: Do you work on both residential and commercial properties?
+            - emphasis [ref=e272]: General
+        - group [ref=e273]:
+          - generic "Can you support one-off jobs as well as ongoing portfolios? General" [ref=e274] [cursor=pointer]:
+            - generic [ref=e275]: Can you support one-off jobs as well as ongoing portfolios?
+            - emphasis [ref=e276]: General
+  - contentinfo [ref=e277]:
+    - generic [ref=e278]:
+      - generic [ref=e279]:
+        - img "Scottish Energy Services" [ref=e280]
+        - paragraph [ref=e281]: Trusted assessments and technical compliance delivery for homeowners, landlords, letting agents, and commercial property teams across the UK.
+      - generic [ref=e282]:
+        - heading "Contact" [level=4] [ref=e283]
+        - paragraph [ref=e284]:
+          - link "0141 255 1360" [ref=e285] [cursor=pointer]:
+            - /url: tel:01412551360
+          - link "info@scottishenergyservices.co.uk" [ref=e286] [cursor=pointer]:
+            - /url: mailto:info@scottishenergyservices.co.uk
+          - text: 272 Bath St, Glasgow G2 4JR
+      - generic [ref=e287]:
+        - heading "Quick Links" [level=4] [ref=e288]
+        - paragraph [ref=e289]:
+          - link "All Services" [ref=e290] [cursor=pointer]:
+            - /url: /services
+          - link "Request a Quote" [ref=e291] [cursor=pointer]:
+            - /url: /quote
+          - link "Contact" [ref=e292] [cursor=pointer]:
+            - /url: /contact
+    - generic [ref=e293]: © 2026 Scottish Energy Services. All rights reserved.

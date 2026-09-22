@@ -1,0 +1,2 @@
+[  476185ms] [ERROR] TimeoutError: signal timed out @ http://127.0.0.1:4321/src/scripts/main.js?t=1789988916135:225
+[  626874ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:4321/@vite/client:1695

@@ -15,7 +15,7 @@ const {
 
 <script>
   const initSpotlights = () => {
-    document.querySelectorAll('[data-rb-spotlight]').forEach((card) => {
+    document.querySelectorAll<HTMLElement>('[data-rb-spotlight]').forEach((card) => {
       if (card.dataset.rbSpotlightReady === 'true') return;
       card.dataset.rbSpotlightReady = 'true';
 

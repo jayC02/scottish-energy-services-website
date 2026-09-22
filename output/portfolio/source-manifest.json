@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Edinburgh University.mp4",
+    "bytes": 8443209,
+    "sha256": "ec6d9be5b444f843ea94088658cb5dd6c30110e9be7eb4e3a3a4e7013dcf24ee"
+  },
+  {
+    "name": "St James Quarter.mp4",
+    "bytes": 124182499,
+    "sha256": "33dd0dff2405cf68c69094619b879704958a0965f6cb47d1ca77a2fbdafef583"
+  },
+  {
+    "name": "Armadillo.mp4",
+    "bytes": 95605332,
+    "sha256": "8b4e340693da7ade9a43af925b9bdf58dc4c5413ac137654b81db122e6f1b398"
+  },
+  {
+    "name": "Kelvingrove Art Gallery.mp4",
+    "bytes": 132712047,
+    "sha256": "186a2f4165511d697bb53b80f1c50930a8a2bb4757563ec13b2b53e43c6f604f"
+  },
+  {
+    "name": "glasgow airport.jpg",
+    "bytes": 3081757,
+    "sha256": "234145466b350cb0f4ae3be70c23359c17e2d5ad5f54cb3fcc234e5aa55390e1"
+  }
+]

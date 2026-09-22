@@ -2,18 +2,11 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
 import './AccordionGallery.css';
-
-const DEFAULT_ITEMS = [
-  { image: 'https://picsum.photos/id/1015/900/1200', label: 'Canyon', link: '#' },
-  { image: 'https://picsum.photos/id/1018/900/1200', label: 'Ridgeline', link: '#' },
-  { image: 'https://picsum.photos/id/1039/900/1200', label: 'Falls', link: '#' },
-  { image: 'https://picsum.photos/id/1043/900/1200', label: 'Harbour', link: '#' },
-  { image: 'https://picsum.photos/id/1044/900/1200', label: 'Skyline', link: '#' }
-];
+import { setProjectPlayback } from '../../scripts/project-playback.js';
 
 const AccordionGallery = ({
-  items = DEFAULT_ITEMS,
-  defaultIndex = 2,
+  items = EMPTY_ITEMS,
+  defaultIndex = 0,
   accentColor = '#ffffff',
   overlayColor = '#060010',
   textColor = '#ffffff',
@@ -33,6 +26,8 @@ const AccordionGallery = ({
   className = ''
 }) => {
   const rootRef = useRef(null);
+  const videoRefs = useRef([]);
+  const pointerTypeRef = useRef(null);
   const panelRefs = useRef([]);
   const mediaRefs = useRef([]);
   const barRefs = useRef([]);
@@ -41,14 +36,46 @@ const AccordionGallery = ({
   const firstRunRef = useRef(true);
   const mediaSizeRef = useRef(320);
 
-  const vertical = orientation === 'vertical';
+  const [mobile, setMobile] = useState(false);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  const [videosEnabled, setVideosEnabled] = useState(false);
+  const [inView, setInView] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  const vertical = orientation === 'vertical' || mobile;
   const count = items.length;
-  const [active, setActive] = useState(Math.min(Math.max(defaultIndex, 0), count - 1));
+  const [active, setActive] = useState(Math.min(Math.max(defaultIndex, 0), Math.max(0, count - 1)));
 
-  const prefersReduced =
-    typeof window !== 'undefined' && window.matchMedia
-      ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      : false;
+  useEffect(() => {
+    const smallScreen = window.matchMedia('(max-width: 640px)');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const connection = navigator.connection;
+    const updateMobile = () => setMobile(smallScreen.matches);
+    const updateMotion = () => {
+      setPrefersReduced(reduced.matches);
+      setVideosEnabled(!reduced.matches && !connection?.saveData);
+    };
+    const updateVisibility = () => setPageVisible(!document.hidden);
+    updateMobile(); updateMotion(); updateVisibility();
+    smallScreen.addEventListener('change', updateMobile);
+    reduced.addEventListener('change', updateMotion);
+    connection?.addEventListener('change', updateMotion);
+    document.addEventListener('visibilitychange', updateVisibility);
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0 });
+    if (rootRef.current) observer.observe(rootRef.current);
+    return () => {
+      observer.disconnect();
+      smallScreen.removeEventListener('change', updateMobile);
+      reduced.removeEventListener('change', updateMotion);
+      connection?.removeEventListener('change', updateMotion);
+      document.removeEventListener('visibilitychange', updateVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    const videos = videoRefs.current;
+    videos.forEach((video, index) => setProjectPlayback(video, index === active && videosEnabled && inView && pageVisible));
+    return () => videos.forEach(video => setProjectPlayback(video, false));
+  }, [active, videosEnabled, inView, pageVisible]);
 
   const applyLayout = useCallback(
     animate => {
@@ -155,7 +182,7 @@ const AccordionGallery = ({
   );
 
   const handleEnter = i => {
-    if (trigger === 'hover') setActive(i);
+    if (trigger === 'hover' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) setActive(i);
   };
 
   const handleClick = (i, e) => {
@@ -168,14 +195,21 @@ const AccordionGallery = ({
   const handleKeyDown = (i, e) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      setActive((i + 1) % count);
+      const next = (i + 1) % count; setActive(next); panelRefs.current[next]?.focus();
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      setActive((i - 1 + count) % count);
+      const next = (i - 1 + count) % count; setActive(next); panelRefs.current[next]?.focus();
     }
   };
 
   return (
+    <div className="ag-shell">
+    <div className="ag-controls">
+      <p>Explore a project. Tap once to expand, again to view.</p>
+      {items.some(item => item.type === 'video') && <button type="button" onClick={() => setVideosEnabled(enabled => !enabled)} aria-pressed={videosEnabled}>
+        {videosEnabled ? 'Pause project videos' : 'Play project videos'}
+      </button>}
+    </div>
     <div
       ref={rootRef}
       className={`accordion-gallery${vertical ? ' accordion-gallery--vertical' : ''}${className ? ` ${className}` : ''}`}
@@ -185,10 +219,10 @@ const AccordionGallery = ({
         '--ag-text': textColor,
         '--ag-gap': `${gap}px`,
         '--ag-radius': `${radius}px`,
-        height: vertical ? `${Math.round(height * 1.6)}px` : `${height}px`
+        height: vertical && !mobile ? `${Math.round(height * 1.6)}px` : `${height}px`
       }}
-      role="list"
-      aria-label="Image accordion gallery"
+      role="group"
+      aria-label="Selected project gallery"
     >
       {items.map((item, i) => {
         const isActive = i === active;
@@ -196,30 +230,42 @@ const AccordionGallery = ({
         return (
           <Tag
             key={i}
-            ref={el => (panelRefs.current[i] = el)}
+            ref={el => { panelRefs.current[i] = el; }}
             className={`ag-panel${isActive ? ' ag-panel--active' : ''}`}
             style={{ borderRadius: `${radius}px` }}
             href={item.link || undefined}
             onClick={e => handleClick(i, e)}
+            onPointerDown={event => { pointerTypeRef.current = event.pointerType; }}
             onMouseEnter={() => handleEnter(i)}
-            onFocus={() => setActive(i)}
+            onFocus={() => {
+              // Touch focus must not turn the first tap into immediate navigation.
+              if (pointerTypeRef.current !== 'touch' && pointerTypeRef.current !== 'pen') setActive(i);
+              pointerTypeRef.current = null;
+            }}
             onKeyDown={e => handleKeyDown(i, e)}
-            role="listitem"
             tabIndex={0}
-            aria-current={isActive ? 'true' : undefined}
-            aria-label={item.label}
+            aria-label={`${item.label}${item.sector ? `, ${item.sector}` : ""} – view project`}
           >
             <span className="ag-panel__frame">
-              <span className="ag-panel__media" ref={el => (mediaRefs.current[i] = el)}>
-                <img src={item.image} alt={item.alt || item.label || ''} draggable="false" />
+              <span className="ag-panel__media" ref={el => { mediaRefs.current[i] = el; }}>
+                {item.type === 'video' ? (
+                  <video ref={element => { videoRefs.current[i] = element; }} data-src={item.src}
+                    poster={item.poster} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1} />
+                ) : (
+                  <img src={item.src || item.image} srcSet={item.thumbnail ? `${item.thumbnail} 720w, ${item.src} 1440w` : undefined}
+                    sizes="(max-width: 640px) 92vw, 55vw" alt={item.alt || item.label || ''}
+                    loading="lazy" decoding="async" draggable="false" />
+                )}
               </span>
               <span className="ag-panel__overlay" aria-hidden="true" />
             </span>
+            {showLabels && <span className="ag-panel__collapsed" aria-hidden="true">{item.label}</span>}
             {showLabels && (
               <span className="ag-panel__label" aria-hidden="true">
-                <span className="ag-panel__bar" ref={el => (barRefs.current[i] = el)} />
-                <span className="ag-panel__text" ref={el => (textRefs.current[i] = el)}>
-                  {item.label}
+                <span className="ag-panel__bar" ref={el => { barRefs.current[i] = el; }} />
+                <span className="ag-panel__text" ref={el => { textRefs.current[i] = el; }}>
+                  <span className="ag-panel__sector">{item.sector}</span>
+                  <span className="ag-panel__name">{item.label} <span aria-hidden="true">↗</span></span>
                 </span>
               </span>
             )}
@@ -227,7 +273,11 @@ const AccordionGallery = ({
         );
       })}
     </div>
+    </div>
   );
 };
+
+/** @type {import("../../data/projects").Project[]} */
+const EMPTY_ITEMS = [];
 
 export default AccordionGallery;
