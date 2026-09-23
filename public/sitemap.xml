@@ -1,25 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://www.scottishenergyservices.co.uk/</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/about</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/areas</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/contact</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/faq</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/quote</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/commercial-epcs</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/decs</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/domestic-epcs-and-legionellas</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/dynamic-simulation-modelling-dsm</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/fras</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/overheating-assessments-tm59</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/saps</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/sbem-calculations</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/services/section-63-assessments</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/fire-risk-assessments-scotland</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/commercial-epc-glasgow-scotland</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/sap-calculations-scotland</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/sbem-calculations-scotland</loc></url>
-<url><loc>https://www.scottishenergyservices.co.uk/section-63-assessments-scotland</loc></url>
-  <url><loc>https://www.scottishenergyservices.co.uk/projects</loc></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><sitemap><loc>https://www.scottishenergyservices.co.uk/sitemap-0.xml</loc></sitemap></sitemapindex>

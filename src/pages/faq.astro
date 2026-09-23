@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 ---
-<BaseLayout title="FAQ" description="Answers to common questions about UK coverage, timescales, compliance services, and reporting.">
+<BaseLayout title="Energy & Building Compliance FAQs" description="Answers on Scottish EPCs, Section 63, SAP, SBEM, overheating and assessment timescales, with links to detailed service guidance.">
   <section class="section">
     <div class="container" data-reveal>
       <h1 class="section-title">Frequently asked questions</h1>
@@ -10,4 +10,9 @@ import FAQAccordion from '../components/FAQAccordion.astro';
     </div>
   </section>
   <FAQAccordion />
+  <section class="section"><div class="container">
+    <h2>Find the guidance for your assessment</h2>
+    <p>Read the source-linked guidance on <a href="/services/commercial-epcs">commercial EPCs</a>, <a href="/services/section-63-assessments">Section 63 and Action Plans</a>, <a href="/services/sbem-calculations">SBEM</a>, <a href="/services/saps">SAP</a>, <a href="/services/fras">Scottish fire risk assessments</a> and <a href="/services/overheating-assessments-tm59">TM59 overheating modelling</a>.</p>
+    <p>For water-system duties, see <a href="/services/domestic-epcs-and-legionellas">Legionella assessment guidance and HSE references</a>. Requirements depend on the property and relevant dates; the detailed pages identify their review date and sources.</p>
+  </div></section>
 </BaseLayout>

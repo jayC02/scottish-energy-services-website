@@ -1,0 +1,53 @@
+---
+import content from '../data/service-content.json';
+import type { ServiceSlug } from '../data/service-pages';
+const { slug } = Astro.props as { slug: ServiceSlug };
+const detail = content[slug];
+---
+<section class="section service-knowledge" aria-label="Assessment guidance">
+  <div class="container knowledge-layout">
+    <aside class="knowledge-index">
+      <p class="eyebrow">Planning your assessment</p>
+      <nav aria-label="On this service page">
+        {detail.sections.map((section, index) => <a href={`#assessment-${index + 1}`}>{section.heading}</a>)}
+        <a href="#assessment-information">Information to send</a>
+        <a href="#assessment-sources">Official guidance and sources</a>
+      </nav>
+    </aside>
+    <div class="knowledge-copy">
+      <p class="review-date">Last reviewed: <time datetime={detail.reviewed}>23 September 2026</time>. Reviewed against the official and technical sources below.</p>
+      <!-- TODO: Add a named SES technical reviewer and verified credentials when supplied by the business. -->
+      {detail.sections.map((section, index) => <section id={`assessment-${index + 1}`}>
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+      </section>)}
+      <section id="assessment-information">
+        <h2>What information should I send?</h2>
+        <ul>{detail.inputs.map(input => <li>{input}</li>)}</ul>
+        <p>Send what you have through our <a href="/quote">quote request form</a> or <a href="/contact">contact the Glasgow team</a> to confirm the scope. See our <a href="/projects">selected projects</a> for the buildings and estates featured in our portfolio.</p>
+      </section>
+      <section aria-labelledby="related-services-heading">
+        <h2 id="related-services-heading">Related assessments</h2>
+        <ul>{detail.related.map(related => <li><a href={`/services/${related}`}>{content[related as ServiceSlug].title}</a></li>)}</ul>
+      </section>
+      <section id="assessment-sources">
+        <h2>Official guidance and sources</h2>
+        <p>Requirements depend on the property, proposed work and relevant dates. The sources below distinguish statutory guidance from assessment methodology; SES provides assessment services, not regulatory approval.</p>
+        <ul>{detail.sources.map(source => <li><a href={source.href}>{source.label}</a></li>)}</ul>
+      </section>
+    </div>
+  </div>
+</section>
+<style>
+  .knowledge-layout { display:grid;grid-template-columns:minmax(210px,.65fr) minmax(0,1.6fr);gap:clamp(2rem,5vw,5rem); }
+  .knowledge-index nav { display:grid;gap:.8rem;font-size:.9rem;line-height:1.5;border-top:1px solid var(--border);padding-top:1rem; }
+  .knowledge-copy { max-width:76ch; }
+  .knowledge-copy section { scroll-margin-top:110px;padding:1.6rem 0;border-bottom:1px solid var(--border); }
+  .knowledge-copy section:first-of-type { padding-top:.5rem; }
+  .knowledge-copy h2 { font-size:clamp(1.35rem,2.2vw,1.8rem);line-height:1.25;color:var(--text-strong);margin:0 0 1rem; }
+  .knowledge-copy p,.knowledge-copy li { line-height:1.7;color:var(--muted); }
+  .knowledge-copy li { margin-bottom:.5rem; }
+  .knowledge-copy a,.knowledge-index a { color:var(--brand-strong);text-decoration:underline;text-underline-offset:3px; }
+  .review-date { font-size:.85rem; }
+  @media(max-width:760px){.knowledge-layout{grid-template-columns:1fr}.knowledge-index nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem 1rem}}
+</style>

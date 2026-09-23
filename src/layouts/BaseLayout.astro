@@ -7,9 +7,12 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  canonical?: string; image?: string; imageAlt?: string; type?: 'website' | 'article';
+  ogTitle?: string; ogDescription?: string; noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description } = Astro.props;
+const { title, description, ...seo } = Astro.props;
 ---
 <!doctype html>
 <html lang="en-GB">
@@ -25,7 +28,9 @@ const { title, description } = Astro.props;
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <SEO title={title} description={description} pathname={Astro.url.pathname} />
+    <SEO title={title} description={description} pathname={Astro.url.pathname} {...seo} />
+    {!['/', '/projects'].includes(Astro.url.pathname.replace(/\/$/, '') || '/') && <noscript><style is:inline>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>}
+    <!-- Add a real google-site-verification meta tag here only if using URL-prefix verification. -->
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />

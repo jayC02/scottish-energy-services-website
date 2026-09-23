@@ -1,5 +1,7 @@
 ---
 import type { Service } from '../data/services';
+import ServiceKnowledge from './ServiceKnowledge.astro';
+import type { ServiceSlug } from '../data/service-pages';
 
 const { service } = Astro.props as { service: Service };
 
@@ -17,7 +19,7 @@ const shortTitle = service.title
 
     <div class="container service-hero__layout">
       <div class="service-hero__copy" data-reveal>
-        <a class="service-back" href="/services">Services <span aria-hidden="true">/</span> {shortTitle}</a>
+        <nav class="service-back" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/services">Services</a><span aria-hidden="true">/</span><span aria-current="page">{shortTitle}</span></nav>
         <p class="service-kicker">Specialist service</p>
         <h1>{service.title}</h1>
         <p class="service-intro">{service.intro}</p>
@@ -96,6 +98,8 @@ const shortTitle = service.title
     </div>
   </section>
 
+  <ServiceKnowledge slug={service.slug as ServiceSlug} />
+
   <section class="section service-next">
     <div class="container service-next__layout">
       <div data-reveal>
@@ -158,6 +162,7 @@ const shortTitle = service.title
 
   .service-back {
     display: inline-flex;
+    flex-wrap: wrap;
     gap: .45rem;
     margin-bottom: 2.1rem;
     color: rgba(216, 230, 240, .72);

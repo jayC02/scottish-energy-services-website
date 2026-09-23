@@ -1,0 +1,712 @@
+{
+  "section-63-assessments": {
+    "title": "Section 63 Assessments Scotland",
+    "description": "Section 63 assessments and Action Plan support for Scottish commercial property sales and new leases. Understand the 1,000 m² threshold, exemptions and DEC route.",
+    "intro": "Section 63 assessment and Action Plan support for owners, agents and project teams dealing with non-domestic buildings in Scotland. Send the EPC, floor area and transaction details so we can establish the assessment scope.",
+    "highlights": [
+      "Applicability and evidence review",
+      "Action Plans and improvement options",
+      "Improvement or operational-rating route"
+    ],
+    "sections": [
+      {
+        "heading": "What is Section 63?",
+        "paragraphs": [
+          "Section 63 of the Climate Change (Scotland) Act 2009 provides the basis for assessing and improving the energy performance and emissions of existing non-domestic buildings. The detailed assessment duties are set out in the 2016 Regulations. This is an additional Scottish process, not another name for an EPC."
+        ]
+      },
+      {
+        "heading": "Which buildings and transactions are covered?",
+        "paragraphs": [
+          "The regulations concern non-domestic buildings, or building units, with a floor area greater than 1,000 m² when sold or leased to a new tenant. Floor area alone does not settle applicability: the transaction, building boundaries and exemptions must also be checked. An existing occupation or a refinancing exercise is not, by itself, the same as a sale or new letting."
+        ]
+      },
+      {
+        "heading": "Are there exemptions?",
+        "paragraphs": [
+          "Not all commercial properties are covered. Scottish Government guidance identifies buildings meeting energy standards equivalent to the 2002 building regulations, and buildings already improved through a qualifying Green Deal, as exemptions. Evidence of equivalent performance matters; do not assume an exemption solely from an approximate construction date. EPC exclusions and the precise transaction should also be reviewed before instruction."
+        ]
+      },
+      {
+        "heading": "What happens when a building is sold or leased?",
+        "paragraphs": [
+          "Where the rules apply, the owner must obtain an Action Plan. It must be available to prospective buyers or tenants and supplied to the new owner or tenant. A lease to a new tenant is a trigger; do not automatically treat every lease event as identical. Ask the transaction team to confirm the arrangement and the owner’s responsibilities early."
+        ]
+      },
+      {
+        "heading": "What is a Section 63 Action Plan?",
+        "paragraphs": [
+          "The Action Plan records improvement targets and measures for the building’s energy and carbon performance. It is prepared by a registered Section 63 adviser and lodged on the Scottish EPC Register. The assessment may identify fabric, lighting or building-services improvements; the relevant measures are determined for the actual building rather than taken from a universal upgrade list."
+        ]
+      },
+      {
+        "heading": "What improvement measures can be identified?",
+        "paragraphs": [
+          "Measures can include roof insulation, draught proofing and lighting controls where the assessment conditions are met. The building-specific assessment establishes the targets and suitable measures; it does not mean every property must install every measure. Discuss practical constraints and any proposed alternative approach with the adviser before committing to works."
+        ]
+      },
+      {
+        "heading": "What happens after the Action Plan?",
+        "paragraphs": [
+          "The owner chooses between carrying out the identified improvements and the permitted operational-rating route for deferring improvements. The regulations provide a 42-month period for completing improvement measures. Confirm the applicable deadline and completion evidence against the final Action Plan and any valid deferral arrangements. SES can explain the assessment outputs; the owner and project team remain responsible for arranging and evidencing the required follow-up."
+        ]
+      },
+      {
+        "heading": "Can improvements be deferred using a DEC?",
+        "paragraphs": [
+          "Scottish Government guidance allows improvements to be deferred through annual reporting of operational energy performance using a Display Energy Certificate (DEC). This uses measured consumption and requires continuing reporting; it is not a permanent exemption or a way to avoid obtaining the Action Plan. Confirm access to energy data and responsibility for annual renewals before choosing this route."
+        ]
+      },
+      {
+        "heading": "How is Section 63 different from an EPC?",
+        "paragraphs": [
+          "A commercial EPC is an asset assessment of the building under standard assumptions. A Section 63 Action Plan addresses improvement targets for a qualifying building. A DEC records operational performance based on measured use. These documents have different purposes and one should not be assumed to replace the others."
+        ]
+      },
+      {
+        "heading": "When should I start the assessment?",
+        "paragraphs": [
+          "Start while preparing the property for marketing, rather than shortly before exchange or a new lease. The initial scope review needs the existing EPC, measured floor area, drawings and evidence relevant to exemptions. Allow time to clarify shared services, access restrictions and missing records."
+        ]
+      },
+      {
+        "heading": "How does SES handle an instruction?",
+        "paragraphs": [
+          "We review the available information, confirm the scope and fee, arrange the survey and assessment work, and explain the resulting documentation and next steps. Glasgow, Edinburgh and Central Belt instructions can be considered alongside wider Scottish sites. Timing depends on the building, access and the evidence available; confirm the required transaction date when enquiring."
+        ]
+      }
+    ],
+    "inputs": [
+      "Address, building use, floor area and boundaries of the property being sold or let",
+      "Existing EPC, any previous Action Plan or DEC, and evidence relevant to exemptions",
+      "Plans and information on insulation, lighting, heating, cooling and ventilation",
+      "Sale or new-lease timetable, survey access and the owner’s contact details",
+      "Metered consumption and reporting arrangements if considering the DEC route"
+    ],
+    "related": [
+      "commercial-epcs",
+      "decs",
+      "sbem-calculations"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Government: Section 63 requirements",
+        "href": "https://www.gov.scot/publications/energy-performance-of-existing-non-domestic-buildings-information/"
+      },
+      {
+        "label": "Assessment of Energy Performance of Non-domestic Buildings (Scotland) Regulations 2016",
+        "href": "https://www.legislation.gov.uk/ssi/2016/146/contents"
+      },
+      {
+        "label": "Scottish EPC Register",
+        "href": "https://www.scottishepcregister.org.uk/"
+      },
+      {
+        "label": "2016 Regulations: policy note and implementation period",
+        "href": "https://www.legislation.gov.uk/ssi/2016/146/pdfs/ssipn_20160146_en.pdf"
+      },
+      {
+        "label": "Scottish Government: Section 63 methodology test cases",
+        "href": "https://www.gov.scot/publications/scotland-ncm-software-validation-dsm-fi-sbem-validation-guidance-document/pages/5/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "commercial-epcs": {
+    "title": "Commercial EPC Assessments Glasgow & Scotland",
+    "description": "Commercial and non-domestic EPC assessments in Glasgow, Edinburgh and across Scotland. Survey, energy rating, lodgement and recommendations for owners and agents.",
+    "intro": "Commercial Energy Performance Certificates for offices, shops, industrial buildings and other non-domestic properties in Glasgow, Edinburgh and wider Scotland. We assess the building, prepare the energy model and arrange certificate lodgement.",
+    "highlights": [
+      "Non-domestic site assessment",
+      "Certificate and recommendations",
+      "Single properties and portfolios"
+    ],
+    "sections": [
+      {
+        "heading": "What is a commercial EPC?",
+        "paragraphs": [
+          "A commercial EPC, also called a non-domestic EPC, describes the building’s energy performance using standardised assumptions about use. It is an asset rating rather than a record of the occupier’s bills. The accompanying recommendations identify potential improvements, subject to their suitability for the property."
+        ]
+      },
+      {
+        "heading": "When do I need an EPC in Scotland?",
+        "paragraphs": [
+          "An EPC is normally required when an applicable building is constructed, sold or let to a new tenant. Owners arranging a sale or letting should establish the EPC position before marketing and make the required information available to prospective buyers or tenants. The Scottish Government’s requirements guidance explains the duties and advertising rules."
+        ]
+      },
+      {
+        "heading": "How long is a commercial EPC valid?",
+        "paragraphs": [
+          "Under the current Scottish system, an EPC can be valid for up to ten years. Check the certificate and register record, and do not assume an old certificate represents a substantially altered building. The Scottish Government’s latest reform update says the current system remains until spring 2028; future certificates and transitional rules should not be confused with today’s requirements. Check the linked reform update for a transaction affected by the changeover."
+        ]
+      },
+      {
+        "heading": "What buildings are exempt?",
+        "paragraphs": [
+          "Exceptions exist, including some temporary buildings, stand-alone buildings under 50 m² and certain low-energy-demand industrial or agricultural premises. Conditions apply to each category. Do not assume that every listed building, empty unit or unheated property is exempt; provide its actual use and services information for a scope review."
+        ]
+      },
+      {
+        "heading": "What does the assessor inspect?",
+        "paragraphs": [
+          "The assessment records geometry, construction, openings, insulation evidence, heating, cooling, hot water, ventilation, lighting and controls relevant to the energy model. Access is needed to representative spaces and building services. Plans and dated specifications help establish details that cannot be confirmed by inspection alone."
+        ]
+      },
+      {
+        "heading": "What affects the rating and what can I improve?",
+        "paragraphs": [
+          "The model reflects fabric performance and building services, including system efficiencies and controls. Missing evidence may restrict which performance values can be used. Reviewing the recommendations alongside maintenance plans can help identify suitable upgrades; no particular rating or saving can be promised before the assessment."
+        ]
+      },
+      {
+        "heading": "What do I receive and how long does it take?",
+        "paragraphs": [
+          "The agreed scope includes the assessment, EPC lodgement and recommendation report. Existing SES programme guidance is 3–6 working days for most standard instructions, subject to access, complexity and complete information. Confirm the programme before relying on it for a sale or lease deadline."
+        ]
+      },
+      {
+        "heading": "What is the Scottish EPC Register?",
+        "paragraphs": [
+          "It is the register used to find Scottish EPC records and registered assessors. Check for an existing certificate before ordering a replacement, and keep the lodged document with the property records. Qualifying larger buildings may also need a Section 63 Action Plan."
+        ]
+      },
+      {
+        "heading": "Can you cover Glasgow, Edinburgh and multi-site instructions?",
+        "paragraphs": [
+          "SES is based at 272 Bath St, Glasgow, G2 4JR. Send the addresses, areas and access contacts for sites in Glasgow, Edinburgh, the Central Belt or elsewhere in Scotland. We can scope a single instruction or a portfolio programme; coverage outside Scotland is confirmed against the service and location."
+        ]
+      }
+    ],
+    "inputs": [
+      "Property address, use, approximate floor area and sale or letting deadline",
+      "Floor plans, existing EPC and evidence of previous alterations",
+      "Heating, cooling, ventilation, lighting and hot-water specifications",
+      "Access contacts, occupied areas and any shared plant or landlord services"
+    ],
+    "related": [
+      "section-63-assessments",
+      "sbem-calculations",
+      "decs"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Government: EPC guide",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/"
+      },
+      {
+        "label": "Scottish Government: EPC requirements",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/pages/requirements/"
+      },
+      {
+        "label": "Scottish Government: EPC exceptions",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/pages/exceptions/"
+      },
+      {
+        "label": "Scottish Government: EPC reform updates",
+        "href": "https://www.gov.scot/publications/energy-performance-certificate-reform-updates/"
+      },
+      {
+        "label": "Scottish EPC Register",
+        "href": "https://www.scottishepcregister.org.uk/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "sbem-calculations": {
+    "title": "SBEM Calculations Scotland",
+    "description": "SBEM calculations for Scottish non-domestic projects. Design and completion-stage modelling for building warrant submissions and commercial EPC coordination.",
+    "intro": "SBEM calculations for non-domestic development projects across Scotland, with design-stage feedback and completion-stage updates coordinated around your drawings and building-services specification.",
+    "highlights": [
+      "Scottish Section 6 context",
+      "Design and completion stages",
+      "Fabric and services coordination"
+    ],
+    "sections": [
+      {
+        "heading": "What is SBEM?",
+        "paragraphs": [
+          "The Simplified Building Energy Model calculates non-domestic energy performance under standard operating assumptions. It is used within the National Calculation Methodology for compliance assessment and energy certification. It is not a prediction of the occupier’s future bills and should not be used to size plant."
+        ]
+      },
+      {
+        "heading": "When is SBEM needed in Scotland?",
+        "paragraphs": [
+          "New non-domestic building projects commonly need energy calculations to demonstrate the applicable Scottish Building Standards. Extensions, alterations and conversions require a project-specific review: the route depends on the work, building use and warrant date. Scotland uses Section 6 energy standards; England’s Part L should not be cited as the Scottish requirement."
+        ]
+      },
+      {
+        "heading": "Which version of the standards applies?",
+        "paragraphs": [
+          "Use the handbook and approved calculation method applicable to the warrant or works date, including relevant transitional provisions. The April 2026 non-domestic handbook applies from 6 April 2026. Consultation software or proposed standards should not be treated as the approved route for a current submission."
+        ]
+      },
+      {
+        "heading": "Design-stage and completion-stage calculations",
+        "paragraphs": [
+          "At design stage, drawings and specifications form the proposed model. Review any shortfall while fabric, glazing, lighting and HVAC decisions can still change. At completion, reconcile the model with what was actually built and obtain the necessary supporting evidence. An earlier design result is not a substitute for an accurate completion record."
+        ]
+      },
+      {
+        "heading": "What information prevents avoidable rework?",
+        "paragraphs": [
+          "Agree thermal zones and uses, fabric build-ups, glazing performance, air permeability, services efficiencies, lighting power and controls. Common coordination problems include inconsistent drawings, unspecified plant efficiencies, revised glazing and unrecorded substitutions. These are reasons to review the model, not proof that a building will fail."
+        ]
+      },
+      {
+        "heading": "How does SBEM relate to an EPC or DSM?",
+        "paragraphs": [
+          "SBEM can support a commercial EPC using the applicable certification conventions, but an EPC and a compliance report serve different purposes. More complex systems or a detailed design question may need dynamic simulation. Agree the output needed by the verifier, property team or design team before modelling starts."
+        ]
+      }
+    ],
+    "inputs": [
+      "Plans, elevations, sections, orientation and room uses",
+      "Fabric U-values, glazing area, g-values and thermal-bridge information",
+      "HVAC, hot-water, ventilation, lighting and controls schedules",
+      "Air-permeability target or test evidence, renewables and warrant date",
+      "As-built specifications and changes for completion-stage work"
+    ],
+    "related": [
+      "commercial-epcs",
+      "dynamic-simulation-modelling-dsm",
+      "saps"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Building Standards: non-domestic handbook, April 2026",
+        "href": "https://www.gov.scot/publications/building-standards-technical-handbook-non-domestic-april-2026-pdf/"
+      },
+      {
+        "label": "National Calculation Methodology: SBEM and DSM",
+        "href": "https://www.uk-ncm.org.uk/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "saps": {
+    "title": "SAP Calculations Scotland",
+    "description": "SAP calculations for Scottish housing projects. Design-stage energy assessment, as-built updates and EPC coordination for architects, developers and self-builders.",
+    "intro": "SAP calculations for residential projects across Scotland. We work from architectural drawings and specifications to assess the design, identify changes needed and coordinate the completion-stage energy information.",
+    "highlights": [
+      "Scottish domestic energy standards",
+      "Design and as-built calculations",
+      "Architect and developer coordination"
+    ],
+    "sections": [
+      {
+        "heading": "What are SAP calculations?",
+        "paragraphs": [
+          "SAP is the Standard Assessment Procedure for the Energy Rating of Dwellings. It evaluates dwelling energy performance from geometry, fabric and services information. It is a calculation method used for residential assessment, whereas SBEM addresses non-domestic buildings."
+        ]
+      },
+      {
+        "heading": "When is SAP required?",
+        "paragraphs": [
+          "New dwellings normally need calculations demonstrating the applicable Scottish domestic energy standards. For a conversion or extension, the evidence route depends on the work and the relevant handbook provisions; not every alteration needs the same full-dwelling calculation. Confirm the scope with the design team and verifier."
+        ]
+      },
+      {
+        "heading": "How do Scottish Building Standards affect the assessment?",
+        "paragraphs": [
+          "Scottish projects should use the applicable Section 6 guidance and approved software for their warrant date, rather than assuming England’s Part L applies. The domestic handbook for warrants from 6 April 2026 is linked below. Older warrants may need an earlier edition and its transitional arrangements."
+        ]
+      },
+      {
+        "heading": "What is the difference between design and as-built SAP?",
+        "paragraphs": [
+          "Design-stage calculations test the proposed construction before key specifications are fixed. As-built calculations are updated to reflect installed products, construction changes and supporting test evidence. Keeping a change record helps avoid late discrepancies between the approved design and completion information."
+        ]
+      },
+      {
+        "heading": "Does SAP produce the final EPC?",
+        "paragraphs": [
+          "SAP assessment information can support the new dwelling’s EPC, but a design-stage calculation alone is not the final lodged certificate. Confirm completion evidence and EPC delivery within the agreed instruction. An existing home assessment may use a different evidence process."
+        ]
+      },
+      {
+        "heading": "When should the architect commission the work?",
+        "paragraphs": [
+          "Begin once coordinated plans and an initial specification are available. Testing insulation, glazing, heating, hot water and ventilation options at this stage is more useful than discovering a shortfall after procurement. Provide the warrant deadline and intended completion date when requesting a programme."
+        ]
+      }
+    ],
+    "inputs": [
+      "Dimensioned plans, elevations, sections and orientation",
+      "Wall, roof and floor build-ups; window and door specifications",
+      "Heating, hot-water, ventilation and renewable-system details",
+      "Thermal-bridge evidence, airtightness target and completion test results",
+      "Warrant date, dwelling schedule and record of design changes"
+    ],
+    "related": [
+      "domestic-epcs-and-legionellas",
+      "overheating-assessments-tm59",
+      "sbem-calculations"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Building Standards: domestic handbook, April 2026",
+        "href": "https://www.gov.scot/publications/building-standards-technical-handbook-domestic-april-2026-pdf/"
+      },
+      {
+        "label": "National Calculation Methodology: SBEM and DSM",
+        "href": "https://www.uk-ncm.org.uk/"
+      },
+      {
+        "label": "Scottish Government: EPC guide",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "dynamic-simulation-modelling-dsm": {
+    "title": "Dynamic Simulation Modelling Scotland",
+    "description": "Dynamic simulation modelling for complex buildings in Scotland. Energy, HVAC, comfort and overheating studies with clear assumptions and design-stage reporting.",
+    "intro": "Detailed building-performance modelling for design and property teams in Scotland and across the UK, scoped around the energy, comfort or overheating question the project needs to answer.",
+    "highlights": [
+      "Time-based building analysis",
+      "Complex fabric and HVAC studies",
+      "Documented assumptions and outputs"
+    ],
+    "sections": [
+      {
+        "heading": "What is Dynamic Simulation Modelling?",
+        "paragraphs": [
+          "DSM represents how a building responds over time to weather, occupancy, fabric and services. It can examine energy demand, internal temperatures and comfort under defined scenarios. Results depend on the inputs and intended use of the model; they are not a guarantee of measured performance."
+        ]
+      },
+      {
+        "heading": "How does DSM differ from SBEM?",
+        "paragraphs": [
+          "SBEM is a simplified compliance and certification method using standard assumptions. Dynamic modelling can investigate time-dependent behaviour and complex design choices in more detail. A design simulation is not automatically an approved compliance model: the software, assessor scope and jurisdiction must match the required output."
+        ]
+      },
+      {
+        "heading": "When is detailed modelling useful?",
+        "paragraphs": [
+          "Consider it where HVAC operation, mixed uses, large glazed areas, unusual occupancy or overheating concerns need closer investigation. Architects and engineers should commission it while there is still scope to change orientation, glazing, shading, ventilation and plant strategy."
+        ]
+      },
+      {
+        "heading": "How does DesignBuilder fit into the process?",
+        "paragraphs": [
+          "DesignBuilder is one example of a modelling interface that uses EnergyPlus for time-based simulation, including fabric, HVAC and comfort studies. Software capabilities do not establish an assessor’s accreditation or the approval status of a particular calculation. Confirm the proposed tool and method in the project scope."
+        ]
+      },
+      {
+        "heading": "What outputs should the project team expect?",
+        "paragraphs": [
+          "Agree the required outputs before the model is built: model assumptions, energy or temperature results, comparison of selected scenarios, limitations and recommendations for the design team. Where TM59 is the brief, reporting should identify the assessed spaces, assumptions and overheating criteria rather than merely presenting a building-wide energy total."
+        ]
+      },
+      {
+        "heading": "Can DSM support Scottish compliance?",
+        "paragraphs": [
+          "Approved DSM routes can be used within the non-domestic calculation framework where appropriate. Scottish Section 6 requirements and England/Wales Part L routes are jurisdiction-specific. An operational-energy or comfort study should be commissioned separately from a statutory output when its assumptions differ."
+        ]
+      }
+    ],
+    "inputs": [
+      "Coordinated building geometry and orientation",
+      "Fabric, glazing and shading specifications",
+      "Occupancy, equipment gains and operating schedules",
+      "HVAC system descriptions, ventilation and controls",
+      "Study objective, weather assumptions, comparison options and reporting deadline"
+    ],
+    "related": [
+      "overheating-assessments-tm59",
+      "sbem-calculations",
+      "commercial-epcs"
+    ],
+    "sources": [
+      {
+        "label": "National Calculation Methodology: SBEM and DSM",
+        "href": "https://www.uk-ncm.org.uk/"
+      },
+      {
+        "label": "DesignBuilder: simulation capabilities",
+        "href": "https://designbuilder.co.uk/simulation"
+      },
+      {
+        "label": "Scottish Building Standards: non-domestic handbook, April 2026",
+        "href": "https://www.gov.scot/publications/building-standards-technical-handbook-non-domestic-april-2026-pdf/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "overheating-assessments-tm59": {
+    "title": "TM59 Overheating Assessments Scotland",
+    "description": "TM59 overheating assessments for Scottish residential designs. Review glazing, shading and ventilation through dynamic modelling before specifications are fixed.",
+    "intro": "TM59 overheating assessments for residential design teams in Scotland. We model room conditions and test mitigation options so the project can address overheating risks while the design is still adaptable.",
+    "highlights": [
+      "Residential thermal modelling",
+      "Glazing, shading and ventilation review",
+      "Clear assumptions and mitigation options"
+    ],
+    "sections": [
+      {
+        "heading": "What is a TM59 assessment?",
+        "paragraphs": [
+          "CIBSE TM59 provides a methodology for assessing overheating risk in homes through dynamic thermal modelling. It considers conditions in occupied rooms using defined criteria and assumptions. It is different from an EPC, which addresses energy performance rather than room-by-room summer comfort."
+        ]
+      },
+      {
+        "heading": "Is TM59 a legal requirement for every Scottish home?",
+        "paragraphs": [
+          "No blanket claim should be made. TM59 is a technical methodology; whether it is requested depends on the applicable Scottish standards, planning conditions and project brief. England’s Part O requirements should not be presented as Scottish law. Agree the required compliance evidence with the design team and relevant authority."
+        ]
+      },
+      {
+        "heading": "What affects the assessment?",
+        "paragraphs": [
+          "Glazing area and solar performance, orientation, shading, ventilation openings, thermal mass, occupancy and internal gains all influence results. Window opening assumptions should reflect practical restrictions such as safety, noise and security. A model based on unrealistic ventilation assumptions can mislead a design decision."
+        ]
+      },
+      {
+        "heading": "How is the modelling carried out?",
+        "paragraphs": [
+          "The scope establishes rooms to assess, weather data, occupancy assumptions and the applicable methodology. A baseline model is tested, then agreed changes are compared. The report should describe the assumptions, results, any criteria not met and the mitigation measures assessed."
+        ]
+      },
+      {
+        "heading": "What mitigation can be tested?",
+        "paragraphs": [
+          "Options can include adjusting glazing, adding external shading and revising the ventilation strategy. Compare feasible passive measures early with the architect and services engineer. A successful modelled option must still be incorporated into the actual design and used as assumed."
+        ]
+      },
+      {
+        "heading": "When should I arrange it?",
+        "paragraphs": [
+          "Commission the assessment before glazing, facade and ventilation specifications are fixed. Provide the design issue date and identify constraints so mitigation testing addresses options that can actually be built. Update the model if significant design changes affect the assessed assumptions."
+        ]
+      }
+    ],
+    "inputs": [
+      "Plans, elevations, sections and site orientation",
+      "Glazing g-values, frame/opening dimensions and shading geometry",
+      "Room uses, occupancy assumptions and internal gains",
+      "Ventilation strategy and restrictions on window opening",
+      "Construction build-ups, design stage and the assessment brief"
+    ],
+    "related": [
+      "dynamic-simulation-modelling-dsm",
+      "saps"
+    ],
+    "sources": [
+      {
+        "label": "CIBSE: overheating methodology and guidance",
+        "href": "https://www.cibse.org/policy-advocacy/key-policy-areas/health-and-wellbeing/overheating-position-statement/"
+      },
+      {
+        "label": "Scottish Building Standards: domestic handbook, April 2026",
+        "href": "https://www.gov.scot/publications/building-standards-technical-handbook-domestic-april-2026-pdf/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "decs": {
+    "title": "Display Energy Certificates Scotland",
+    "description": "Display Energy Certificates and operational ratings for Scotland’s Section 63 reporting route. Energy-data review and annual reporting support for property teams.",
+    "intro": "Display Energy Certificate and operational-rating support for Scottish properties using the Section 63 reporting route. We review the building and consumption data before confirming the assessment requirements.",
+    "highlights": [
+      "Measured energy performance",
+      "Section 63 reporting in Scotland",
+      "Consumption and metering review"
+    ],
+    "sections": [
+      {
+        "heading": "What is a Display Energy Certificate?",
+        "paragraphs": [
+          "A DEC reports operational energy performance using measured consumption, whereas an EPC is an asset assessment based on standardised use. Actual consumption is affected by occupation and management as well as the building itself, so the two ratings should not be treated as interchangeable."
+        ]
+      },
+      {
+        "heading": "When is a DEC relevant in Scotland?",
+        "paragraphs": [
+          "Under the Section 63 process, an owner can defer identified improvements by reporting operational energy performance annually through a DEC. This is distinct from Scottish requirements to display an EPC in qualifying buildings. Do not apply England and Wales public-building DEC rules automatically to a Scottish property."
+        ]
+      },
+      {
+        "heading": "How does annual reporting work?",
+        "paragraphs": [
+          "For the Scottish Section 63 deferral route, plan for ongoing annual reporting rather than treating the first DEC as a permanent solution. Establish the reporting period, meter coverage, access to consumption records and who is responsible for renewal. Confirm the current Action Plan and route before commissioning the work."
+        ]
+      },
+      {
+        "heading": "What energy information is needed?",
+        "paragraphs": [
+          "Provide a complete consumption record for the relevant assessment period, supported by meter readings or supplier records. Explain shared meters, landlord and tenant supplies, changes of occupancy and fuels used. Gaps or inconsistent boundaries should be resolved before relying on the data."
+        ]
+      },
+      {
+        "heading": "What will SES deliver?",
+        "paragraphs": [
+          "We review the instruction and energy records, identify missing information and agree the certificate and reporting scope. Advisory reporting and improvement priorities can be discussed as part of the instruction. For public estates outside Scotland, confirm the location and applicable requirements before assuming the same route applies."
+        ]
+      }
+    ],
+    "inputs": [
+      "Property address, use, floor area and occupancy information",
+      "Current Action Plan, previous DEC and relevant EPC",
+      "Fuel and electricity consumption with reporting dates",
+      "Meter boundaries, shared supplies and evidence for any data adjustments"
+    ],
+    "related": [
+      "section-63-assessments",
+      "commercial-epcs"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Government: Section 63 requirements",
+        "href": "https://www.gov.scot/publications/energy-performance-of-existing-non-domestic-buildings-information/"
+      },
+      {
+        "label": "Scottish Government: EPC guide",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/"
+      },
+      {
+        "label": "Scottish EPC Register",
+        "href": "https://www.scottishepcregister.org.uk/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "fras": {
+    "title": "Fire Risk Assessments Glasgow & Scotland",
+    "description": "Fire risk assessments in Glasgow and across Scotland for businesses, landlords and dutyholders. Premises inspection, clear findings and prioritised actions.",
+    "intro": "Fire risk assessments for Scottish premises, with a clear record of findings and prioritised actions. We confirm the building use, occupancy and assessment scope before arranging the inspection.",
+    "highlights": [
+      "Premises and occupancy review",
+      "Prioritised recommendations",
+      "Scottish dutyholder context"
+    ],
+    "sections": [
+      {
+        "heading": "Who needs a fire risk assessment in Scotland?",
+        "paragraphs": [
+          "The Fire (Scotland) Act 2005 and Fire Safety (Scotland) Regulations 2006 set duties for most non-domestic premises, including workplaces, premises open to the public and licensed HMOs. Those responsible must assess and manage fire risks. The exact duties depend on control of the premises and their use."
+        ]
+      },
+      {
+        "heading": "Does the same law apply to every residential property?",
+        "paragraphs": [
+          "No. Individual homes and the common areas of ordinary blocks of flats should not automatically be described as subject to the same regime as non-domestic premises. HMOs, sleeping accommodation and other relevant premises need their own scope review. Residential fire-safety work can also involve other duties and specialist assessments."
+        ]
+      },
+      {
+        "heading": "What does the assessment consider?",
+        "paragraphs": [
+          "The review considers ignition and fuel hazards, people at risk, escape arrangements, warning systems, emergency lighting and management procedures within the agreed scope. Visible fire precautions and available maintenance records inform the findings. Intrusive inspection or specialist testing must be separately identified where needed."
+        ]
+      },
+      {
+        "heading": "What happens after the report?",
+        "paragraphs": [
+          "The report records findings and prioritises recommended actions. The dutyholder remains responsible for managing risk, implementing appropriate measures and keeping arrangements under review. A report is not a legal guarantee or a substitute for maintenance, training and effective fire-safety management."
+        ]
+      },
+      {
+        "heading": "When should the assessment be reviewed?",
+        "paragraphs": [
+          "Review it when significant changes affect the premises, occupants or fire precautions, or when there is reason to doubt its validity. Agree an appropriate review programme for the premises. Do not assume a universal expiry date covers every building and use."
+        ]
+      },
+      {
+        "heading": "How do I arrange a survey?",
+        "paragraphs": [
+          "Send the address, use, occupancy, floor area and any existing assessment. Explain access restrictions and the reason for the instruction. We support enquiries in Glasgow, Edinburgh and wider Scotland, with timing confirmed against scope and availability."
+        ]
+      },
+      {
+        "heading": "What should a Glasgow business prepare before the visit?",
+        "paragraphs": [
+          "Arrange access to the areas within the assessment scope, identify who controls shared premises and gather the previous assessment, alarm and emergency-lighting records. Tell us about sleeping accommodation, changes of use, vulnerable occupants or outstanding actions. For multi-occupancy premises, clarify landlord and tenant responsibilities before the survey."
+        ]
+      },
+      {
+        "heading": "What affects the fee and survey programme?",
+        "paragraphs": [
+          "The fee depends on the size and use of the premises, occupancy, complexity, access and the assessment scope. Send plans and the existing report with your enquiry so the quotation reflects the building. Existing SES guidance is 3–7 working days for most reports after inspection; confirm availability and reporting dates before instruction. There is no published fixed fee or guaranteed inspection date."
+        ]
+      }
+    ],
+    "inputs": [
+      "Address, plans, building use and occupancy including vulnerable occupants",
+      "Previous risk assessments and outstanding actions",
+      "Fire-alarm, emergency-lighting and maintenance records",
+      "Evacuation arrangements, training records and access contacts"
+    ],
+    "related": [
+      "commercial-epcs",
+      "domestic-epcs-and-legionellas"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Government: non-domestic fire safety",
+        "href": "https://www.gov.scot/policies/fire-and-rescue/non-domestic-fire-safety/"
+      },
+      {
+        "label": "Scottish Government: fire risk assessment and residential scope",
+        "href": "https://www.gov.scot/publications/single-building-assessment-specification-sba/pages/6/"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  },
+  "domestic-epcs-and-legionellas": {
+    "title": "Domestic EPCs & Legionella Assessments Scotland",
+    "description": "Domestic EPC and Legionella risk assessment support for Scottish landlords, letting agents and homeowners. Separate evidence and reporting for each service.",
+    "intro": "Domestic EPC and Legionella risk assessment support for homeowners, landlords and letting agents. These are separate assessments; where suitable, we can coordinate access under one instruction.",
+    "highlights": [
+      "Domestic energy certification",
+      "Water-system risk review",
+      "Coordinated access where suitable"
+    ],
+    "sections": [
+      {
+        "heading": "When do I need a domestic EPC?",
+        "paragraphs": [
+          "Applicable Scottish homes normally need an EPC when sold or let, subject to the official exceptions. The energy assessment records the building and relevant services, rather than the occupier’s spending. New dwellings may require SAP-based completion information instead of the existing-home assessment route."
+        ]
+      },
+      {
+        "heading": "What does a landlord need to do about Legionella?",
+        "paragraphs": [
+          "HSE guidance requires landlords to assess and control the risk of exposure to Legionella. A proportionate assessment may be straightforward for a small, regularly used domestic water system. The appropriate precautions depend on the actual system and occupancy."
+        ]
+      },
+      {
+        "heading": "Is an annual Legionella test certificate required?",
+        "paragraphs": [
+          "HSE states that health and safety law does not require a landlord to obtain a Legionella test certificate. Routine water sampling is not normally needed in domestic hot and cold water systems, and the law does not prescribe annual or biennial risk-assessment reviews. Review the assessment periodically and when conditions change."
+        ]
+      },
+      {
+        "heading": "What should I send before the visit?",
+        "paragraphs": [
+          "Provide the property address, access details, reason for the EPC and basic information about the water system. Explain any stored water, periods of vacancy or infrequently used outlets. We will confirm the scope of each service and any follow-up information required."
+        ]
+      }
+    ],
+    "inputs": [
+      "Address, property type and current EPC if available",
+      "Access contact and sale or letting timetable",
+      "Heating and hot-water arrangements, tanks and infrequently used outlets",
+      "Previous water-system assessment and changes since the last review"
+    ],
+    "related": [
+      "saps",
+      "commercial-epcs",
+      "fras"
+    ],
+    "sources": [
+      {
+        "label": "Scottish Government: EPC guide",
+        "href": "https://www.gov.scot/publications/energy-performance-certificates-guide/"
+      },
+      {
+        "label": "HSE: Legionella and landlords’ responsibilities",
+        "href": "https://www.hse.gov.uk/legionnaires/legionella-landlords-responsibilities.htm"
+      }
+    ],
+    "reviewed": "2026-09-23"
+  }
+}

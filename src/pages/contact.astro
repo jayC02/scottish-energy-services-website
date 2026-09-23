@@ -5,7 +5,7 @@ import QuoteRequestForm from '../components/QuoteRequestForm.astro';
 
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
-<BaseLayout title="Contact" description="Contact Scottish Energy Services for technical enquiries, quotes, and appointment availability.">
+<BaseLayout title="Contact Our Glasgow Team" description="Contact Scottish Energy Services at 272 Bath St, Glasgow. Call 0141 255 1360 for EPC, Section 63, modelling and fire risk assessment enquiries.">
   <section class="section">
     <div class="container grid grid-2 form-layout">
       <div data-reveal>
@@ -13,6 +13,7 @@ const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
         <h1 class="section-title">Talk to our team</h1>
         <p class="lead">For the quickest quote, please include the service required and a short description of the property or project. We will confirm scope, fee and likely timescale before instruction.</p>
         <div class="contact-card card">
+          <p><strong>Address:</strong> {siteConfig.address}, United Kingdom</p>
           <p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p>
           <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p>
         </div>

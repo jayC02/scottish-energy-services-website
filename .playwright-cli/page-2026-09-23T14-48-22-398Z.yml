@@ -1,0 +1,248 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Scottish Energy Services home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Scottish Energy Services" [ref=e5]
+      - navigation "Primary navigation" [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Home" [ref=e9] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e10]:
+            - link "About" [ref=e11] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e12]:
+            - link "Services" [ref=e13] [cursor=pointer]:
+              - /url: /services
+          - listitem [ref=e14]:
+            - link "Projects" [ref=e15] [cursor=pointer]:
+              - /url: /projects
+          - listitem [ref=e16]:
+            - link "FAQ" [ref=e17] [cursor=pointer]:
+              - /url: /faq
+          - listitem [ref=e18]:
+            - link "Contact" [ref=e19] [cursor=pointer]:
+              - /url: /contact
+        - link "0141 255 1360" [ref=e20] [cursor=pointer]:
+          - /url: tel:01412551360
+        - link "Get a Quote" [ref=e21] [cursor=pointer]:
+          - /url: /quote
+  - main [ref=e22]:
+    - article [ref=e23]:
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - link "Services Section 63 Scotland" [ref=e27] [cursor=pointer]:
+            - /url: /services
+            - text: Services
+            - generic [aria-hidden] [ref=e28]: /
+            - text: Section 63 Scotland
+          - paragraph [ref=e29]: Specialist service
+          - heading "Section 63 Assessments Scotland" [level=1] [ref=e30]
+          - paragraph [ref=e31]: Section 63 assessment and Action Plan support for owners, agents and project teams dealing with non-domestic buildings in Scotland. Send the EPC, floor area and transaction details so we can establish the assessment scope.
+          - generic [ref=e32]:
+            - link "Request a quote" [ref=e33] [cursor=pointer]:
+              - /url: /quote
+              - text: Request a quote
+              - generic [aria-hidden] [ref=e34]: →
+            - link "View details" [ref=e35] [cursor=pointer]:
+              - /url: "#service-details"
+        - complementary "Service summary" [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]: At a glance
+            - strong [ref=e39]: Section 63 Scotland
+          - generic [ref=e40]:
+            - generic [ref=e41]:
+              - generic [ref=e42]: "01"
+              - paragraph [ref=e43]: Applicability and evidence review
+            - generic [ref=e44]:
+              - generic [ref=e45]: "02"
+              - paragraph [ref=e46]: Action Plans and improvement options
+            - generic [ref=e47]:
+              - generic [ref=e48]: "03"
+              - paragraph [ref=e49]: Improvement or operational-rating route
+          - generic [ref=e50]:
+            - generic [ref=e51]: Typical turnaround
+            - paragraph [ref=e52]: Delivery is scoped to building complexity and occupancy constraints.
+      - generic [ref=e54]:
+        - generic [ref=e55]:
+          - paragraph [ref=e56]: What is included
+          - heading "What you get with this service" [level=2] [ref=e57]
+          - paragraph [ref=e58]: A clear, practical scope covering the assessment, technical work and final outputs needed for the project.
+        - generic [ref=e59]:
+          - article [ref=e60]:
+            - generic [ref=e61]: "01"
+            - strong [ref=e63]: Section 63 assessment and reporting
+          - article [ref=e65]:
+            - generic [ref=e66]: "02"
+            - strong [ref=e68]: Action Plan guidance
+          - article [ref=e70]:
+            - generic [ref=e71]: "03"
+            - strong [ref=e73]: Practical next-step advice for compliance
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: Who this is for
+          - heading "Designed for the teams responsible for delivery and compliance" [level=2] [ref=e79]
+          - paragraph [ref=e80]: We work directly with the people who need clear answers, dependable reporting and a straightforward route to completion.
+        - generic [ref=e81]:
+          - article [ref=e82]:
+            - generic [ref=e83]: "01"
+            - strong [ref=e84]: Owners of qualifying non-domestic properties
+          - article [ref=e85]:
+            - generic [ref=e86]: "02"
+            - strong [ref=e87]: Commercial agents and legal teams
+          - article [ref=e88]:
+            - generic [ref=e89]: "03"
+            - strong [ref=e90]: Asset managers preparing for transactions
+      - region "Assessment guidance" [ref=e91]:
+        - generic [ref=e92]:
+          - complementary [ref=e93]:
+            - paragraph [ref=e94]: Planning your assessment
+            - navigation "On this service page" [ref=e95]:
+              - link "What is Section 63?" [ref=e96] [cursor=pointer]:
+                - /url: "#assessment-1"
+              - link "Which buildings and transactions are covered?" [ref=e97] [cursor=pointer]:
+                - /url: "#assessment-2"
+              - link "Are there exemptions?" [ref=e98] [cursor=pointer]:
+                - /url: "#assessment-3"
+              - link "What happens when a building is sold or leased?" [ref=e99] [cursor=pointer]:
+                - /url: "#assessment-4"
+              - link "What is a Section 63 Action Plan?" [ref=e100] [cursor=pointer]:
+                - /url: "#assessment-5"
+              - link "What improvement measures can be identified?" [ref=e101] [cursor=pointer]:
+                - /url: "#assessment-6"
+              - link "What happens after the Action Plan?" [ref=e102] [cursor=pointer]:
+                - /url: "#assessment-7"
+              - link "Can improvements be deferred using a DEC?" [ref=e103] [cursor=pointer]:
+                - /url: "#assessment-8"
+              - link "How is Section 63 different from an EPC?" [ref=e104] [cursor=pointer]:
+                - /url: "#assessment-9"
+              - link "When should I start the assessment?" [ref=e105] [cursor=pointer]:
+                - /url: "#assessment-10"
+              - link "How does SES handle an instruction?" [ref=e106] [cursor=pointer]:
+                - /url: "#assessment-11"
+              - link "Information to send" [ref=e107] [cursor=pointer]:
+                - /url: "#assessment-information"
+              - link "Official guidance and sources" [ref=e108] [cursor=pointer]:
+                - /url: "#assessment-sources"
+          - generic [ref=e109]:
+            - paragraph [ref=e110]:
+              - text: "Last reviewed:"
+              - time [ref=e111]: 23 September 2026
+              - text: . Reviewed against the official and technical sources below.
+            - generic [ref=e112]:
+              - heading "What is Section 63?" [level=2] [ref=e113]
+              - paragraph [ref=e114]: Section 63 of the Climate Change (Scotland) Act 2009 provides the basis for assessing and improving the energy performance and emissions of existing non-domestic buildings. The detailed assessment duties are set out in the 2016 Regulations. This is an additional Scottish process, not another name for an EPC.
+            - generic [ref=e115]:
+              - heading "Which buildings and transactions are covered?" [level=2] [ref=e116]
+              - paragraph [ref=e117]: "The regulations concern non-domestic buildings, or building units, with a floor area greater than 1,000 m² when sold or leased to a new tenant. Floor area alone does not settle applicability: the transaction, building boundaries and exemptions must also be checked. An existing occupation or a refinancing exercise is not, by itself, the same as a sale or new letting."
+            - generic [ref=e118]:
+              - heading "Are there exemptions?" [level=2] [ref=e119]
+              - paragraph [ref=e120]: Not all commercial properties are covered. Scottish Government guidance identifies buildings meeting energy standards equivalent to the 2002 building regulations, and buildings already improved through a qualifying Green Deal, as exemptions. Evidence of equivalent performance matters; do not assume an exemption solely from an approximate construction date. EPC exclusions and the precise transaction should also be reviewed before instruction.
+            - generic [ref=e121]:
+              - heading "What happens when a building is sold or leased?" [level=2] [ref=e122]
+              - paragraph [ref=e123]: Where the rules apply, the owner must obtain an Action Plan. It must be available to prospective buyers or tenants and supplied to the new owner or tenant. A lease to a new tenant is a trigger; do not automatically treat every lease event as identical. Ask the transaction team to confirm the arrangement and the owner’s responsibilities early.
+            - generic [ref=e124]:
+              - heading "What is a Section 63 Action Plan?" [level=2] [ref=e125]
+              - paragraph [ref=e126]: The Action Plan records improvement targets and measures for the building’s energy and carbon performance. It is prepared by a registered Section 63 adviser and lodged on the Scottish EPC Register. The assessment may identify fabric, lighting or building-services improvements; the relevant measures are determined for the actual building rather than taken from a universal upgrade list.
+            - generic [ref=e127]:
+              - heading "What improvement measures can be identified?" [level=2] [ref=e128]
+              - paragraph [ref=e129]: Measures can include roof insulation, draught proofing and lighting controls where the assessment conditions are met. The building-specific assessment establishes the targets and suitable measures; it does not mean every property must install every measure. Discuss practical constraints and any proposed alternative approach with the adviser before committing to works.
+            - generic [ref=e130]:
+              - heading "What happens after the Action Plan?" [level=2] [ref=e131]
+              - paragraph [ref=e132]: The owner chooses between carrying out the identified improvements and the permitted operational-rating route for deferring improvements. The regulations provide a 42-month period for completing improvement measures. Confirm the applicable deadline and completion evidence against the final Action Plan and any valid deferral arrangements. SES can explain the assessment outputs; the owner and project team remain responsible for arranging and evidencing the required follow-up.
+            - generic [ref=e133]:
+              - heading "Can improvements be deferred using a DEC?" [level=2] [ref=e134]
+              - paragraph [ref=e135]: Scottish Government guidance allows improvements to be deferred through annual reporting of operational energy performance using a Display Energy Certificate (DEC). This uses measured consumption and requires continuing reporting; it is not a permanent exemption or a way to avoid obtaining the Action Plan. Confirm access to energy data and responsibility for annual renewals before choosing this route.
+            - generic [ref=e136]:
+              - heading "How is Section 63 different from an EPC?" [level=2] [ref=e137]
+              - paragraph [ref=e138]: A commercial EPC is an asset assessment of the building under standard assumptions. A Section 63 Action Plan addresses improvement targets for a qualifying building. A DEC records operational performance based on measured use. These documents have different purposes and one should not be assumed to replace the others.
+            - generic [ref=e139]:
+              - heading "When should I start the assessment?" [level=2] [ref=e140]
+              - paragraph [ref=e141]: Start while preparing the property for marketing, rather than shortly before exchange or a new lease. The initial scope review needs the existing EPC, measured floor area, drawings and evidence relevant to exemptions. Allow time to clarify shared services, access restrictions and missing records.
+            - generic [ref=e142]:
+              - heading "How does SES handle an instruction?" [level=2] [ref=e143]
+              - paragraph [ref=e144]: We review the available information, confirm the scope and fee, arrange the survey and assessment work, and explain the resulting documentation and next steps. Glasgow, Edinburgh and Central Belt instructions can be considered alongside wider Scottish sites. Timing depends on the building, access and the evidence available; confirm the required transaction date when enquiring.
+            - generic [ref=e145]:
+              - heading "What information should I send?" [level=2] [ref=e146]
+              - list [ref=e147]:
+                - listitem [ref=e148]: Address, building use, floor area and boundaries of the property being sold or let
+                - listitem [ref=e149]: Existing EPC, any previous Action Plan or DEC, and evidence relevant to exemptions
+                - listitem [ref=e150]: Plans and information on insulation, lighting, heating, cooling and ventilation
+                - listitem [ref=e151]: Sale or new-lease timetable, survey access and the owner’s contact details
+                - listitem [ref=e152]: Metered consumption and reporting arrangements if considering the DEC route
+              - paragraph [ref=e153]:
+                - text: Send what you have through our
+                - link "quote request form" [ref=e154] [cursor=pointer]:
+                  - /url: /quote
+                - text: or
+                - link "contact the Glasgow team" [ref=e155] [cursor=pointer]:
+                  - /url: /contact
+                - text: to confirm the scope. See our
+                - link "selected projects" [ref=e156] [cursor=pointer]:
+                  - /url: /projects
+                - text: for the buildings and estates featured in our portfolio.
+            - region [ref=e157]:
+              - heading "Related assessments" [level=2] [ref=e158]
+              - list [ref=e159]:
+                - listitem [ref=e160]:
+                  - link "Commercial EPC Assessments Glasgow & Scotland" [ref=e161] [cursor=pointer]:
+                    - /url: /services/commercial-epcs
+                - listitem [ref=e162]:
+                  - link "Display Energy Certificates Scotland" [ref=e163] [cursor=pointer]:
+                    - /url: /services/decs
+                - listitem [ref=e164]:
+                  - link "SBEM Calculations Scotland" [ref=e165] [cursor=pointer]:
+                    - /url: /services/sbem-calculations
+            - generic [ref=e166]:
+              - heading "Official guidance and sources" [level=2] [ref=e167]
+              - paragraph [ref=e168]: Requirements depend on the property, proposed work and relevant dates. The sources below distinguish statutory guidance from assessment methodology; SES provides assessment services, not regulatory approval.
+              - list [ref=e169]:
+                - listitem [ref=e170]:
+                  - 'link "Scottish Government: Section 63 requirements" [ref=e171] [cursor=pointer]':
+                    - /url: https://www.gov.scot/publications/energy-performance-of-existing-non-domestic-buildings-information/
+                - listitem [ref=e172]:
+                  - link "Assessment of Energy Performance of Non-domestic Buildings (Scotland) Regulations 2016" [ref=e173] [cursor=pointer]:
+                    - /url: https://www.legislation.gov.uk/ssi/2016/146/contents
+                - listitem [ref=e174]:
+                  - link "Scottish EPC Register" [ref=e175] [cursor=pointer]:
+                    - /url: https://www.scottishepcregister.org.uk/
+                - listitem [ref=e176]:
+                  - 'link "2016 Regulations: policy note and implementation period" [ref=e177] [cursor=pointer]':
+                    - /url: https://www.legislation.gov.uk/ssi/2016/146/pdfs/ssipn_20160146_en.pdf
+                - listitem [ref=e178]:
+                  - 'link "Scottish Government: Section 63 methodology test cases" [ref=e179] [cursor=pointer]':
+                    - /url: https://www.gov.scot/publications/scotland-ncm-software-validation-dsm-fi-sbem-validation-guidance-document/pages/5/
+      - generic [ref=e181]:
+        - generic [ref=e182]:
+          - paragraph [ref=e183]: Need this service?
+          - heading "Send us the project details and we will confirm the scope." [level=2] [ref=e184]
+        - generic [ref=e185]:
+          - paragraph [ref=e186]: Share the property type, location, project stage and target date. We will come back with the information we need and the next available delivery window.
+          - link "Request a quote" [ref=e187] [cursor=pointer]:
+            - /url: /quote
+            - text: Request a quote
+            - generic [aria-hidden] [ref=e188]: →
+  - contentinfo [ref=e189]:
+    - generic [ref=e190]:
+      - generic [ref=e191]:
+        - img "Scottish Energy Services" [ref=e192]
+        - paragraph [ref=e193]: Trusted assessments and technical compliance delivery for homeowners, landlords, letting agents, and commercial property teams across the UK.
+      - generic [ref=e194]:
+        - heading "Contact" [level=4] [ref=e195]
+        - paragraph [ref=e196]:
+          - link "0141 255 1360" [ref=e197] [cursor=pointer]:
+            - /url: tel:01412551360
+          - link "info@scottishenergyservices.co.uk" [ref=e198] [cursor=pointer]:
+            - /url: mailto:info@scottishenergyservices.co.uk
+          - text: 272 Bath St, Glasgow G2 4JR
+      - generic [ref=e199]:
+        - heading "Quick Links" [level=4] [ref=e200]
+        - paragraph [ref=e201]:
+          - link "All Services" [ref=e202] [cursor=pointer]:
+            - /url: /services
+          - link "Request a Quote" [ref=e203] [cursor=pointer]:
+            - /url: /quote
+          - link "Contact" [ref=e204] [cursor=pointer]:
+            - /url: /contact
+    - generic [ref=e205]: © 2026 Scottish Energy Services. All rights reserved.

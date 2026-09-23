@@ -1,10 +1,13 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import sitemap from '@astrojs/sitemap';
+import { productionSite, isIndexablePath } from './src/data/seo-routing.mjs';
 
 export default defineConfig({
-  site: 'https://www.scottishenergyservices.co.uk',
+  site: productionSite,
+  trailingSlash: 'never',
   output: 'static',
-  integrations: [react()],
+  integrations: [react(), sitemap({ filter: (url) => isIndexablePath(new URL(url).pathname) })],
   vite: {
     optimizeDeps: {
       include: [

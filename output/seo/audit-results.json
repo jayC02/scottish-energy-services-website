@@ -1,0 +1,195 @@
+{
+  "pages": 23,
+  "canonicalPages": 17,
+  "sitemapURLs": 17,
+  "errors": [],
+  "notes": [
+    "/: 0 H1s; homepage excluded from body edits by request"
+  ],
+  "routes": [
+    {
+      "path": "/404",
+      "canonical": "https://www.scottishenergyservices.co.uk/404",
+      "title": "Page not found | Scottish Energy Services",
+      "description": "The page you requested could not be found.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/",
+      "canonical": "https://www.scottishenergyservices.co.uk/",
+      "title": "Building Energy Consultants Glasgow | Scottish Energy Services",
+      "description": "Glasgow-based building energy consultants providing commercial EPCs, Section 63, SAP, SBEM, fire risk assessments and building modelling across Scotland.",
+      "h1": 0,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/about",
+      "canonical": "https://www.scottishenergyservices.co.uk/about",
+      "title": "About Our Glasgow Consultancy | Scottish Energy Services",
+      "description": "Meet Scottish Energy Services: Glasgow-based energy assessment and building-compliance support for property owners, developers and professional teams.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/areas",
+      "canonical": "https://www.scottishenergyservices.co.uk/areas",
+      "title": "Glasgow, Edinburgh & UK Service Coverage | Scottish Energy Services",
+      "description": "Energy assessment coverage from Glasgow across Edinburgh, the Central Belt and wider Scotland. Contact SES to confirm survey availability for your site.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/commercial-epc-glasgow-scotland",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/commercial-epcs",
+      "title": "Commercial EPC Assessments Glasgow & Scotland | Scottish Energy Services",
+      "description": "Commercial and non-domestic EPC assessments in Glasgow, Edinburgh and across Scotland. Survey, energy rating, lodgement and recommendations for owners and agents.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/contact",
+      "canonical": "https://www.scottishenergyservices.co.uk/contact",
+      "title": "Contact Our Glasgow Team | Scottish Energy Services",
+      "description": "Contact Scottish Energy Services at 272 Bath St, Glasgow. Call 0141 255 1360 for EPC, Section 63, modelling and fire risk assessment enquiries.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/faq",
+      "canonical": "https://www.scottishenergyservices.co.uk/faq",
+      "title": "Energy & Building Compliance FAQs | Scottish Energy Services",
+      "description": "Answers on Scottish EPCs, Section 63, SAP, SBEM, overheating and assessment timescales, with links to detailed service guidance.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/fire-risk-assessments-scotland",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/fras",
+      "title": "Fire Risk Assessments Glasgow & Scotland | Scottish Energy Services",
+      "description": "Fire risk assessments in Glasgow and across Scotland for businesses, landlords and dutyholders. Premises inspection, clear findings and prioritised actions.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/projects",
+      "canonical": "https://www.scottishenergyservices.co.uk/projects",
+      "title": "Selected Projects | Scottish Buildings & Estates | Scottish Energy Services",
+      "description": "Explore selected Scottish Energy Services projects, including Glasgow Airport, the University of Edinburgh, St James Quarter, SEC Armadillo and Kelvingrove Art Gallery.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/quote",
+      "canonical": "https://www.scottishenergyservices.co.uk/quote",
+      "title": "Request an Assessment Quote | Scottish Energy Services",
+      "description": "Request a quote for an EPC, Section 63 assessment, SAP, SBEM or building-performance study. Send your property address, service and target date.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/sap-calculations-scotland",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/saps",
+      "title": "SAP Calculations Scotland | Scottish Energy Services",
+      "description": "SAP calculations for Scottish housing projects. Design-stage energy assessment, as-built updates and EPC coordination for architects, developers and self-builders.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/sbem-calculations-scotland",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/sbem-calculations",
+      "title": "SBEM Calculations Scotland | Scottish Energy Services",
+      "description": "SBEM calculations for Scottish non-domestic projects. Design and completion-stage modelling for building warrant submissions and commercial EPC coordination.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/section-63-assessments-scotland",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/section-63-assessments",
+      "title": "Section 63 Assessments Scotland | Scottish Energy Services",
+      "description": "Section 63 assessments and Action Plan support for Scottish commercial property sales and new leases. Understand the 1,000 m\u00b2 threshold, exemptions and DEC route.",
+      "h1": 1,
+      "canonicalIndexable": false
+    },
+    {
+      "path": "/services",
+      "canonical": "https://www.scottishenergyservices.co.uk/services",
+      "title": "Energy & Building Compliance Services Scotland | Scottish Energy Services",
+      "description": "Commercial EPCs, Section 63, SAP, SBEM, DSM, TM59, DECs and fire risk assessments from Glasgow, with service coverage across Scotland and the UK.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/commercial-epcs",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/commercial-epcs",
+      "title": "Commercial EPC Assessments Glasgow & Scotland | Scottish Energy Services",
+      "description": "Commercial and non-domestic EPC assessments in Glasgow, Edinburgh and across Scotland. Survey, energy rating, lodgement and recommendations for owners and agents.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/decs",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/decs",
+      "title": "Display Energy Certificates Scotland | Scottish Energy Services",
+      "description": "Display Energy Certificates and operational ratings for Scotland\u2019s Section 63 reporting route. Energy-data review and annual reporting support for property teams.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/domestic-epcs-and-legionellas",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/domestic-epcs-and-legionellas",
+      "title": "Domestic EPCs & Legionella Assessments Scotland | Scottish Energy Services",
+      "description": "Domestic EPC and Legionella risk assessment support for Scottish landlords, letting agents and homeowners. Separate evidence and reporting for each service.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/dynamic-simulation-modelling-dsm",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/dynamic-simulation-modelling-dsm",
+      "title": "Dynamic Simulation Modelling Scotland | Scottish Energy Services",
+      "description": "Dynamic simulation modelling for complex buildings in Scotland. Energy, HVAC, comfort and overheating studies with clear assumptions and design-stage reporting.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/fras",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/fras",
+      "title": "Fire Risk Assessments Glasgow & Scotland | Scottish Energy Services",
+      "description": "Fire risk assessments in Glasgow and across Scotland for businesses, landlords and dutyholders. Premises inspection, clear findings and prioritised actions.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/overheating-assessments-tm59",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/overheating-assessments-tm59",
+      "title": "TM59 Overheating Assessments Scotland | Scottish Energy Services",
+      "description": "TM59 overheating assessments for Scottish residential designs. Review glazing, shading and ventilation through dynamic modelling before specifications are fixed.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/saps",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/saps",
+      "title": "SAP Calculations Scotland | Scottish Energy Services",
+      "description": "SAP calculations for Scottish housing projects. Design-stage energy assessment, as-built updates and EPC coordination for architects, developers and self-builders.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/sbem-calculations",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/sbem-calculations",
+      "title": "SBEM Calculations Scotland | Scottish Energy Services",
+      "description": "SBEM calculations for Scottish non-domestic projects. Design and completion-stage modelling for building warrant submissions and commercial EPC coordination.",
+      "h1": 1,
+      "canonicalIndexable": true
+    },
+    {
+      "path": "/services/section-63-assessments",
+      "canonical": "https://www.scottishenergyservices.co.uk/services/section-63-assessments",
+      "title": "Section 63 Assessments Scotland | Scottish Energy Services",
+      "description": "Section 63 assessments and Action Plan support for Scottish commercial property sales and new leases. Understand the 1,000 m\u00b2 threshold, exemptions and DEC route.",
+      "h1": 1,
+      "canonicalIndexable": true
+    }
+  ]
+}

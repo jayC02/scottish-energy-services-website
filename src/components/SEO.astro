@@ -1,40 +1,60 @@
 ---
 import { siteConfig } from '../data/site';
-
+import { canonicalPath, productionSite } from '../data/seo-routing.mjs';
 interface Props {
-  title: string;
-  description: string;
-  pathname?: string;
+  title: string; description: string; pathname?: string; canonical?: string;
+  image?: string; imageAlt?: string; type?: 'website' | 'article';
+  ogTitle?: string; ogDescription?: string; noindex?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
-
-const { title, description, pathname = '/' } = Astro.props;
-const canonical = new URL(pathname, Astro.site);
-const logoUrl = new URL('/images/ses-logo-icon.png', Astro.site).toString();
-const orgSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: siteConfig.name,
-  description,
-  telephone: siteConfig.phone,
-  email: siteConfig.email,
-  areaServed: 'United Kingdom',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '272 Bath St',
-    addressLocality: 'Glasgow',
-    postalCode: 'G2 4JR',
-    addressCountry: 'GB'
-  },
-  url: Astro.site,
-  logo: logoUrl
-};
+const { title, description, pathname = '/', canonical, image = '/images/projects/glasgow-airport-poster.webp',
+  imageAlt = 'Glasgow Airport', type = 'website', ogTitle, ogDescription, noindex = false, structuredData = [] } = Astro.props;
+const url = new URL(canonical || canonicalPath(pathname), productionSite);
+url.search = ''; url.hash = '';
+// Homepage body remains protected; clarify commercial intent in head metadata only.
+const seoTitle = pathname === '/' ? 'Building Energy Consultants Glasgow' : title;
+const seoDescription = pathname === '/' ? 'Glasgow-based building energy consultants providing commercial EPCs, Section 63, SAP, SBEM, fire risk assessments and building modelling across Scotland.' : description;
+const fullTitle = seoTitle.endsWith(siteConfig.name) ? seoTitle : `${seoTitle} | ${siteConfig.name}`;
+const imageUrl = new URL(image, productionSite).href;
+const orgId = `${productionSite}/#organisation`;
+const siteId = `${productionSite}/#website`;
+const graph: Record<string, unknown>[] = [
+  { '@type': 'WebPage', '@id': `${url.href}#webpage`, url: url.href, name: fullTitle,
+    description: seoDescription, inLanguage: 'en-GB', isPartOf: { '@id': siteId }, about: { '@id': orgId } }
+];
+if (pathname === '/' || pathname === '/about' || pathname === '/contact') {
+  graph.push({ '@type': 'ProfessionalService', '@id': orgId, name: siteConfig.name,
+    url: `${productionSite}/`, logo: new URL('/images/ses-logo-icon.png', productionSite).href,
+    telephone: '+441412551360', email: siteConfig.email,
+    address: { '@type': 'PostalAddress', streetAddress: '272 Bath St', addressLocality: 'Glasgow', postalCode: 'G2 4JR', addressCountry: 'GB' },
+    areaServed: { '@type': 'Country', name: 'United Kingdom' } });
+  graph.push({ '@type': 'WebSite', '@id': siteId, url: `${productionSite}/`, name: siteConfig.name,
+    inLanguage: 'en-GB', publisher: { '@id': orgId } });
+}
+if (pathname !== '/' && !noindex) {
+  const crumbs = [{ name: 'Home', item: `${productionSite}/` }];
+  if (url.pathname.startsWith('/services/')) crumbs.push({ name: 'Services', item: `${productionSite}/services` });
+  crumbs.push({ name: title, item: url.href });
+  graph.push({ '@type': 'BreadcrumbList', '@id': `${url.href}#breadcrumbs`, itemListElement: crumbs.map((crumb, index) => ({ '@type': 'ListItem', position: index + 1, ...crumb })) });
+}
+graph.push(...(Array.isArray(structuredData) ? structuredData : [structuredData]));
+const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
 ---
-<title>{title} | Scottish Energy Services</title>
-<meta name="description" content={description} />
-<link rel="canonical" href={canonical.toString()} />
-<meta property="og:title" content={`${title} | Scottish Energy Services`} />
-<meta property="og:description" content={description} />
-<meta property="og:type" content="website" />
-<meta property="og:url" content={canonical.toString()} />
+<title>{fullTitle}</title>
+<meta name="description" content={seoDescription} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
+<link rel="canonical" href={url.href} />
+<meta property="og:title" content={ogTitle || fullTitle} />
+<meta property="og:description" content={ogDescription || seoDescription} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={url.href} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={imageAlt} />
 <meta name="twitter:card" content="summary_large_image" />
-<script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
+<meta name="twitter:title" content={ogTitle || fullTitle} />
+<meta name="twitter:description" content={ogDescription || seoDescription} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+<script type="application/ld+json" is:inline set:html={json} />

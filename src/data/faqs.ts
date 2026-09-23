@@ -43,7 +43,7 @@ export const faqs: Faq[] = [
   {
     category: 'EPC',
     question: 'How long is an EPC valid for?',
-    answer: 'An EPC is generally valid for 10 years, unless major changes are made that require a new assessment.'
+    answer: 'Under the current Scottish system, an EPC can be valid for up to ten years. Check the certificate and current Scottish Government reform guidance before relying on it for a future transaction.'
   },
   {
     category: 'EPC',
@@ -63,7 +63,7 @@ export const faqs: Faq[] = [
   {
     category: 'SAP / SBEM',
     question: 'Do I need SAP calculations for a new build?',
-    answer: 'In most residential new-build cases, yes. SAP calculations are typically required to demonstrate Building Regulations compliance.'
+    answer: 'New dwellings normally need SAP calculations under the applicable Scottish domestic energy standards. The warrant date and type of work determine the assessment route.'
   },
   {
     category: 'SAP / SBEM',
@@ -108,7 +108,7 @@ export const faqs: Faq[] = [
   {
     category: 'TM59 / DSM',
     question: 'When is a TM59 assessment required?',
-    answer: 'It is often required for residential schemes where overheating risk must be demonstrated for planning, design, or compliance.'
+    answer: 'TM59 is a technical methodology, not a blanket statutory requirement for every Scottish home. Its use depends on the applicable standards, planning conditions and project brief.'
   },
   {
     category: 'TM59 / DSM',
