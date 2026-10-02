@@ -19,7 +19,8 @@ for name,slug,start in clips:
  duration=min(9,float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0',str(source/name)]))-start)
  fade=0.6 if duration>=9 else 0.4
  duration=int(duration*25)/25
- filters=f'[0:v]fps=25,scale=1920:1080:force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1,format=yuv420p,split=2[bodyin][headin];[bodyin]trim=start={fade}:end={duration},setpts=PTS-STARTPTS[body];[headin]trim=start=0:end={fade},setpts=PTS-STARTPTS[head];[body][head]xfade=transition=fade:duration={fade}:offset={duration-2*fade},format=yuv420p[v]'
+ exposure=',eq=brightness=0.055:contrast=1.02:gamma=1.25' if slug=='sec-armadillo' else ''
+ filters=f'[0:v]fps=25,scale=1920:1080:force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1,format=yuv420p{exposure},split=2[bodyin][headin];[bodyin]trim=start={fade}:end={duration},setpts=PTS-STARTPTS[body];[headin]trim=start=0:end={fade},setpts=PTS-STARTPTS[head];[body][head]xfade=transition=fade:duration={fade}:offset={duration-2*fade},format=yuv420p[v]'
  subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-ss',str(start),'-t',str(duration),'-i',str(source/name),'-filter_complex_threads','1','-filter_complex',filters,'-map','[v]','-an','-sn','-dn','-c:v','libx264','-preset','slow','-crf','19','-maxrate','10M','-bufsize','20M','-threads','4','-pix_fmt','yuv420p','-movflags','+faststart','-map_metadata','-1','-y',str(target)],check=True)
  for width,suffix in [(1280,'-poster'),(640,'-poster-small')]:
   subprocess.run(['ffmpeg','-hide_banner','-loglevel','error','-i',str(target),'-frames:v','1','-vf',f'scale={width}:-1','-c:v','libwebp','-quality','85','-y',f'public/images/projects/{slug}{suffix}.webp'],check=True)

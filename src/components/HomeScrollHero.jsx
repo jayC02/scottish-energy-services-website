@@ -7,14 +7,19 @@ export default function HomeScrollHero() {
       <ScrollExpand
         src="/videos/hero-background.mp4"
         mediaType="video"
-        title="Scottish Energy Services"
+        title={
+          <span className="home-scroll-hero__logo" role="img" aria-label="Scottish Energy Services">
+            <img className="home-scroll-hero__logo-wordmark" src="/images/ses-logo-horizontal.png" alt="" width="1815" height="226" aria-hidden="true" />
+            <img className="home-scroll-hero__logo-mark" src="/images/ses-logo-horizontal.png" alt="" width="1815" height="226" aria-hidden="true" />
+          </span>
+        }
         scrollHint="Scroll"
         startWidth={78}
         startHeight={70}
         startRadius={22}
         endRadius={0}
         mediaZoom={1.08}
-        scrollDistance={0.58}
+        scrollDistance={0.377}
         holdDistance={0.08}
         smoothing={0.08}
         overlayScrim={0.38}
