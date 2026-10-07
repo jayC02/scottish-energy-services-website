@@ -1,0 +1,13 @@
+---
+import { startingPrice, type ServicePrice } from '../data/pricing';
+const { price } = Astro.props as { price: ServicePrice };
+---
+<div class="service-pricing">
+  <p class="service-pricing__price">{startingPrice(price)}</p>
+  <p>{price.bespoke ? 'Starting price for smaller or straightforward assessments.' : 'Starting price for straightforward assessments.'} Final pricing depends on property size, complexity, available information and site requirements. We confirm the scope and full cost before work begins.</p>
+</div>
+<style>
+  .service-pricing { margin-top: 1.4rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.22); max-width: 62ch; }
+  .service-pricing p { margin: .35rem 0 0; font-size: .9rem; line-height: 1.55; color: #c4d3de; }
+  .service-pricing .service-pricing__price { margin: 0; color: #fff; font-size: 1.12rem; font-weight: 650; }
+</style>

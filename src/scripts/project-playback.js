@@ -3,6 +3,7 @@
 export function setProjectPlayback(video, shouldPlay) {
   if (!video) return;
   video.dataset.playback = shouldPlay ? 'play' : 'pause';
+  if (window.sesVideosPaused) { video.pause(); return; }
   if (!shouldPlay) {
     video.pause();
     return;

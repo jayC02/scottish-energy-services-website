@@ -12,5 +12,40 @@
       "permanent": true
     }
   ],
-  "trailingSlash": false
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+        },
+        {
+          "key": "Content-Security-Policy-Report-Only",
+          "value": "default-src 'self'; script-src 'self' 'sha256-0Z/QXI1v9SUj/iynI8ijj51AQGg9JMozYkFQ0bUHad0=' 'sha256-3Xq/4mpI/3kO3yPnyNEJu/C4smtQg44H+D4Lnj+9InY=' 'sha256-3ijTMSKv0yB1BkneffqKK4DZsa4qAFGeI25pa7HKQaM=' 'sha256-4GFeRv0Oj4pbuq41vNtq/GM+SuiyFxPEDdFrd16XA1E=' 'sha256-7/uSoHnjxb+tIBCjCwih1Sje946zAWI3xoOCZw4zaLY=' 'sha256-7nsILUb7/oofKqx77EXAZJwAxF3NMcalG80Ve5JY2zI=' 'sha256-AySbEF1gPRYtegkK6rJpAyh2KVprmeLDxqy07LVF6II=' 'sha256-Bb9ehyEI9BAUv0TMuLuRO7F/8blzWyAJ7RHD7rsRnEw=' 'sha256-JTglibgPavMKKj6rkS3XWhi/hS2L+Z/D70UHDbBZdPQ=' 'sha256-Okdi2//P6g8+nkB2OguJa3mU6AA1CO2g+e/I7z130TM=' 'sha256-QzWFZi+FLIx23tnm9SBU4aEgx4x8DsuASP07mfqol/c=' 'sha256-U7a72oKuFFz8D7GUHLA1NZ0ciymHmDOc9T9aVDg2rWU=' 'sha256-VothPpav0TiIL2deB8S7QED+c9MnBV2xxaxBFrj6nIk=' 'sha256-Xa2kcWGjEtJ2Tlx+HKMmB6pd1V+g2P3t4EzIXGzscNo=' 'sha256-XaniKiwB3oo64s6VwCWp6PiX5UADFn3xIYGXgknEXFU=' 'sha256-aJkumSjjV8aU4/1Y5IgYW6+vcfdly1DjVCEDy4TQsa8=' 'sha256-f5ily4HBYqi8ztHNcoScqv/91T009M0CL5KLeHfm0kY=' 'sha256-gN0+J7dYEf9ipYb8b5Ke01CxuX+CnDjaibDln/gi7wk=' 'sha256-in/zgqR51nGE0wjQblCRiRsxEtbdmoo9J8njPHYdVQ4=' 'sha256-m4jlbRK20Lj6bkylq0RhrffCS7D2qd/38rx0+aR3LUs=' 'sha256-tqijbrnX3+3oT3SY1GH9UEaeQGN6ypz0vyjzbfA7Ur8=' 'sha256-upMx3ziGRqMlvdj7JIEzMc6ze+ek38CoeUes/H8jeFQ=' 'sha256-wwYBCE2utkCQ4OHlpIPGKICwdUkAENcV+9il74gjLNM=' https://challenges.cloudflare.com https://www.googletagmanager.com https://*.google.com https://*.googleadservices.com https://*.doubleclick.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google.com https://*.google.co.uk https://*.googleadservices.com https://*.doubleclick.net https://www.googletagmanager.com; connect-src 'self' https://challenges.cloudflare.com https://*.google.com https://*.google.co.uk https://*.googleadservices.com https://*.doubleclick.net https://www.googletagmanager.com; frame-src https://challenges.cloudflare.com https://*.doubleclick.net https://*.google.com; media-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+        }
+      ]
+    }
+  ]
 }

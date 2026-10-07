@@ -26,7 +26,6 @@ export default function HomeScrollHero() {
         useWindowScroll
       >
         <div className="home-scroll-hero__content">
-          <p className="home-scroll-hero__kicker">Energy, compliance & building performance</p>
           <h2>Technical building services for projects across the UK.</h2>
           <p className="home-scroll-hero__copy">
             Commercial EPCs, SAP, SBEM, Section 63, fire risk assessments and advanced building modelling.

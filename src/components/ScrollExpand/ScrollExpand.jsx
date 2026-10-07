@@ -210,6 +210,11 @@ const ScrollExpand = ({
     >
       <div ref={trackRef} className="scroll-expand__track">
         <div ref={stageRef} className="scroll-expand__stage">
+          {title ? (
+            <h1 ref={titleRef} className="scroll-expand__title">
+              {title}
+            </h1>
+          ) : null}
           <div ref={frameRef} className="scroll-expand__frame">
             {media}
             <div ref={scrimRef} className="scroll-expand__scrim" />
@@ -219,11 +224,6 @@ const ScrollExpand = ({
               </div>
             ) : null}
           </div>
-          {title ? (
-            <div ref={titleRef} className="scroll-expand__title">
-              {title}
-            </div>
-          ) : null}
           {scrollHint ? (
             <div ref={hintRef} className="scroll-expand__hint">
               {scrollHint}

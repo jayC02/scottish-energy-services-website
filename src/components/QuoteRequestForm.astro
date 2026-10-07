@@ -1,4 +1,6 @@
 ---
+import { services } from '../data/services';
+import { quoteFields } from '../data/quote-fields.mjs';
 interface Props {
   formType: 'contact' | 'quote';
   submitText?: string;
@@ -28,33 +30,52 @@ const serviceOptions = [
 
   <div class="compact-grid">
     <label>Name
-      <input required type="text" name="name" autocomplete="name" />
-      <span class="field-error" data-error-for="name" aria-live="polite"></span>
+      <input required type="text" name="name" maxlength="120" aria-describedby={`${formType}-name-error`} autocomplete="name" />
+      <span class="field-error" id={`${formType}-name-error`} data-error-for="name" aria-live="polite"></span>
     </label>
 
     <label>Email
-      <input required type="email" name="email" autocomplete="email" />
-      <span class="field-error" data-error-for="email" aria-live="polite"></span>
+      <input required type="email" name="email" maxlength="254" aria-describedby={`${formType}-email-error`} autocomplete="email" />
+      <span class="field-error" id={`${formType}-email-error`} data-error-for="email" aria-live="polite"></span>
     </label>
 
-    <label>Phone number
-      <input required type="tel" name="phone" autocomplete="tel" />
-      <span class="field-error" data-error-for="phone" aria-live="polite"></span>
+    <label>Phone number (optional)
+      <input type="tel" name="phone" maxlength="20" aria-describedby={`${formType}-phone-error`} autocomplete="tel" />
+      <span class="field-error" id={`${formType}-phone-error`} data-error-for="phone" aria-live="polite"></span>
     </label>
 
     <label>Service required
-      <select name="service" required>
+      <select name="service" required aria-describedby={`${formType}-service-error`}>
         <option value="">Select a service</option>
-        {serviceOptions.map((option) => <option value={option}>{option}</option>)}
+        {serviceOptions.map((option) => <option value={option} data-service-slug={services.find(service => service.title === option)?.slug}>{option}</option>)}
       </select>
-      <span class="field-error" data-error-for="service" aria-live="polite"></span>
+      <span class="field-error" id={`${formType}-service-error`} data-error-for="service" aria-live="polite"></span>
     </label>
 
+    {formType === 'quote' && <label class="full">Property address or postcode (optional)
+      <input type="text" name="propertyAddress" maxlength={quoteFields[0].limit} aria-describedby={`${formType}-propertyAddress-error`} autocomplete="off" />
+      <span class="field-error" id={`${formType}-propertyAddress-error`} data-error-for="propertyAddress" aria-live="polite"></span>
+    </label>}
+
     <label class="full">Message / Project details
-      <textarea required name="message" rows="4"></textarea>
-      <span class="field-error" data-error-for="message" aria-live="polite"></span>
+      <textarea required name="message" rows="4" maxlength="10000" aria-describedby={`${formType}-message-error`}></textarea>
+      <span class="field-error" id={`${formType}-message-error`} data-error-for="message" aria-live="polite"></span>
     </label>
   </div>
+
+  {formType === 'quote' && <details class="property-details">
+    <summary>Add property details (optional)</summary>
+    <p>Not sure what you need? Send what you have and we’ll advise. These details help us confirm the scope and fee.</p>
+    <div class="compact-grid">
+      {quoteFields.slice(1).map(field => <label>{field.label} (optional)
+        {field.options.length ? <select name={field.name} aria-describedby={`${formType}-${field.name}-error`}>
+          <option value="">Select if known</option>
+          {field.options.map(option => <option value={option}>{option}</option>)}
+        </select> : <input type="text" name={field.name} maxlength={field.limit} placeholder={field.placeholder} inputmode={field.name === 'floorArea' ? 'decimal' : undefined} aria-describedby={`${formType}-${field.name}-error`} />}
+        <span class="field-error" id={`${formType}-${field.name}-error`} data-error-for={field.name} aria-live="polite"></span>
+      </label>)}
+    </div>
+  </details>}
 
   <label class="sr-only" aria-hidden="true">
     Leave this field blank
@@ -62,13 +83,15 @@ const serviceOptions = [
   </label>
 
   <div class="captcha-wrap">
-    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light"></div>
+    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light" aria-describedby={`${formType}-turnstileToken-error`}></div>
     <input type="hidden" name="cf-turnstile-response" value="" />
-    <span class="field-error" data-error-for="turnstileToken" aria-live="polite"></span>
+    <span class="field-error" id={`${formType}-turnstileToken-error`} data-error-for="turnstileToken" aria-live="polite"></span>
   </div>
 
   <div class="form-status" data-form-status aria-live="polite"></div>
-  <button class="btn btn-primary" type="submit" data-submit-text={submitText} data-track="form_submit">{submitText}</button>
+  <p class="full">We use your details to respond to your enquiry. Read our <a href="/privacy">Privacy Policy</a>. Please avoid including sensitive personal information.</p>
+  <noscript><p>Please enable JavaScript to use the protected enquiry form, or contact us by phone or email.</p></noscript>
+  <button class="btn btn-primary" type="submit" data-submit-text={submitText}>{submitText}</button>
 </form>
 
 <style>
@@ -84,6 +107,9 @@ const serviceOptions = [
   .compact-form textarea { padding: .6rem .68rem; }
   .compact-form textarea { min-height: 96px; }
   .full { grid-column: 1 / -1; }
+  .property-details { border-block: 1px solid var(--border); padding: .7rem 0; }
+  .property-details summary { cursor: pointer; color: var(--brand-strong); font-size: .9rem; font-weight: 600; }
+  .property-details p { margin: .65rem 0; color: var(--muted); font-size: .85rem; }
 
   @media (max-width: 720px) {
     .compact-grid { grid-template-columns: 1fr; }

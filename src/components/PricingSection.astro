@@ -1,0 +1,50 @@
+---
+import { servicePricing, startingPrice, pricingNote, vatNote } from '../data/pricing';
+---
+<section id="pricing" class="section pricing-section" aria-labelledby="pricing-heading">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Assessment pricing</p>
+      <h2 id="pricing-heading" class="section-title">Straightforward pricing. No surprises.</h2>
+      <p class="lead">Every building is different, so our advertised prices are starting points rather than one-size-fits-all fees. Send us your property details and we’ll provide a clear quote before any work begins.</p>
+    </div>
+    <dl class="pricing-list" aria-describedby="pricing-note">
+      {servicePricing.map(price => (
+        <div class="pricing-row">
+          <dt><a href={`/services/${price.slug}`}>{price.label}<span aria-hidden="true"> ↗</span></a></dt>
+          <dd>{startingPrice(price)}</dd>
+        </div>
+      ))}
+    </dl>
+    <p id="pricing-note" class="pricing-note">{pricingNote} {vatNote}</p>
+    <div class="bespoke-pricing">
+      <div>
+        <h3>Managing a larger property or portfolio?</h3>
+        <p>We provide bespoke pricing for larger commercial buildings, complex projects, property portfolios and ongoing compliance requirements.</p>
+      </div>
+      <a class="btn btn-primary" href="/quote">Discuss your project <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+<style>
+  .pricing-section { background: var(--surface-soft); scroll-margin-top: 100px; }
+  .pricing-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; margin: 0; }
+  .pricing-row { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; padding: 1.1rem 0; border-top: 1px solid var(--border); }
+  dt { font-weight: 600; color: var(--text-strong); }
+  dt a { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; }
+  dt a:hover { color: var(--brand-strong); text-decoration-color: currentColor; }
+  dt span { color: var(--brand-strong); }
+  dd { flex-shrink: 0; margin: 0; white-space: nowrap; color: var(--brand-strong); font-size: .95rem; font-weight: 600; }
+  .pricing-note { max-width: 90ch; color: var(--muted); font-size: .9rem; margin: 1.25rem 0 0; }
+  .bespoke-pricing { display: flex; gap: 2rem; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); margin-top: 2rem; padding-top: 1.8rem; }
+  h3 { color: var(--text-strong); font-size: 1.35rem; line-height: 1.3; margin: 0 0 .6rem; }
+  .bespoke-pricing p { max-width: 65ch; color: var(--muted); margin: 0; }
+  .bespoke-pricing .btn { flex-shrink: 0; }
+  @media (max-width: 760px) {
+    .pricing-list { grid-template-columns: 1fr; }
+    .bespoke-pricing { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+  }
+  @media (max-width: 430px) {
+    .pricing-row { flex-direction: column; gap: .25rem; }
+  }
+</style>

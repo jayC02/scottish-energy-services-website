@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Cookie Policy" description="Essential website technologies and your advertising choices.">
+  <section class="section"><div class="container legal-copy"><h1 class="section-title">Cookie Policy</h1><p>Last updated: 6 October 2026.</p><h2>Your choices</h2><p>Advertising technologies are off until you choose Accept advertising. Reject advertising is available on the same notice. You can change or withdraw your choice at any time using Cookie settings in the footer.</p><button class="btn btn-secondary" type="button" data-cookie-settings>Change cookie settings</button>
+<h2>Essential technologies</h2><p>We store your choice in your browser's localStorage under <code>ses-consent-v1</code>, with a timestamp. The choice expires after 180 days, at which point we ask again. This preference storage is used to remember your privacy choice. If browser storage is unavailable, the choice applies only to the current page.</p><p>Cloudflare Turnstile runs on pages containing enquiry forms to help distinguish genuine submissions from abuse. It processes browser and interaction information and may use security-related browser technologies. Vercel may also process request and security information to provide hosting and protect the site. These services are not used by this site's code for advertising.</p>
+<h2>Optional advertising</h2><p>If you accept advertising, Google Ads measures visits and interactions such as phone clicks and successful enquiries. It may use first-party cookies with names beginning <code>_gcl_</code> and Google-managed advertising technologies. Exact cookies and expiry depend on Google's configuration and your browser. See <a href="https://policies.google.com/technologies/cookies">Google's cookie information</a>.</p><p>The site has a Google Ads tag, not a separately configured Google Analytics property. Our tracking code does not send names, email addresses, phone numbers or enquiry messages. Advertising consent does not subscribe you to email marketing.</p>
+<h2>Withdrawal and browser controls</h2><p>Rejecting advertising after accepting stops our event tracking, clears accessible first-party Google advertising cookies and reloads the page to unload the tag. We cannot directly delete cookies stored on Google's own domains; use your browser controls to remove those. No past events are replayed if you accept later.</p><p>You can clear cookies and site storage using your browser settings. If you remove our preference, we ask for your choice again. Read our <a href="/privacy">Privacy Policy</a> for further information.</p>
+<!-- OWNER: verify the final deployed cookie inventory, including Vercel firewall and Turnstile settings, before publication. --></div></section>
+</BaseLayout>
+<style>
+  .legal-copy { max-width: 850px; }
+  h2 { margin-top: 2rem; font-size: 1.4rem; }
+  p, li { line-height: 1.75; }
+  a { text-decoration: underline; }
+</style>

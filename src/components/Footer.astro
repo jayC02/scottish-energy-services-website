@@ -5,7 +5,7 @@ const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 <footer class="section footer">
   <div class="container footer-grid">
     <div>
-      <img class="footer-logo" src="/images/ses-logo-horizontal.png" alt="Scottish Energy Services" loading="lazy" decoding="async" />
+      <img class="footer-logo" src="/images/ses-logo-horizontal.png" alt="Scottish Energy Services" width="1815" height="226" loading="lazy" decoding="async" />
       <p class="lead">Trusted assessments and technical compliance delivery for homeowners, landlords, letting agents, and commercial property teams across the UK.</p>
     </div>
     <div>
@@ -18,16 +18,18 @@ const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
     </div>
   </div>
   <div class="container legal">© {new Date().getFullYear()} Scottish Energy Services. All rights reserved.</div>
+<div class="container legal"><a href="/privacy">Privacy Policy</a> ? <a href="/cookies">Cookie Policy</a> ? <a href="/terms">Website Terms</a> ? <button class="cookie-settings" type="button" data-cookie-settings>Cookie settings</button> ? <button class="cookie-settings" type="button" data-pause-videos aria-pressed="false" hidden>Pause videos</button></div>
 </footer>
 
 <style>
+  .cookie-settings { background: none; border: 0; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer; }
   .footer {
     border-top: 1px solid var(--border);
     background: linear-gradient(180deg, rgba(242, 247, 251, 0.45) 0%, rgba(239, 244, 249, 0.85) 100%);
     padding-bottom: 2.7rem;
   }
   .footer-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) 1fr 1fr; gap: 1.3rem; }
-  .footer-logo { max-width: 260px; margin-bottom: 1rem; }
+  .footer-logo { max-width: 260px; height: auto; margin-bottom: 1rem; }
   .legal { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: .9rem; }
   h4 { margin: .4rem 0 .5rem; color: var(--text-strong); }
   p { margin: 0; color: var(--muted); }

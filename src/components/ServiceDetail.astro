@@ -2,8 +2,11 @@
 import type { Service } from '../data/services';
 import ServiceKnowledge from './ServiceKnowledge.astro';
 import type { ServiceSlug } from '../data/service-pages';
+import ServicePricing from './ServicePricing.astro';
+import { getServicePrice, quoteLink } from '../data/pricing';
 
 const { service } = Astro.props as { service: Service };
+const price = getServicePrice(service.slug);
 
 const shortTitle = service.title
   .replace(' Assessments', '')
@@ -24,8 +27,10 @@ const shortTitle = service.title
         <h1>{service.title}</h1>
         <p class="service-intro">{service.intro}</p>
 
+        {price && <ServicePricing price={price} />}
+
         <div class="service-actions">
-          <a class="service-primary" href="/quote">Request a quote <span aria-hidden="true">→</span></a>
+          <a class="service-primary" href={quoteLink(service.slug)}>{price ? 'Get a Fixed Quote' : 'Request a quote'} <span aria-hidden="true">→</span></a>
           <a class="service-secondary" href="#service-details">View details</a>
         </div>
       </div>
@@ -49,6 +54,11 @@ const shortTitle = service.title
           <span>Typical turnaround</span>
           <p>{service.turnaround}</p>
         </div>
+        {price?.bespoke && <div class="service-summary__bespoke">
+          <strong>Larger or complex projects</strong>
+          <p>Bespoke pricing for large buildings, complex services, unusual construction, multi-site work and portfolios.</p>
+          <a href={quoteLink(service.slug)}>Discuss your project <span aria-hidden="true">→</span></a>
+        </div>}
       </aside>
     </div>
   </section>
@@ -306,6 +316,11 @@ const shortTitle = service.title
     font-size: .94rem;
     line-height: 1.45;
   }
+
+  .service-summary__bespoke { margin-top: 1.1rem; padding: 1.1rem 0; border-top: 1px solid rgba(255,255,255,.14); font-size: .9rem; }
+  .service-summary__bespoke strong { color: #fff; }
+  .service-summary__bespoke p { margin: .45rem 0 .65rem; color: #c4d3de; }
+  .service-summary__bespoke a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 
   .service-details {
     background: #fff;
