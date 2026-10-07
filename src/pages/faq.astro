@@ -1,18 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import FAQAccordion from '../components/FAQAccordion.astro';
+import FAQGroup from '../components/FAQGroup.astro';
+import { faqColumns } from '../data/faq-page';
 ---
 <BaseLayout title="Energy & Building Compliance FAQs" description="Answers on Scottish EPCs, Section 63, SAP, SBEM, overheating and assessment timescales, with links to detailed service guidance.">
-  <section class="section">
-    <div class="container" data-reveal>
+  <section class="section faq-intro">
+    <div class="container">
       <h1 class="section-title">Frequently asked questions</h1>
-      <p class="lead">If you have a project-specific question, contact our team and we will advise on scope, programme, and next steps.</p>
+      <p class="lead">Clear answers on our services, pricing, timescales and compliance requirements.</p>
     </div>
   </section>
-  <FAQAccordion />
-  <section class="section"><div class="container">
-    <h2>Find the guidance for your assessment</h2>
-    <p>Read the source-linked guidance on <a href="/services/commercial-epcs">commercial EPCs</a>, <a href="/services/section-63-assessments">Section 63 and Action Plans</a>, <a href="/services/sbem-calculations">SBEM</a>, <a href="/services/saps">SAP</a>, <a href="/services/fras">Scottish fire risk assessments</a> and <a href="/services/overheating-assessments-tm59">TM59 overheating modelling</a>.</p>
-    <p>For water-system duties, see <a href="/services/domestic-epcs-and-legionellas">Legionella assessment guidance and HSE references</a>. Requirements depend on the property and relevant dates; the detailed pages identify their review date and sources.</p>
-  </div></section>
+  <div class="container faq-columns">
+    {faqColumns.map(groups => <div class="faq-column">
+      {groups.map(group => <FAQGroup group={group} />)}
+    </div>)}
+  </div>
+  <section class="section faq-contact" aria-labelledby="faq-contact-heading">
+    <div class="container faq-contact__inner">
+      <div>
+        <h2 id="faq-contact-heading">Have a project-specific question?</h2>
+        <p>Send what you have. We’ll confirm the scope, information needed and full fee before work begins.</p>
+      </div>
+      <a class="btn btn-primary" href="/quote">Discuss your project <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .faq-intro { padding-bottom: 1.5rem; }
+  .faq-intro .section-title { margin-bottom: .65rem; }
+  .faq-intro .lead { margin: 0; max-width: none; }
+  .faq-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .faq-column { display: grid; gap: 1.9rem; min-width: 0; }
+  .faq-contact { padding-top: 2rem; }
+  .faq-contact__inner { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  .faq-contact h2 { margin: 0 0 .45rem; color: var(--text-strong); font-size: 1.3rem; line-height: 1.35; }
+  .faq-contact p { margin: 0; max-width: 65ch; color: var(--muted); }
+  .faq-contact .btn { flex-shrink: 0; }
+  @media (max-width: 760px) {
+    .faq-columns { grid-template-columns: 1fr; gap: 1.9rem; }
+    .faq-intro { padding-top: 1.8rem; }
+    .faq-contact__inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>

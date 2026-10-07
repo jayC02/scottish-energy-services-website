@@ -1,56 +1,28 @@
 ---
-import { faqs } from '../data/faqs';
-const limit = Astro.props.limit;
-const items = limit ? faqs.slice(0, limit) : faqs;
+import FAQGroup from './FAQGroup.astro';
+import { faqColumns } from '../data/faq-page';
+const limit = Astro.props.limit ?? 6;
+const general = faqColumns[0][0];
+const pricing = faqColumns[0][1];
+const generalItems = [general.items[0], general.items[2], general.items[3]].slice(0, limit);
+const pricingItems = pricing.items.slice(0, Math.max(0, limit - generalItems.length));
 ---
 <section class="section surface-band">
   <div class="container">
     <div class="section-heading">
-      <p class="eyebrow">FAQs</p>
-      <h2 class="section-title">Practical answers before you instruct</h2>
-      <p class="lead">Clear guidance on timescales, coverage, compliance requirements, and service scope.</p>
+      <h2 class="section-title">Frequently asked questions</h2>
     </div>
-    <div class="faq-list">
-      {items.map((faq, i) => (
-        <details class="card faq" data-reveal>
-          <summary>
-            <span>{faq.question}</span>
-            <em>{faq.category}</em>
-          </summary>
-          <p id={`faq-${i}`}>{faq.answer}</p>
-        </details>
-      ))}
+    <div class="faq-preview">
+      <FAQGroup group={{ ...general, items: generalItems }} headingLevel={3} />
+      {pricingItems.length > 0 && <FAQGroup group={{ ...pricing, items: pricingItems }} headingLevel={3} />}
     </div>
+    <a class="faq-all" href="/faq">View all frequently asked questions <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
 <style>
-  .faq-list { display: grid; gap: .85rem; }
-  .faq { padding: 1.1rem 1.2rem; }
-  summary {
-    cursor: pointer;
-    font-weight: 650;
-    color: var(--text-strong);
-    display: flex;
-    justify-content: space-between;
-    gap: .8rem;
-    align-items: center;
-  }
-  summary em {
-    font-style: normal;
-    font-size: .72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .07em;
-    color: var(--brand-strong);
-    background: color-mix(in oklab, var(--brand-soft) 75%, white);
-    border: 1px solid #c5d8ea;
-    border-radius: 999px;
-    padding: .2rem .5rem;
-    white-space: nowrap;
-  }
-  .faq p { color: var(--muted); margin: .75rem 0 0; }
-  @media (max-width: 620px) {
-    summary { flex-direction: column; align-items: flex-start; }
-  }
+  .faq-preview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(2rem, 5vw, 4rem); }
+  .section-heading { margin-bottom: 1.3rem; }
+  .faq-all { display: inline-block; margin-top: 1.3rem; color: var(--brand-strong); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 760px) { .faq-preview { grid-template-columns: 1fr; gap: 1.6rem; } }
 </style>

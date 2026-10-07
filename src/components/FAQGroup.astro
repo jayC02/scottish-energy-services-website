@@ -1,0 +1,43 @@
+---
+import type { FaqGroup } from '../data/faq-page';
+const { group, headingLevel = 2 } = Astro.props as { group: FaqGroup; headingLevel?: 2 | 3 };
+const Heading = headingLevel === 3 ? 'h3' : 'h2';
+---
+<section class="faq-group" aria-labelledby={`${group.id}-heading`}>
+  <Heading id={`${group.id}-heading`}>{group.title}</Heading>
+  <div class="faq-questions">
+    {group.items.map(item => (
+      <details class="faq-question">
+        <summary>
+          <span>{item.question}</span>
+          <span class="faq-toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="faq-answer">
+          <p>{item.answer}</p>
+          {item.links && <ul class="faq-links">
+            {item.links.map(link => <li><a href={link.href}>{link.label} <span aria-hidden="true">→</span></a></li>)}
+          </ul>}
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+<style>
+  .faq-group { min-width: 0; }
+  h2, h3 { margin: 0 0 .75rem; color: var(--text-strong); font-size: clamp(1.2rem, 1.7vw, 1.45rem); line-height: 1.3; letter-spacing: -.01em; }
+  .faq-question { border-bottom: 1px solid var(--border); }
+  .faq-question:first-child { border-top: 1px solid var(--border); }
+  summary { display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; gap: 1rem; padding: .85rem 0; min-height: 48px; color: var(--text-strong); font-size: .96rem; font-weight: 600; line-height: 1.45; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--brand-strong); }
+  summary:focus-visible { outline-offset: 2px; }
+  .faq-toggle { position: relative; width: 16px; height: 16px; color: var(--brand-strong); }
+  .faq-toggle::before, .faq-toggle::after { content: ''; position: absolute; background: currentColor; }
+  .faq-toggle::before { top: 7px; left: 2px; width: 12px; height: 2px; }
+  .faq-toggle::after { top: 2px; left: 7px; width: 2px; height: 12px; }
+  details[open] .faq-toggle::after { display: none; }
+  .faq-answer { padding: 0 2rem .95rem 0; color: var(--muted); font-size: .94rem; line-height: 1.65; }
+  .faq-answer p { margin: 0; }
+  .faq-links { display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; list-style: none; padding: 0; margin: .65rem 0 0; }
+  .faq-links a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 3px; }
+</style>

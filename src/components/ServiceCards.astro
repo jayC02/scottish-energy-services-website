@@ -23,7 +23,7 @@ const list = preview ? services : services;
           <p class="service-index">{String(index + 1).padStart(2, '0')}</p>
           <h3>{service.title}</h3>
           <p class="service-description">{service.short}</p>
-          {getServicePrice(service.slug) && <p class="service-price">{startingPrice(getServicePrice(service.slug)!)} <a href="/#pricing">Pricing details</a></p>}
+          {getServicePrice(service.slug) && <p class="service-price">{startingPrice(getServicePrice(service.slug)!)}</p>}
           <ul class="service-highlights">
             {service.highlights.slice(0, 2).map((item) => <li>{item}</li>)}
           </ul>
@@ -151,7 +151,6 @@ const list = preview ? services : services;
   }
 
   .service-price { margin: .7rem 0 0; color: var(--brand-strong); font-size: .92rem; font-weight: 600; }
-  .service-price a { display: inline-block; margin-left: .45rem; font-size: .78rem; font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
   .service-card--featured .service-price { color: #fff; }
   .service-price-note { margin: 1.2rem 0 0; color: var(--muted); font-size: .85rem; max-width: 85ch; }
   .service-price-note a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 3px; }

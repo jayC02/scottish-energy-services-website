@@ -23,9 +23,9 @@ export const services: Service[] = [
   {
     slug: 'saps',
     title: 'SAPs',
-    short: 'SAP calculations for new builds and residential developments.',
+    short: 'SAP calculations for new builds and residential developments across the UK.',
     intro: 'We produce accurate SAP assessments to demonstrate compliance with Building Regulations, supporting projects from design stage through to completion.',
-    highlights: ['Part L compliance support', 'As-designed and as-built SAPs', 'Support for developers and architects'],
+    highlights: ['Building Regulations support', 'As-designed and as-built SAPs', 'Support for developers and architects'],
     forWho: ['Housebuilders and residential developers', 'Architectural practices', 'Project teams delivering conversions and extensions'],
     whatIncluded: ['Design-stage SAP calculations', 'As-built SAP updates and final outputs', 'Technical coordination with project teams'],
     turnaround: 'Typical delivery is 3–5 working days depending on drawing quality and scope.'
@@ -33,9 +33,9 @@ export const services: Service[] = [
   {
     slug: 'sbem-calculations',
     title: 'SBEM Calculations',
-    short: 'SBEM calculations for non-domestic buildings.',
+    short: 'SBEM calculations for non-domestic buildings across the UK.',
     intro: 'We model the energy performance of commercial properties to support Building Regulations compliance and broader project delivery requirements.',
-    highlights: ['New builds and conversions', 'Part L compliance', 'Can support EPC delivery where required'],
+    highlights: ['New builds and conversions', 'Building Regulations compliance', 'Can support EPC delivery where required'],
     forWho: ['Commercial developers', 'M&E consultants and design teams', 'Contractors delivering non-domestic projects'],
     whatIncluded: ['SBEM model setup and compliance calculations', 'Performance scenario testing where required', 'Documentation suitable for submission'],
     turnaround: 'Programme-led delivery with staged outputs available for live projects.'
@@ -63,9 +63,9 @@ export const services: Service[] = [
   {
     slug: 'decs',
     title: 'DECs',
-    short: 'Display Energy Certificates for applicable public buildings.',
+    short: 'Display Energy Certificates, with requirements confirmed for the building’s location and use.',
     intro: 'We evaluate actual energy usage and provide the required certification and advisory reporting to support public sector compliance.',
-    highlights: ['Public sector compliance', 'Annual and advisory report support', 'Clear, dependable delivery'],
+    highlights: ['Operational energy ratings', 'Jurisdiction-specific requirements', 'Clear, dependable delivery'],
     forWho: ['Public sector property teams', 'Education and healthcare estates', 'Operators of frequently visited buildings'],
     whatIncluded: ['Operational energy data review', 'DEC certificate issue', 'Advisory report with improvement priorities'],
     turnaround: 'Most DEC instructions are completed within 4–8 working days once data is confirmed.'
