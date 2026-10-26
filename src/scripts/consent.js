@@ -1,7 +1,7 @@
 // Basic consent mode: Google is never contacted before an affirmative choice.
 const KEY = 'ses-consent-v1';
 const TTL = 180 * 24 * 60 * 60 * 1000;
-const ADS_ID = 'AW-18158926466';
+const ADS_ID = 'AW-18512642483';
 let allowed = false;
 let started = false;
 let storedChoice = null;

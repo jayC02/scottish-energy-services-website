@@ -29,6 +29,9 @@ test('accept injects one tag; only approved non-personal events are sent once', 
   const p = page();
   p.accept.click(); p.accept.click();
   assert.equal(p.requests.length, 1);
+  assert.equal(p.requests[0], 'https://www.googletagmanager.com/gtag/js?id=AW-18512642483');
+  const config = p.window.dataLayer.find(entry => entry[0] === 'config');
+  assert.equal(config[1], 'AW-18512642483');
   const before = p.window.dataLayer.length;
   p.window.sesTrackEvent('phone_click', { email: 'private@example.invalid' });
   p.window.sesTrackEvent('unapproved');
