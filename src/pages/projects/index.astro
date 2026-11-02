@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import ProjectServiceFilter from '../../components/ProjectServiceFilter';
+import { caseStudies, projectServices } from '../../data/project-cases';
+import { productionSite } from '../../data/seo-routing.mjs';
+const filters = Object.entries(projectServices).filter(([key]) => caseStudies.some(project => project.services.includes(key as keyof typeof projectServices)));
+const filterOptions = [
+  { value: 'all', label: 'All services', tag: String(caseStudies.length) },
+  ...filters.map(([value, service]) => ({
+    value,
+    label: service.label,
+    tag: String(caseStudies.filter(project => project.services.includes(value as keyof typeof projectServices)).length)
+  }))
+];
+const schema = { '@type': 'ItemList', name: 'Scottish Energy Services projects', itemListElement: caseStudies.map((project,index) => ({ '@type': 'ListItem', position: index + 1, name: project.label, url: `${productionSite}/projects/${project.slug}` })) };
+---
+<BaseLayout title="Projects" description="EPC, SAP, SBEM and compliance work for universities, venues, shopping centres, hotels and developments." structuredData={schema}>
+  <section class="portfolio-intro"><div class="container"><h1>Projects</h1><p class="lead">We’ve completed over 12,000 projects. Here are a few examples of our work.</p></div></section>
+  <section class="portfolio-work" aria-label="Project portfolio"><div class="container">
+    <div class="portfolio-tools">
+      <div class="portfolio-filter" data-project-filter-control hidden>
+        <span>Show</span><ProjectServiceFilter options={filterOptions} client:load />
+      </div>
+      <p class="project-count" data-project-count role="status" aria-live="polite">{caseStudies.length} projects</p>
+    </div>
+    <div class="portfolio-grid">{caseStudies.map((project, index) => <ProjectCard project={project} headingLevel={2} priority={index < 3} />)}</div>
+  </div></section>
+  <section class="portfolio-cta"><div class="container">
+    <div><h2>Have a project in mind?</h2><p>Send us the details and we’ll confirm how we can help.</p></div>
+    <a class="btn btn-primary" href="/quote">Request a quote <span aria-hidden="true">↗</span></a>
+  </div></section>
+</BaseLayout>
+<script>import '../../scripts/project-page.js';</script>
+<style>
+  .portfolio-intro{padding:2.5rem 0 1rem;background:white}
+  h1{margin:0;color:var(--text-strong);font-size:clamp(2rem,4vw,2.85rem);line-height:1.1;letter-spacing:-.03em}.portfolio-intro .lead{margin:.75rem 0 0}
+  .portfolio-work{padding:1.5rem 0 3rem}.portfolio-tools{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1.25rem}
+  .portfolio-filter{display:flex;align-items:center;gap:.75rem;min-width:0;max-width:100%}.portfolio-filter[hidden]{display:none}.portfolio-filter>span,.project-count{font-size:.84rem;color:var(--muted)}.portfolio-filter>span{flex:none}
+  .portfolio-filter :global(.project-service-filter){width:240px;max-width:100%;min-width:0}.portfolio-filter :global(.glide-select){width:100%}.portfolio-filter :global(.glide-select__trigger){width:100%;border:1px solid var(--border-strong)}.project-count{margin:0;white-space:nowrap}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 16px}.portfolio-grid :global([hidden]){display:none}
+  .portfolio-cta{padding:2.5rem 0;background:#0d1d2d;color:#c6d2dc}.portfolio-cta .container{display:flex;justify-content:space-between;align-items:center;gap:2rem}.portfolio-cta h2{color:white;font-size:clamp(1.5rem,3vw,2rem);line-height:1.2;margin:0 0 .65rem}.portfolio-cta p{margin:0}.portfolio-cta .btn{flex:none}
+  @media(max-width:1050px){.portfolio-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:660px){.portfolio-grid{grid-template-columns:1fr}.portfolio-cta .container{display:block}.portfolio-cta .btn{margin-top:1.4rem}.portfolio-tools{flex-wrap:wrap;row-gap:.65rem}.portfolio-filter{gap:.6rem}}
+</style>

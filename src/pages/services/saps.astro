@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceDetail from '../../components/ServiceDetail.astro';
-import { services } from '../../data/services';
-const service = services.find((s) => s.slug === 'saps')!;
+import { getServicePage } from '../../data/service-pages';
+const { service, detail, schema } = getServicePage('saps');
 ---
-<BaseLayout title={service.title} description={service.short}><ServiceDetail service={service} /></BaseLayout>
+<BaseLayout title={detail.title} description={detail.description} structuredData={schema}>
+  <ServiceDetail service={service} />
+</BaseLayout>

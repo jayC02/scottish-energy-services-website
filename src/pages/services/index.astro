@@ -1,15 +1,16 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceCards from '../../components/ServiceCards.astro';
-import CTASection from '../../components/CTASection.astro';
 ---
-<BaseLayout title="Services" description="Explore nine premium technical compliance services delivered by Scottish Energy Services across the UK.">
-  <section class="section">
-    <div class="container" data-reveal>
-      <h1 class="section-title">Technical services portfolio</h1>
-      <p class="lead">Our nine-service structure supports transactions, development programmes, statutory obligations, and ongoing portfolio compliance across the UK.</p>
-    </div>
-  </section>
-  <ServiceCards />
-  <CTASection title="Need help selecting the right scope?" text="Tell us where your project is now and what you need to evidence. We will advise the most efficient service path." />
+<BaseLayout title="Energy & Building Compliance Services Scotland" description="Commercial EPCs, Section 63, SAP, SBEM, DSM, TM59, DECs and fire risk assessments from Glasgow, with service coverage across Scotland and the UK.">
+  <ServiceCards page />
+  <section class="service-help"><div class="container service-help-layout">
+    <div><h2>Not sure what you need?</h2><p>Send the address, project stage and any drawings. We’ll confirm the right assessment and what it will cost.</p></div>
+    <a class="btn btn-primary" href="/quote">Discuss your project</a>
+  </div></section>
 </BaseLayout>
+<style>
+  .service-help{padding:2.5rem 0;background:white}.service-help-layout{display:flex;justify-content:space-between;align-items:center;gap:2rem}
+  h2{margin:0 0 .6rem;font-size:clamp(1.5rem,2.5vw,1.85rem);line-height:1.2;letter-spacing:-.025em;color:var(--text-strong)}p{max-width:62ch;margin:0;color:var(--muted)}.btn{flex:none}
+  @media(max-width:700px){.service-help-layout{display:block}.btn{margin-top:1.4rem}}
+</style>

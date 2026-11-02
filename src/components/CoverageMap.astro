@@ -1,43 +1,204 @@
-<section class="section">
-  <div class="container grid grid-2 coverage-grid">
-    <div data-reveal>
+<section class="section coverage-section">
+  <div class="container coverage-layout">
+    <div class="coverage-copy" data-reveal>
       <p class="eyebrow">Coverage</p>
-      <h2 class="section-title">Based in Scotland. Structured for project delivery across the UK.</h2>
-      <p class="lead">We coordinate surveys, modelling, and reporting for domestic and commercial clients throughout England, Scotland, Wales, and Northern Ireland, with clear scheduling from enquiry to delivery.</p>
-      <a href="/areas" class="btn btn-ghost">See coverage details</a>
+      <h2 class="section-title">Based in Glasgow. Delivering projects across the UK.</h2>
+      <p class="lead">
+        We coordinate surveys, modelling and reporting for domestic and commercial clients across
+        Scotland, England, Wales and Northern Ireland.
+      </p>
+      <a href="/areas" class="coverage-link">See coverage details <span aria-hidden="true">→</span></a>
     </div>
-    <div class="card coverage-panel" data-reveal>
-      <div>
-        <p>Core office base</p>
-        <strong>Glasgow, Scotland</strong>
+
+    <div class="coverage-visual" data-reveal aria-label="UK-wide service coverage">
+      <div class="coverage-gridlines" aria-hidden="true"></div>
+
+      <div class="coverage-base">
+        <span>Base</span>
+        <strong>Glasgow</strong>
       </div>
-      <div>
-        <p>Operational footprint</p>
-        <strong>UK-wide service delivery</strong>
+
+      <div class="coverage-title">
+        <span>Operational coverage</span>
+        <strong>UK</strong>
       </div>
-      <div>
-        <p>Appointment model</p>
-        <strong>Single properties to multi-site programmes</strong>
+
+      <div class="coverage-regions">
+        <span>Scotland</span>
+        <span>England</span>
+        <span>Wales</span>
+        <span>Northern Ireland</span>
+      </div>
+
+      <div class="coverage-note">
+        <span>From</span>
+        <strong>Single properties</strong>
+        <span>to</span>
+        <strong>multi-site programmes</strong>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .coverage-grid { align-items: stretch; }
-  .coverage-panel {
-    min-height: 320px;
+  .coverage-section {
+    background: #f7f9fc;
+  }
+
+  .coverage-layout {
     display: grid;
-    gap: .8rem;
-    background: linear-gradient(165deg, #ffffff 0%, #f4f8fc 58%, #edf5fb 100%);
-    border-color: #ccdbe8;
+    grid-template-columns: minmax(0, .82fr) minmax(460px, 1.18fr);
+    gap: clamp(2.8rem, 6vw, 6rem);
+    align-items: center;
   }
-  .coverage-panel > div {
-    border-radius: 14px;
-    border: 1px solid #d5e2ef;
-    background: rgba(255, 255, 255, 0.84);
-    padding: 1rem;
+
+  .coverage-copy .section-title {
+    max-width: 15ch;
   }
-  .coverage-panel p { margin: 0 0 .35rem; color: var(--muted); font-size: .86rem; text-transform: uppercase; letter-spacing: .06em; }
-  .coverage-panel strong { color: var(--text-strong); font-size: 1.02rem; line-height: 1.35; }
+
+  .coverage-copy .lead {
+    max-width: 48ch;
+  }
+
+  .coverage-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    margin-top: .5rem;
+    color: var(--brand-strong);
+    font-weight: 700;
+  }
+
+  .coverage-link span {
+    transition: transform .2s ease;
+  }
+
+  .coverage-link:hover span {
+    transform: translateX(4px);
+  }
+
+  .coverage-visual {
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    padding: clamp(1.5rem, 3vw, 2.2rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 72% 28%, rgba(89, 184, 226, .18), transparent 26%),
+      linear-gradient(145deg, #102438 0%, #14344c 100%);
+    color: #fff;
+    box-shadow: 0 24px 50px rgba(16, 36, 56, .14);
+  }
+
+  .coverage-gridlines {
+    position: absolute;
+    inset: 0;
+    opacity: .45;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .coverage-base,
+  .coverage-title,
+  .coverage-regions,
+  .coverage-note {
+    position: relative;
+    z-index: 1;
+  }
+
+  .coverage-base {
+    display: inline-grid;
+    gap: .1rem;
+    padding: .65rem .8rem;
+    border: 1px solid rgba(255,255,255,.18);
+    border-radius: 10px;
+    background: rgba(255,255,255,.06);
+  }
+
+  .coverage-base span,
+  .coverage-title span,
+  .coverage-note > span {
+    color: #a9c0d2;
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+  }
+
+  .coverage-base strong {
+    font-size: .95rem;
+  }
+
+  .coverage-title {
+    margin-top: 2.6rem;
+  }
+
+  .coverage-title strong {
+    display: block;
+    margin-top: -.25rem;
+    font-size: clamp(5.5rem, 11vw, 9rem);
+    line-height: .9;
+    letter-spacing: -.065em;
+    color: #fff;
+  }
+
+  .coverage-regions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .55rem;
+    margin-top: 1rem;
+  }
+
+  .coverage-regions span {
+    padding: .45rem .7rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    color: #d7e3ec;
+    font-size: .82rem;
+  }
+
+  .coverage-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .4rem .55rem;
+    margin-top: 2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid rgba(255,255,255,.16);
+  }
+
+  .coverage-note strong {
+    color: #fff;
+    font-size: .93rem;
+  }
+
+  @media (max-width: 900px) {
+    .coverage-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .coverage-copy .section-title {
+      max-width: 18ch;
+    }
+
+    .coverage-visual {
+      min-height: 340px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .coverage-visual {
+      min-height: 315px;
+    }
+
+    .coverage-title {
+      margin-top: 2rem;
+    }
+
+    .coverage-title strong {
+      font-size: 6rem;
+    }
+  }
 </style>

@@ -1,128 +1,47 @@
+import { quoteFields, validateQuoteDetails } from '../data/quote-fields.mjs';
 
-window.sesTrackEvent = (eventName, payload = {}) => {
-  if (window.gtag) window.gtag('event', eventName, payload);
-  if (window.dataLayer) window.dataLayer.push({ event: eventName, ...payload });
-};
-document.querySelectorAll('[data-track]').forEach((el)=>el.addEventListener('click',()=>window.sesTrackEvent(el.getAttribute('data-track')||'click')));
+// Delegation covers hydrated gallery/navigation links without duplicate listeners.
+document.addEventListener('click', (event) => {
+  const element = event.target instanceof Element ? event.target.closest('a, button[data-track]') : null;
+  if (!element) return;
+  const href = element.getAttribute('href') || '';
+  let name = element.getAttribute('data-track') || (href.startsWith('tel:') ? 'phone_click' : href.startsWith('mailto:') ? 'email_click' : /^\/quote(?:[?#]|$)/.test(href) ? 'primary_cta_click' : href.startsWith('/services/') ? 'service_cta_click' : '');
+  const details = { placement: element.closest('header') ? 'header' : element.closest('footer') ? 'footer' : 'content' };
+  if (href && !href.startsWith('#')) {
+    try {
+      const url = new URL(href, location.href);
+      if (['http:', 'https:'].includes(url.protocol)) {
+        if (url.origin === location.origin) {
+          details.link_path = url.pathname;
+          if (!name) name = 'internal_link_click';
+        } else {
+          details.link_domain = url.hostname;
+          if (!name) name = 'outbound_link_click';
+        }
+      }
+    } catch { /* Ignore malformed link destinations. */ }
+  }
+  if (name) window.sesTrackEvent?.(name, details);
+});
 
 const nav = document.querySelector('.nav');
 const toggle = document.querySelector('.menu-toggle');
 const header = document.querySelector('[data-header]');
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const setupGlobalLoading = () => {
-  if (window.RaceHubLoading) return;
-
-  const bar = document.querySelector('[data-route-loading-bar]');
-  if (!bar) return;
-
-  let active = false;
-  let progress = 0;
-  let tickerId = 0;
-  let resetId = 0;
-
-  const applyState = () => {
-    bar.style.setProperty('--loading-progress', `${progress}%`);
-  };
-
-  const stopTicker = () => {
-    if (tickerId) {
-      window.clearInterval(tickerId);
-      tickerId = 0;
-    }
-  };
-
-  const queueReset = () => {
-    window.clearTimeout(resetId);
-    resetId = window.setTimeout(() => {
-      bar.classList.remove('is-active', 'is-fail');
-      progress = 0;
-      applyState();
-    }, reducedMotion ? 60 : 240);
-  };
-
-  const start = () => {
-    if (active) return;
-    active = true;
-    window.clearTimeout(resetId);
-    bar.classList.add('is-active');
-    bar.classList.remove('is-fail');
-    progress = 8;
-    applyState();
-
-    if (reducedMotion) {
-      progress = 40;
-      applyState();
-      return;
-    }
-
-    stopTicker();
-    tickerId = window.setInterval(() => {
-      progress = Math.min(80, progress + (progress < 45 ? 9 : progress < 65 ? 4 : 1.2));
-      applyState();
-      if (progress >= 80) stopTicker();
-    }, 180);
-  };
-
-  const finish = (failed = false) => {
-    if (!active && progress === 0) return;
-
-    active = false;
-    stopTicker();
-    bar.classList.add('is-active');
-    bar.classList.toggle('is-fail', failed);
-    progress = 100;
-    applyState();
-    queueReset();
-  };
-
-  window.RaceHubLoading = { start, done: () => finish(false), fail: () => finish(true) };
-
-  document.addEventListener('astro:before-preparation', () => window.RaceHubLoading.start());
-  document.addEventListener('astro:before-swap', () => window.RaceHubLoading.start());
-  document.addEventListener('astro:after-swap', () => window.RaceHubLoading.done());
-  document.addEventListener('astro:page-load', () => window.RaceHubLoading.done());
-
-  document.addEventListener('click', (event) => {
-    if (event.defaultPrevented || event.button !== 0) return;
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-
-    const target = event.target;
-    if (!(target instanceof Element) || target.closest('[data-no-loading]')) return;
-
-    const anchor = target.closest('a[href]');
-    if (!(anchor instanceof HTMLAnchorElement)) return;
-
-    if (anchor.hasAttribute('download') || anchor.hasAttribute('data-no-loading')) return;
-    if (anchor.getAttribute('target') === '_blank') return;
-
-    const rawHref = anchor.getAttribute('href') || '';
-    if (!rawHref || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) return;
-
-    const url = new URL(anchor.href, window.location.href);
-    if (url.origin !== window.location.origin) return;
-    if (url.pathname === window.location.pathname && url.hash && url.search === window.location.search) return;
-
-    window.RaceHubLoading.start();
-  }, { capture: true });
-
-  document.addEventListener('submit', (event) => {
-    const form = event.target;
-    if (!(form instanceof HTMLFormElement) || form.hasAttribute('data-no-loading')) return;
-    window.RaceHubLoading.start();
-  }, { capture: true });
-};
-
-setupGlobalLoading();
-
 
 if (toggle && nav) {
   toggle.addEventListener('click', () => {
     const isOpen = nav.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) nav.querySelector('a')?.focus();
   });
 }
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && nav?.classList.contains('open')) {
+    nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); toggle?.focus();
+  }
+});
 
 if (header) {
   const handleHeader = () => header.classList.toggle('compact', window.scrollY > 10);
@@ -180,6 +99,33 @@ if (!reducedMotion && counters.length) {
   });
 
   counters.forEach((counter) => counterObserver.observe(counter));
+}
+
+const heroStats = document.querySelectorAll('.hero-panel .metric');
+if (!reducedMotion && heroStats.length) {
+  heroStats.forEach((stat) => {
+    stat.addEventListener(
+      'pointermove',
+      (event) => {
+        const rect = stat.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+
+        stat.style.setProperty('--stat-glow-x', `${Math.round(x * 100)}%`);
+        stat.style.setProperty('--stat-glow-y', `${Math.round(y * 100)}%`);
+        stat.style.setProperty('--tilt-y', `${((x - 0.5) * 4).toFixed(2)}deg`);
+        stat.style.setProperty('--tilt-x', `${((0.5 - y) * 3).toFixed(2)}deg`);
+      },
+      { passive: true }
+    );
+
+    stat.addEventListener('pointerleave', () => {
+      stat.style.removeProperty('--stat-glow-x');
+      stat.style.removeProperty('--stat-glow-y');
+      stat.style.removeProperty('--tilt-x');
+      stat.style.removeProperty('--tilt-y');
+    });
+  });
 }
 
 const heroCanvas = document.querySelector('#hero-field');
@@ -295,8 +241,10 @@ const setFieldError = (form, fieldName, message = '') => {
   if (errorSlot) {
     errorSlot.textContent = message;
   }
+  if (message && field?.closest('details')) field.closest('details').open = true;
 };
 
+let turnstileScriptRequested = false;
 const initializeTurnstile = (form) => {
   const widget = form.querySelector('[data-turnstile-widget]');
   const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
@@ -312,11 +260,21 @@ const initializeTurnstile = (form) => {
     return;
   }
 
+  if (!turnstileScriptRequested && !window.turnstile) {
+    turnstileScriptRequested = true;
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+
   const renderWidget = () => {
     if (!window.turnstile || typeof window.turnstile.render !== 'function') return false;
     if (widget.dataset.rendered === 'true') return true;
 
-    window.turnstile.render(widget, {
+    widget.dataset.widgetId = window.turnstile.render(widget, {
+      action: 'enquiry',
+      'response-field': false,
       sitekey: siteKey,
       theme: widget.getAttribute('data-theme') || 'light',
       callback: (token) => {
@@ -325,6 +283,7 @@ const initializeTurnstile = (form) => {
       },
       'expired-callback': () => {
         tokenInput.value = '';
+        setFieldError(form, 'turnstileToken', 'The security check expired. Please complete it again.');
       },
       'error-callback': () => {
         tokenInput.value = '';
@@ -360,7 +319,10 @@ const validateClientValues = (values, options = { captchaRequired: true }) => {
   if (values.phone && !PHONE_REGEX.test(values.phone.trim())) errors.phone = 'Please enter a valid phone number.';
   if (options.captchaRequired && !values['cf-turnstile-response']) errors.turnstileToken = 'Please complete the captcha check.';
 
-  return errors;
+  for (const [field, limit] of Object.entries({ name: 120, email: 254, phone: 20, message: 10000 })) {
+    if (String(values[field] || '').length > limit) errors[field] = `Please use no more than ${limit} characters.`;
+  }
+  return { ...errors, ...validateQuoteDetails(values) };
 };
 
 const collectValues = (formData) => Object.fromEntries(formData.entries());
@@ -369,15 +331,29 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
   const submitButton = form.querySelector('button[type="submit"]');
   const statusEl = form.querySelector('[data-form-status]');
 
+  // Static Astro pages read the query in the browser; no extra route or request.
+  const requestedService = new URLSearchParams(window.location.search).get('service');
+  const serviceSelect = form.querySelector('select[name="service"]');
+  const requestedOption = serviceSelect && Array.from(serviceSelect.options).find(option => option.dataset.serviceSlug === requestedService);
+  if (requestedOption) serviceSelect.value = requestedOption.value;
+
   initializeTurnstile(form);
+  form.addEventListener('focusin', () => window.sesTrackEvent?.(`${form.getAttribute('name')}_form_started`), { once: true });
+  const resetCaptcha = () => {
+    const widget = form.querySelector('[data-turnstile-widget]');
+    const input = form.querySelector('[name="cf-turnstile-response"]');
+    if (input) input.value = '';
+    if (window.turnstile && widget?.dataset.widgetId) window.turnstile.reset(widget.dataset.widgetId);
+  };
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (form.dataset.submitting === 'true') return;
 
     const formData = new FormData(form);
     const values = collectValues(formData);
 
-    ['name','email','service','phone','message','turnstileToken'].forEach((field) => setFieldError(form, field, ''));
+    ['name','email','service','phone','message','turnstileToken', ...quoteFields.map(field => field.name)].forEach((field) => setFieldError(form, field, ''));
     if (statusEl) statusEl.textContent = '';
 
     const captchaWidget = form.querySelector('[data-turnstile-widget]');
@@ -392,6 +368,7 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
     }
 
     const defaultText = submitButton?.dataset.submitText || submitButton?.textContent || 'Submit';
+    form.dataset.submitting = 'true';
     if (submitButton) {
       submitButton.disabled = true;
       submitButton.textContent = 'Sending...';
@@ -411,7 +388,8 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
 
       const payload = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || payload?.ok !== true) {
+        resetCaptcha();
         if (payload?.errors && typeof payload.errors === 'object') {
           Object.entries(payload.errors).forEach(([field, message]) => {
             if (typeof message === 'string') setFieldError(form, field, message);
@@ -421,25 +399,22 @@ document.querySelectorAll('[data-ajax-form]').forEach((form) => {
         const message = payload?.message || 'We could not submit your request. Please try again.';
         if (statusEl) statusEl.textContent = message;
         showToast(message, 'error');
+        form.querySelector('[aria-invalid="true"]')?.focus();
         return;
       }
 
       form.reset();
-      const tokenInput = form.querySelector('[name="cf-turnstile-response"]');
-      if (tokenInput) tokenInput.value = '';
-      if (window.turnstile && typeof window.turnstile.reset === 'function') {
-        const captchaWidget = form.querySelector('[data-turnstile-widget]');
-        if (captchaWidget) window.turnstile.reset(captchaWidget);
-      }
-
+      resetCaptcha();
+      window.sesTrackEvent?.(`${form.getAttribute('name')}_form_submitted`);
       const successMessage = 'Thanks — your form was submitted successfully. We will get back to you shortly.';
       if (statusEl) statusEl.textContent = successMessage;
       showToast(successMessage, 'success');
     } catch (error) {
       if (statusEl) statusEl.textContent = 'Unable to send right now. Please try again in a moment.';
       showToast('Unable to send right now. Please try again in a moment.', 'error');
-      console.error(error);
+      resetCaptcha();
     } finally {
+      delete form.dataset.submitting;
       if (submitButton) {
         submitButton.disabled = false;
         submitButton.textContent = defaultText;

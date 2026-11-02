@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projectImages } from '../data/project-images';
+import { caseStudies } from '../data/project-cases';
+import { services } from '../data/services';
+import { serviceVisuals } from '../data/service-visuals';
+const credits = caseStudies.map(project => ({ project, image: projectImages[project.slug] })).filter(item => item.image?.credit);
+const serviceCredits = services.map(service => ({ service, image: serviceVisuals[service.slug] })).filter(item => item.image?.credit && !Object.values(projectImages).some(image => image.src === item.image.src));
+---
+<BaseLayout title="Image credits" description="Sources and licences for images used by Scottish Energy Services.">
+  <section class="section"><div class="container">
+    <h1 class="section-title">Image credits</h1>
+    <p class="lead">Image sources. Images are resized and cropped for display.</p>
+    <div class="credits-grid">{credits.map(({ project, image }) => <section id={project.slug}>
+      <h2><a href={`/projects/${project.slug}`}>{project.label}</a></h2>
+      <p><a href={image.credit!.source}>{image.credit!.name}</a></p>
+      {image.credit!.license && <p><a href={image.credit!.licenseUrl}>{image.credit!.license}</a></p>}
+    </section>)}{serviceCredits.map(({ service, image }) => <section id={`service-${service.slug}`}>
+      <h2><a href={`/services/${service.slug}`}>{service.title}</a></h2>
+      <p><a href={image.credit!.source}>{image.credit!.name}</a></p>
+      {image.credit!.license && <p>{image.credit!.licenseUrl ? <a href={image.credit!.licenseUrl}>{image.credit!.license}</a> : image.credit!.license}</p>}
+    </section>)}</div>
+  </div></section>
+</BaseLayout>
+<style>
+  .credits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 2rem;margin-top:2rem}
+  .credits-grid section{padding:1.5rem 0;border-top:1px solid var(--border);scroll-margin-top:110px;min-width:0}
+  h2{font-size:1.1rem;line-height:1.3;margin:0 0 .6rem;color:var(--text-strong)}p{margin:.25rem 0;color:var(--muted)}.credits-grid a{text-decoration:underline;text-underline-offset:3px}
+  @media(max-width:650px){.credits-grid{grid-template-columns:1fr}}
+</style>

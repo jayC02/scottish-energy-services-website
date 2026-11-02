@@ -1,18 +1,185 @@
-<section class="section surface-band">
+---
+import SpotlightSurface from './bits/SpotlightSurface.astro';
+
+const steps = [
+  {
+    number: '01',
+    title: 'Brief & quote',
+    text: 'Send the property details. We confirm the scope, fee and timing.'
+  },
+  {
+    number: '02',
+    title: 'Site visit',
+    text: 'We arrange a visit if the assessment needs one.'
+  },
+  {
+    number: '03',
+    title: 'Assessment',
+    text: 'We complete the calculations, review and certification as agreed.'
+  },
+  {
+    number: '04',
+    title: 'Report & next steps',
+    text: 'You receive your report and advice on the next steps.'
+  }
+];
+---
+
+<section class="section ses-process">
   <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">Simple Process</p>
-      <h2 class="section-title">A clear, managed workflow from first contact to final report.</h2>
+    <div class="ses-process-heading" data-reveal>
+      <div>
+        <h2 class="section-title">How it works</h2>
+      </div>
     </div>
-    <div class="grid grid-2 process-grid">
-      <article class="card" data-reveal><h3>1. Brief & quote</h3><p>Share your property type, location, and service need. We return a clear scope, cost, and timeframe.</p></article>
-      <article class="card" data-reveal><h3>2. Site visit</h3><p>An assessor attends at the agreed time and gathers required information efficiently with minimal disruption.</p></article>
-      <article class="card" data-reveal><h3>3. Assessment & lodgement</h3><p>We complete calculations, risk review, and certificate lodgement where required by the relevant scheme.</p></article>
-      <article class="card" data-reveal><h3>4. Report & next steps</h3><p>You receive a clear report with recommended actions to maintain compliance and support planning decisions.</p></article>
+
+    <div class="ses-process-track" data-reveal>
+      <div class="ses-process-line" aria-hidden="true"></div>
+
+      {steps.map((step) => (
+        <SpotlightSurface class="ses-process-step" spotlightColor="rgba(76, 184, 229, 0.13)">
+          <span class="ses-process-node" aria-hidden="true"></span>
+          <span class="ses-process-number">{step.number}</span>
+          <h3>{step.title}</h3>
+          <p>{step.text}</p>
+        </SpotlightSurface>
+      ))}
     </div>
   </div>
 </section>
 
-<style>
-  .process-grid .card { border-left: 4px solid var(--brand-soft); }
+<style is:global>
+  .ses-process {
+    background: #fff;
+  }
+
+  .ses-process-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .ses-process-heading .section-title {
+    max-width: 17ch;
+    margin-bottom: 0;
+  }
+
+  .ses-process-heading .lead {
+    margin: 0;
+    max-width: 42ch;
+  }
+
+  .ses-process-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: .8rem;
+    padding-top: 1.4rem;
+  }
+
+  .ses-process-line {
+    position: absolute;
+    top: 1.75rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, #b9d9e9, #d5e1ea);
+  }
+
+  .ses-process-step {
+    min-height: 255px;
+    padding: 2.25rem 1.25rem 1.35rem;
+    border: 1px solid #d8e2eb;
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.99), rgba(248,250,253,.98));
+    box-shadow: 0 8px 26px rgba(17,39,61,.045);
+    transition:
+      transform .25s ease,
+      border-color .25s ease,
+      box-shadow .25s ease;
+  }
+
+  .ses-process-step:hover {
+    transform: translateY(-4px);
+    border-color: #b7cedd;
+    box-shadow: 0 16px 38px rgba(17,39,61,.085);
+  }
+
+  .ses-process-node {
+    position: absolute;
+    top: .98rem;
+    left: 1.2rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--brand);
+    box-shadow: 0 0 0 6px #fff;
+  }
+
+  .ses-process-number {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: var(--brand);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .74rem;
+    font-weight: 800;
+  }
+
+  .ses-process-step h3 {
+    margin: 0 0 .65rem;
+    color: var(--text-strong);
+    font-size: 1.12rem;
+    line-height: 1.3;
+  }
+
+  .ses-process-step p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .92rem;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 960px) {
+    .ses-process-heading {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .ses-process-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ses-process-line {
+      display: none;
+    }
+
+    .ses-process-step {
+      min-height: 220px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .ses-process-track {
+      grid-template-columns: 1fr;
+      gap: .7rem;
+      padding-top: 0;
+    }
+
+    .ses-process-step {
+      min-height: 0;
+      padding: 1.25rem 1.1rem 1.15rem 3.2rem;
+    }
+
+    .ses-process-node {
+      top: 1.45rem;
+      left: 1rem;
+    }
+
+    .ses-process-number {
+      margin-bottom: .45rem;
+    }
+  }
 </style>

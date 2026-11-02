@@ -1,0 +1,17 @@
+<section class="cookie-notice" data-cookie-notice aria-label="Cookie preferences" hidden>
+  <div class="container">
+    <p><strong>Your privacy choices</strong></p>
+    <p>We use essential technologies to run the site, plus optional Google Analytics and Google Ads measurement to understand visits and enquiries. <a href="/cookies">Cookie Policy</a>.</p>
+    <div class="cookie-actions">
+      <button class="btn btn-secondary" type="button" data-cookie-choice="none">Reject</button>
+      <button class="btn btn-secondary" type="button" data-cookie-choice="all">Accept</button>
+    </div>
+  </div>
+</section>
+<style>
+  .cookie-notice { position: fixed; inset: auto 0 0; z-index: 1000; background: var(--bg, #fff); color: var(--text, #172b3e); border-top: 1px solid var(--border, #ccd5dd); padding: 1rem 0; box-shadow: 0 -2px 12px #0001; max-height: 65vh; overflow: auto; }
+  .cookie-notice[hidden] { display: none; }
+  p { margin: 0 0 .65rem; font-size: .95rem; }
+  a { text-decoration: underline; }
+  .cookie-actions { display: flex; gap: .65rem; flex-wrap: wrap; }
+</style>

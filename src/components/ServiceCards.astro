@@ -1,90 +1,74 @@
 ---
 import { services } from '../data/services';
-const preview = Astro.props.preview ?? false;
-const list = preview ? services : services;
+import { serviceVisuals } from '../data/service-visuals';
+import { getServicePrice, startingPrice } from '../data/pricing';
+interface Props { page?: boolean; }
+const { page = false } = Astro.props;
+const Heading = page ? 'h1' : 'h2';
+const CardHeading = page ? 'h2' : 'h3';
 ---
-<section class="section service-band">
+<section class="service-band" aria-labelledby="services-heading">
   <div class="container">
-    <div class="section-heading">
-      <p class="eyebrow">Core Services</p>
-      <h2 class="section-title">Nine specialist services delivered with technical discipline and clear communication.</h2>
-      <p class="lead">From one-off assessments to portfolio instruction programmes, every service is structured for practical delivery, dependable compliance, and commercially useful reporting.</p>
-    </div>
+    <header class="service-heading">
+      <Heading id="services-heading">Our services</Heading>
+      <p>Energy assessments, fire risk assessments and building compliance for homes, businesses and public buildings.</p>
+    </header>
     <div class="service-grid">
-      {list.map((service, index) => (
-        <article class="card service-card" data-reveal style={`--index:${index};`}>
-          <p class="service-index">{String(index + 1).padStart(2, '0')}</p>
-          <h3>{service.title}</h3>
-          <p class="service-description">{service.short}</p>
-          <ul class="service-highlights">
-            {service.highlights.slice(0, 2).map((item) => <li>{item}</li>)}
-          </ul>
-          <a href={`/services/${service.slug}`} class="service-link">View service <span aria-hidden="true">→</span></a>
-        </article>
-      ))}
+      {services.map((service, index) => {
+        const image = serviceVisuals[service.slug];
+        const price = getServicePrice(service.slug);
+        return <article class="service-card">
+          <a class="service-card-link" href={`/services/${service.slug}`} aria-labelledby={`service-${service.slug}`}>
+            <div class="service-image">
+              <img src={image.src} srcset={image.small ? `${image.small} ${image.smallWidth || 640}w, ${image.src} ${image.width || 1280}w` : undefined} sizes="(min-width: 1051px) 390px, (min-width: 661px) 46vw, 92vw" width={image.width || 1280} height={image.height || 720} alt="" loading={page && index < 3 ? 'eager' : 'lazy'} fetchpriority={page && index === 0 ? 'high' : undefined} decoding="async" style={`object-position: ${image.position || '50% 45%'}`} />
+            </div>
+            <div class="service-body">
+              <CardHeading id={`service-${service.slug}`}>{service.title}</CardHeading>
+              <p class="service-description">{service.short}</p>
+              <ul class="service-highlights">
+                {service.highlights.slice(0, 3).map(item => <li>
+                  <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.3" /><path d="m6.5 10 2.3 2.3 4.7-4.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  <span>{item}</span>
+                </li>)}
+              </ul>
+              <div class="service-card-footer">
+                <span class:list={['service-price', {'service-price--bespoke': !price}]}>{price ? startingPrice(price) : 'Price on request'}</span>
+                <span class="service-link-label">View details <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+              </div>
+            </div>
+          </a>
+        </article>;
+      })}
     </div>
+    <p class="service-price-note">Prices exclude VAT. We confirm the scope and full fee before work begins. <a href="/#pricing">View pricing</a>.</p>
   </div>
 </section>
-
 <style>
-  .service-band { position: relative; }
-  .service-grid {
-    margin-top: 2rem;
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 1.1rem;
-  }
-  .service-card {
-    grid-column: span 4;
-    display: grid;
-    gap: .82rem;
-    padding: 1.55rem;
-    min-height: 286px;
-    transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .3s ease;
-    background: linear-gradient(170deg, rgba(255,255,255,.98), rgba(246,251,255,.94));
-    border-color: #d5e0eb;
-    position: relative;
-  }
-  .service-card:hover { transform: translateY(-5px); border-color: #b7cde0; box-shadow: var(--shadow); }
-  .service-index {
-    margin: 0;
-    color: color-mix(in oklab, var(--brand) 75%, white);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-weight: 700;
-    letter-spacing: .03em;
-    font-size: .8rem;
-  }
-  h3 { margin: 0; color: var(--text-strong); font-size: 1.17rem; line-height: 1.3; }
-  .service-description { color: var(--muted); margin: 0; }
-  .service-highlights {
-    margin: .15rem 0 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    gap: .34rem;
-  }
-  .service-highlights li {
-    color: #52657a;
-    font-size: .9rem;
-    padding-left: 1rem;
-    position: relative;
-  }
-  .service-highlights li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: .48rem;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: color-mix(in oklab, var(--brand) 70%, white);
-  }
-  .service-link { color: var(--brand-strong); font-weight: 600; margin-top: auto; }
-
-  @media (max-width: 1080px) {
-    .service-card { grid-column: span 6; min-height: 270px; }
-  }
-  @media (max-width: 700px) {
-    .service-card { grid-column: 1 / -1; min-height: unset; }
-  }
+  .service-band{padding:clamp(2rem,4vw,3.25rem) 0 2.5rem;background:#f5f8fb}
+  .service-heading{display:flex;justify-content:space-between;align-items:start;gap:2rem;margin-bottom:1.8rem}
+  .service-heading :is(h1,h2){margin:0;color:var(--text-strong);font-size:clamp(1.85rem,3vw,2.6rem);line-height:1.15;letter-spacing:-.03em;font-weight:750}
+  .service-heading p{max-width:48ch;margin:0;color:var(--muted);font-size:.92rem;line-height:1.6}
+  .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 20px}
+  .service-card{min-width:0;border-radius:12px;background:white;box-shadow:0 8px 24px rgba(20,43,61,.045)}
+  .service-card-link{display:flex;flex-direction:column;height:100%;overflow:hidden;border-radius:inherit;color:var(--text-strong);text-decoration:none}
+  .service-image{height:146px;flex:none;overflow:hidden;background:#e5ecf1}
+  .service-image img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .45s cubic-bezier(.2,.7,.3,1)}
+  .service-body{position:relative;display:flex;flex:1;flex-direction:column;padding:20px 22px 16px;margin-top:-10px;background:white;border-radius:10px 10px 0 0}
+  .service-body :is(h2,h3){margin:0;font-size:1.12rem;line-height:1.3;letter-spacing:-.025em;font-weight:750;color:var(--text-strong)}
+  .service-description{margin:8px 0 0;color:var(--muted);font-size:.87rem;line-height:1.5}
+  .service-highlights{display:grid;gap:6px;margin:15px 0 20px;padding:0;list-style:none}
+  .service-highlights li{display:flex;align-items:start;gap:8px;color:#506071;font-size:.78rem;line-height:1.5}
+  .service-highlights svg{flex:none;margin-top:2px;color:#387b68}
+  .service-card-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:13px;border-top:1px solid #e3e9ee;min-height:38px}
+  .service-price{color:var(--text-strong);font-size:.76rem;font-weight:750;line-height:1.4}
+  .service-price--bespoke{font-weight:500;color:var(--muted)}
+  .service-link-label{display:inline-flex;align-items:center;gap:6px;flex-shrink:0;color:var(--brand-strong);font-size:.76rem;font-weight:650;line-height:1.4}
+  .service-link-label svg{transition:transform .25s ease}
+  .service-card-link:focus-visible{outline:3px solid var(--brand);outline-offset:4px}
+  .service-price-note{font-size:.77rem;line-height:1.6;margin:1.25rem 0 0;color:var(--muted)}.service-price-note a{color:var(--brand-strong);text-decoration:underline;text-underline-offset:3px}
+  @media(hover:hover){.service-card-link:hover .service-image img{transform:scale(1.045)}.service-card-link:hover .service-link-label svg{transform:translateX(3px)}}
+  @media(max-width:1050px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-heading{gap:1rem}.service-heading p{max-width:40ch}}
+  @media(max-width:660px){.service-grid{grid-template-columns:1fr;gap:20px}.service-heading{display:block;margin-bottom:1.4rem}.service-heading p{margin-top:.8rem;max-width:50ch}.service-image{height:158px}}
+  @media(max-width:370px){.service-body{padding:18px 18px 14px}.service-body :is(h2,h3){font-size:1.06rem}.service-card-footer{gap:8px}.service-price,.service-link-label{font-size:.71rem}}
+  @media(prefers-reduced-motion:reduce){.service-image img,.service-link-label svg{transition:none}.service-card-link:hover .service-image img,.service-card-link:hover .service-link-label svg{transform:none}}
 </style>

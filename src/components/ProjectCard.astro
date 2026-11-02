@@ -1,0 +1,51 @@
+---
+import type { CaseStudy } from '../data/project-cases';
+import { projectImages } from '../data/project-images';
+const { project, compact = false, headingLevel = 3, priority = false } = Astro.props as { project: CaseStudy; compact?: boolean; headingLevel?: 2 | 3; priority?: boolean };
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+const image = projectImages[project.slug];
+const titleId = `${project.slug}-card-title`;
+---
+<article class:list={['project-card', { compact }]} id={project.slug} data-project-card data-services={project.services.join(' ')}>
+  <a class="project-card-link" href={`/projects/${project.slug}`} aria-labelledby={titleId}>
+    <div class:list={['project-image', { 'project-image--brand': !image }]}>
+      {image ? <img src={image.src} srcset={image.small ? `${image.small} 640w, ${image.src} ${image.width || 1280}w` : undefined} sizes="(min-width: 1051px) 390px, (min-width: 661px) 46vw, 92vw" alt="" width={image.width || 1280} height={image.height || 720} loading={priority ? 'eager' : 'lazy'} decoding="async" fetchpriority={priority ? 'high' : undefined} style={`object-position: ${image.position || '50% 50%'}`} /> : <img class="project-brand" src={project.logo || '/images/ses-logo-horizontal.png'} alt="" width="320" height="100" loading="lazy" />}
+      <span class="project-sector">{project.sector}</span>
+    </div>
+    <div class="project-body">
+      <svg class="project-curve" viewBox="0 0 400 64" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H251C273 0 268 54 291 54H400V64H0Z" /></svg>
+      <div class="project-copy">
+        <Heading id={titleId}>{project.label}</Heading>
+        <p>{project.summary}</p>
+      </div>
+      <span class="project-action">
+        <span class="project-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+        <span>View project</span><span class="project-rule" aria-hidden="true"></span>
+      </span>
+    </div>
+  </a>
+</article>
+<style>
+  .project-card{--card-surface:#fbfcfd;min-width:0;border:1px solid #e0e6ec;border-radius:12px;background:var(--card-surface);scroll-margin-top:100px;isolation:isolate}
+  .project-card[hidden]{display:none}
+  .project-card-link{display:flex;flex-direction:column;height:100%;border-radius:inherit;color:var(--text-strong);text-decoration:none;overflow:hidden}
+  .project-image{position:relative;height:146px;flex:none;overflow:hidden;background:#e9eff3}
+  .project-image>img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.2,.7,.3,1)}
+  .project-image::after{content:'';position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(12,26,33,.25));pointer-events:none}
+  .project-image--brand{background:#e9eff2}.project-image--brand>img{object-fit:contain;padding:32px 60px 50px}
+  .project-sector{position:absolute;z-index:1;bottom:64px;left:20px;max-width:calc(100% - 40px);padding:4px 12px;border:1px solid rgba(255,255,255,.38);border-radius:999px;background:rgba(18,28,31,.83);color:white;font-size:.68rem;line-height:1.5}
+  .project-body{position:relative;display:flex;flex-direction:column;flex:1;margin-top:-56px;background:linear-gradient(to bottom,transparent 54px,var(--card-surface) 54px)}
+  .project-curve{position:absolute;inset:0 0 auto;width:100%;height:64px;fill:var(--card-surface);pointer-events:none}
+  .project-copy{position:relative;display:flow-root;padding:12px 22px 0;min-height:76px}
+  .project-copy::before{content:'';float:right;width:28%;height:44px}
+  :is(h2,h3){position:relative;margin:0;color:var(--text-strong);font-size:1.08rem;line-height:1.25;font-weight:750;letter-spacing:-.025em}
+  .project-copy p{margin:8px 0 0;color:#58687a;font-size:.79rem;line-height:1.45}
+  .project-action{position:relative;display:flex;align-items:center;gap:12px;min-height:52px;margin-top:auto;padding:8px 22px 12px;color:#172c3e;font-size:.7rem;font-weight:650}
+  .project-arrow{display:grid;place-items:center;width:30px;height:30px;flex:none;border:1px solid #73998e;border-radius:50%;color:#173d35;transition:background-color .2s,color .2s,transform .2s}
+  .project-rule{height:1px;flex:1;background:#d9e1e8}
+  .project-card-link:focus-visible{outline:3px solid var(--brand);outline-offset:4px}
+  @media(hover:hover){.project-card-link:hover .project-image>img{transform:scale(1.035)}.project-card-link:hover .project-arrow{background:#173d35;color:white;transform:translateX(2px)}}
+  .project-card-link:focus-visible .project-arrow{background:#173d35;color:white}
+  @media(prefers-reduced-motion:reduce){.project-image>img,.project-arrow{transition:none}.project-card-link:hover .project-image>img,.project-card-link:hover .project-arrow{transform:none}}
+  @media(max-width:370px){.project-copy{padding-inline:18px}:is(h2,h3){font-size:1.02rem}.project-action{padding-inline:18px}.project-sector{left:18px}}
+</style>

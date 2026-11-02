@@ -1,0 +1,102 @@
+[
+  {
+    "source": "Edinburgh University.mp4",
+    "sourceBytes": 8443209,
+    "output": "public/videos/projects/university-of-edinburgh.mp4",
+    "bytes": 4490300,
+    "sourceStartSeconds": 2,
+    "loopCrossfadeSeconds": 0.6,
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        }
+      ],
+      "format": {
+        "duration": "8.400000",
+        "size": "4490300"
+      }
+    }
+  },
+  {
+    "source": "St James Quarter.mp4",
+    "sourceBytes": 124182499,
+    "output": "public/videos/projects/st-james-centre.mp4",
+    "bytes": 8623494,
+    "sourceStartSeconds": 9,
+    "loopCrossfadeSeconds": 0.6,
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        }
+      ],
+      "format": {
+        "duration": "8.400000",
+        "size": "8623494"
+      }
+    }
+  },
+  {
+    "source": "Armadillo.mp4",
+    "sourceBytes": 95605332,
+    "output": "public/videos/projects/sec-armadillo.mp4",
+    "bytes": 10586836,
+    "sourceStartSeconds": 10,
+    "loopCrossfadeSeconds": 0.6,
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        }
+      ],
+      "format": {
+        "duration": "8.400000",
+        "size": "10586836"
+      }
+    }
+  },
+  {
+    "source": "Kelvingrove Art Gallery.mp4",
+    "sourceBytes": 132712047,
+    "output": "public/videos/projects/kelvingrove-art-gallery.mp4",
+    "bytes": 8110011,
+    "sourceStartSeconds": 8,
+    "loopCrossfadeSeconds": 0.6,
+    "probe": {
+      "programs": [],
+      "stream_groups": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video",
+          "width": 1920,
+          "height": 1080,
+          "r_frame_rate": "25/1"
+        }
+      ],
+      "format": {
+        "duration": "8.400000",
+        "size": "8110011"
+      }
+    }
+  }
+]

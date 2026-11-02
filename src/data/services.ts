@@ -18,41 +18,41 @@ export const services: Service[] = [
     highlights: ['Suitable for sales, lettings, and compliance', 'Fast turnaround across the UK', 'Clear guidance on improving ratings'],
     forWho: ['Commercial landlords and asset managers', 'Property agencies and transaction teams', 'Developers completing new commercial space'],
     whatIncluded: ['On-site non-domestic assessment', 'Accredited EPC lodgement and certificate issue', 'Practical improvement recommendations'],
-    turnaround: 'Most standard instructions are completed within 3–6 working days.'
+    turnaround: 'Usually 3 to 6 working days for standard assessments.'
   },
   {
     slug: 'saps',
-    title: 'SAPs',
+    title: 'SAP calculations',
     short: 'SAP calculations for new builds and residential developments.',
     intro: 'We produce accurate SAP assessments to demonstrate compliance with Building Regulations, supporting projects from design stage through to completion.',
-    highlights: ['Part L compliance support', 'As-designed and as-built SAPs', 'Support for developers and architects'],
+    highlights: ['Building Regulations support', 'Design and completion assessments', 'Support for developers and architects'],
     forWho: ['Housebuilders and residential developers', 'Architectural practices', 'Project teams delivering conversions and extensions'],
     whatIncluded: ['Design-stage SAP calculations', 'As-built SAP updates and final outputs', 'Technical coordination with project teams'],
-    turnaround: 'Typical delivery is 3–5 working days depending on drawing quality and scope.'
+    turnaround: 'Usually 3 to 5 working days, depending on the drawings and scope.'
   },
   {
     slug: 'sbem-calculations',
-    title: 'SBEM Calculations',
+    title: 'SBEM calculations',
     short: 'SBEM calculations for non-domestic buildings.',
     intro: 'We model the energy performance of commercial properties to support Building Regulations compliance and broader project delivery requirements.',
-    highlights: ['New builds and conversions', 'Part L compliance', 'Can support EPC delivery where required'],
+    highlights: ['New builds and conversions', 'Building Regulations support', 'EPC support where required'],
     forWho: ['Commercial developers', 'M&E consultants and design teams', 'Contractors delivering non-domestic projects'],
     whatIncluded: ['SBEM model setup and compliance calculations', 'Performance scenario testing where required', 'Documentation suitable for submission'],
     turnaround: 'Programme-led delivery with staged outputs available for live projects.'
   },
   {
     slug: 'fras',
-    title: 'Fire Risk Assessments (FRAs)',
+    title: 'Fire risk assessments',
     short: 'Compliant fire risk assessments for residential and commercial properties.',
     intro: 'We identify hazards, assess risk, and provide clear actions to improve life safety, support compliance, and strengthen ongoing property management.',
     highlights: ['Residential and commercial properties', 'Clear, actionable reports', 'Practical compliance support'],
     forWho: ['Landlords and managing agents', 'Facilities and operations teams', 'Duty holders responsible for shared premises'],
     whatIncluded: ['On-site fire risk review', 'Risk rating and prioritised action schedule', 'Clear implementation guidance'],
-    turnaround: 'Reports are typically issued within 3–7 working days after inspection.'
+    turnaround: 'Reports usually follow within 3 to 7 working days of inspection.'
   },
   {
     slug: 'section-63-assessments',
-    title: 'Section 63 Assessments',
+    title: 'Section 63 assessments',
     short: 'Section 63 compliance support for non-domestic properties in Scotland.',
     intro: 'We assess qualifying buildings and produce the required documentation and Action Plan guidance to help clients meet regulatory obligations efficiently.',
     highlights: ['Full compliance guidance', 'Action plans and improvement options', 'Support with next steps'],
@@ -62,27 +62,27 @@ export const services: Service[] = [
   },
   {
     slug: 'decs',
-    title: 'DECs',
-    short: 'Display Energy Certificates for applicable public buildings.',
-    intro: 'We evaluate actual energy usage and provide the required certification and advisory reporting to support public sector compliance.',
-    highlights: ['Public sector compliance', 'Annual and advisory report support', 'Clear, dependable delivery'],
+    title: 'Display Energy Certificates',
+    short: 'Operational energy ratings based on actual building energy use.',
+    intro: 'We assess actual energy use and confirm the DEC scope for your building and location.',
+    highlights: ['Operational energy ratings', 'Energy data review', 'Advice on the relevant requirements'],
     forWho: ['Public sector property teams', 'Education and healthcare estates', 'Operators of frequently visited buildings'],
     whatIncluded: ['Operational energy data review', 'DEC certificate issue', 'Advisory report with improvement priorities'],
-    turnaround: 'Most DEC instructions are completed within 4–8 working days once data is confirmed.'
+    turnaround: 'Usually 4 to 8 working days once the energy data is confirmed.'
   },
   {
     slug: 'overheating-assessments-tm59',
-    title: 'Overheating Assessments (TM59)',
+    title: 'Overheating assessments (TM59)',
     short: 'TM59 overheating assessments for residential developments.',
     intro: 'We model internal temperature performance to assess overheating risk and support planning, design, and compliance requirements for modern developments.',
-    highlights: ['Required for many residential schemes', 'Dynamic modelling approach', 'Clear mitigation guidance'],
+    highlights: ['Residential overheating analysis', 'Dynamic modelling', 'Practical design advice'],
     forWho: ['Residential developers and design teams', 'Architects and sustainability consultants', 'Planning and compliance advisors'],
     whatIncluded: ['TM59 dynamic thermal modelling', 'Mitigation strategy testing', 'Reporting for planning and technical coordination'],
     turnaround: 'Phased outputs can be aligned with concept, developed, and technical design milestones.'
   },
   {
     slug: 'dynamic-simulation-modelling-dsm',
-    title: 'Dynamic Simulation Modelling (DSM)',
+    title: 'Dynamic simulation modelling',
     short: 'Advanced building performance analysis using dynamic simulation.',
     intro: 'We deliver detailed modelling to assess energy use, overheating risk, and operational performance, supporting better-informed design and compliance decisions.',
     highlights: ['High-level technical modelling', 'Supports complex developments', 'Useful alongside SBEM and TM59'],
@@ -92,12 +92,12 @@ export const services: Service[] = [
   },
   {
     slug: 'domestic-epcs-and-legionellas',
-    title: 'Domestic EPCs & Legionella Risk Assessments',
+    title: 'Domestic EPCs and Legionella',
     short: 'Domestic EPCs and Legionella risk assessments for residential properties.',
     intro: 'We support landlords, agents, and homeowners with efficient certification and water safety assessments, helping maintain compliance and reduce risk.',
     highlights: ['Fast turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],
     forWho: ['Private landlords and portfolio owners', 'Letting agents and property managers', 'Homeowners preparing to sell or let'],
     whatIncluded: ['Domestic EPC assessment and lodgement', 'Legionella risk review', 'Clear follow-up actions and renewal guidance'],
-    turnaround: 'Most combined domestic instructions are completed within 2–5 working days.'
+    turnaround: 'Usually 2 to 5 working days.'
   }
 ];

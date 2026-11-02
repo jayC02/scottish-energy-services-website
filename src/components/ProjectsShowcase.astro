@@ -1,0 +1,85 @@
+---
+import AccordionGallery from './AccordionGallery/AccordionGallery.jsx';
+
+import { projects } from '../data/projects';
+---
+
+<section id="projects" class="section projects-showcase">
+  <div class="container">
+    <div class="projects-heading">
+      <div>
+        <h2 class="section-title">Selected projects</h2>
+      </div>
+      <p class="lead">
+        EPC work for airports, universities, retail premises and public venues.
+      </p>
+    </div>
+
+    <div class="projects-gallery-shell">
+      <AccordionGallery
+        client:load
+        items={projects}
+        defaultIndex={0}
+        expandRatio={0.52}
+        trigger="hover"
+      />
+    </div>
+    <a class="projects-view-all" href="/projects">View all projects <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<style is:global>
+  .projects-showcase {
+    background: #0d1d2d;
+    color: #fff;
+    padding-block: clamp(3.25rem, 6vw, 5.5rem);
+  }
+
+  .projects-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: end;
+    margin-bottom: 2rem;
+  }
+
+  .projects-heading .eyebrow {
+    color: #74c8ef;
+  }
+
+  .projects-heading .section-title {
+    max-width: 23ch;
+    margin-bottom: 0;
+    color: #fff;
+  }
+
+  .projects-heading .lead {
+    margin: 0;
+    max-width: 46ch;
+    color: #bccbd7;
+  }
+
+  .projects-view-all { display:inline-flex;gap:1.5rem;color:white;margin-top:1.5rem;padding:.4rem 0;border-bottom:1px solid #6f8599;font-size:.9rem; }
+
+  .projects-gallery-shell {
+    border-top: 1px solid rgba(255, 255, 255, .14);
+    padding-top: 1.4rem;
+  }
+
+  .projects-gallery-shell .accordion-gallery {
+    --ag-accent: #74c8ef;
+    --ag-overlay: #07121d;
+    --ag-text: #ffffff;
+  }
+
+  @media (max-width: 900px) {
+    .projects-heading {
+      grid-template-columns: 1fr;
+      gap: .8rem;
+    }
+
+    .projects-heading .section-title {
+      max-width: 25ch;
+    }
+  }
+</style>

@@ -33,7 +33,7 @@ Both `/contact` and `/quote` submit to the production-safe Vercel serverless fun
 
 All validated form submissions currently route to:
 
-- `jay@scottishenergyservices.co.uk`
+- `info@scottishenergyservices.co.uk`
 
 ## Notes
 
@@ -44,3 +44,7 @@ All validated form submissions currently route to:
 - Replace placeholder assets in `public/images/` when final brand assets are available.
 
 - Favicon note: after deployment, Google Search may take days or weeks to recrawl and refresh the favicon shown in results.
+
+## Security and privacy
+
+See [deployment checklist](docs/SECURITY.md) and [audit findings](docs/SECURITY-AUDIT.md). Run `npm test` on Node 22.18+ or Node 24, `npm run check`, and `npm run build`. The build regenerates report-only CSP hashes in `vercel.json`; rebuild after changing inline code.

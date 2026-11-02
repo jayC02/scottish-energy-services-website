@@ -1,0 +1,25 @@
+---
+import type { Project } from '../data/projects';
+interface Props { project: Project; priority?: boolean }
+const { project, priority = false } = Astro.props;
+---
+<figure class="project-media" data-project-media>
+  {project.type === 'image' ? (
+    <picture>
+      <source type="image/webp" srcset={`${project.thumbnail} 720w, ${project.src} 1440w`} sizes="(max-width: 760px) 92vw, 60vw" />
+      <img src={project.fallback || project.src} alt={project.alt} width="1440" height="1080"
+        loading={priority ? 'eager' : 'lazy'} decoding="async" />
+    </picture>
+  ) : (
+    <>
+      <video data-project-video data-src={project.src} data-label={project.label} poster={project.poster}
+        muted loop playsinline preload="none" aria-label={project.alt} width="1920" height="1080" />
+
+    </>
+  )}
+</figure>
+<style>
+  .project-media { margin:0;position:relative;aspect-ratio:16/10;overflow:hidden;background:#102538; }
+  .project-media picture { display:block;width:100%;height:100%; }
+  .project-media img,.project-media video { display:block;width:100%;height:100%;object-fit:cover; }
+</style>

@@ -1,56 +1,531 @@
 ---
 import type { Service } from '../data/services';
+import ServiceKnowledge from './ServiceKnowledge.astro';
+import type { ServiceSlug } from '../data/service-pages';
+import ServicePricing from './ServicePricing.astro';
+import RelatedProjects from './RelatedProjects.astro';
+import { getServicePrice, quoteLink } from '../data/pricing';
+
 const { service } = Astro.props as { service: Service };
+const price = getServicePrice(service.slug);
+
+const shortTitle = service.title
+  .replace(' Assessments', '')
+  .replace(' Calculations', '')
+  .replace(' (FRAs)', '')
+  .replace(' (DSM)', '')
+  .replace(' (TM59)', '');
 ---
-<section class="section">
-  <div class="container grid grid-2">
-    <div data-reveal>
-      <p class="eyebrow">Service Overview</p>
-      <h1 class="section-title">{service.title}</h1>
-      <p class="lead">{service.intro}</p>
-      <ul class="highlights">
-        {service.highlights.map((item) => <li>{item}</li>)}
-      </ul>
-      <p><strong>Typical turnaround:</strong> {service.turnaround}</p>
-      <a class="btn btn-primary" href="/quote">Request a quote</a>
+
+<article class="service-page">
+  <section class="service-hero">
+    <div class="service-hero__gridlines" aria-hidden="true"></div>
+
+    <div class="container service-hero__layout">
+      <div class="service-hero__copy" data-reveal>
+        <nav class="service-back" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/services">Services</a><span aria-hidden="true">/</span><span aria-current="page">{shortTitle}</span></nav>
+        <h1>{service.title}</h1>
+        <p class="service-intro">{service.intro}</p>
+
+        {price && <ServicePricing price={price} />}
+
+        <div class="service-actions">
+          <a class="service-primary" href={quoteLink(service.slug)}>{price ? 'Get a Fixed Quote' : 'Request a quote'} <span aria-hidden="true">→</span></a>
+          <a class="service-secondary" href="#service-details">View details</a>
+        </div>
+      </div>
+
+      <aside class="service-summary" data-reveal aria-label="Service summary">
+        <div class="service-summary__top">
+          <span>At a glance</span>
+        </div>
+
+        <div class="service-summary__items">
+          {service.highlights.slice(0, 3).map((item, index) => (
+            <div class="service-summary__item">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <p>{item}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="service-summary__turnaround">
+          <span>Typical turnaround</span>
+          <p>{service.turnaround}</p>
+        </div>
+        {price?.bespoke && <div class="service-summary__bespoke">
+          <strong>Larger or complex projects</strong>
+          <p>Contact us for a quote for larger buildings, complex work or portfolios.</p>
+          <a href={quoteLink(service.slug)}>Discuss your project <span aria-hidden="true">→</span></a>
+        </div>}
+      </aside>
     </div>
-    <aside class="card detail" data-reveal>
-      <h2>Who this is for</h2>
-      <ul>
-        {service.forWho.map((item) => <li>{item}</li>)}
-      </ul>
-      <h2>What is included</h2>
-      <ul>
-        {service.whatIncluded.map((item) => <li>{item}</li>)}
-      </ul>
-    </aside>
-  </div>
-</section>
+  </section>
+
+  <section id="service-details" class="section service-details">
+    <div class="container">
+      <div class="service-section-heading" data-reveal>
+        <h2 class="section-title">What’s included</h2>
+      </div>
+
+      <div class="service-deliverables" data-reveal>
+        {service.whatIncluded.map((item, index) => (
+          <article class="service-deliverable">
+            <span class="service-deliverable__number">{String(index + 1).padStart(2, '0')}</span>
+            <div class="service-deliverable__body">
+              <strong>{item}</strong>
+              <span class="service-deliverable__line" aria-hidden="true"></span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-audience">
+    <div class="container">
+      <div class="service-section-heading service-section-heading--light" data-reveal>
+        <h2 class="section-title">Who we work with</h2>
+      </div>
+
+      <div class="service-audience__grid" data-reveal>
+        {service.forWho.map((item, index) => (
+          <article class="service-audience__card">
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{item}</strong>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ServiceKnowledge slug={service.slug as ServiceSlug} />
+  <RelatedProjects slug={service.slug} />
+
+  <section class="section service-next">
+    <div class="container service-next__layout">
+      <div data-reveal>
+        <h2 class="section-title">Discuss your project</h2>
+      </div>
+
+      <div class="service-next__action" data-reveal>
+        <p>
+          Send the location, plans and deadline. We’ll confirm the scope and fee.
+        </p>
+        <a class="service-next__button" href={quoteLink(service.slug)}>
+          Request a quote
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</article>
 
 <style>
-  .highlights {
-    list-style: none;
-    margin: 0 0 1rem;
-    padding: 0;
-    display: grid;
-    gap: .35rem;
+  .service-page {
+    background: #fff;
   }
-  .highlights li {
-    color: var(--muted);
+
+  .service-hero {
     position: relative;
-    padding-left: 1rem;
+    overflow: hidden;
+    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(3.8rem, 6vw, 5.8rem);
+    background:
+      radial-gradient(circle at 78% 22%, rgba(75, 178, 222, .17), transparent 28%),
+      linear-gradient(135deg, #0c1d2d 0%, #102b40 58%, #14384f 100%);
+    color: #fff;
   }
-  .highlights li::before {
-    content: '';
+
+  .service-hero__gridlines {
     position: absolute;
-    left: 0;
-    top: .6rem;
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--accent);
+    inset: 0;
+    pointer-events: none;
+    opacity: .4;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 54px 54px;
+    mask-image: linear-gradient(to left, black, transparent 76%);
   }
-  .detail h2 { margin: 0 0 .6rem; font-size: 1.12rem; color: var(--text-strong); }
-  .detail ul { margin: 0 0 1rem; padding-left: 1rem; color: var(--muted); }
-  .detail li { margin-bottom: .35rem; }
+
+  .service-hero__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(330px, .68fr);
+    gap: clamp(3rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .service-hero__copy {
+    max-width: 760px;
+  }
+
+  .service-back {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-bottom: 2.1rem;
+    color: rgba(216, 230, 240, .72);
+    font-size: .82rem;
+    font-weight: 650;
+  }
+
+  .service-back:hover {
+    color: #fff;
+  }
+
+  .service-kicker {
+    margin: 0 0 .8rem;
+    color: #83cef0;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+  }
+
+  .service-hero h1 {
+    margin: 0;
+    max-width: 20ch;
+    color: #fff;
+    font-size: clamp(2.3rem, 5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -.05em;
+    text-wrap: balance;
+  }
+
+  .service-intro {
+    max-width: 62ch;
+    margin: 1.4rem 0 0;
+    color: #c4d3de;
+    font-size: clamp(1.02rem, 1.45vw, 1.18rem);
+    line-height: 1.65;
+  }
+
+  .service-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.8rem;
+  }
+
+  .service-primary,
+  .service-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-height: 46px;
+    padding: .82rem 1.15rem;
+    border-radius: 999px;
+    font-size: .92rem;
+    font-weight: 750;
+    transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
+  }
+
+  .service-primary {
+    background: #fff;
+    color: #10283b;
+    border: 1px solid #fff;
+  }
+
+  .service-secondary {
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.32);
+    background: rgba(255,255,255,.035);
+  }
+
+  .service-primary:hover,
+  .service-secondary:hover {
+    transform: translateY(-2px);
+  }
+
+  .service-summary {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    min-height: 410px;
+    border-top: 1px solid rgba(255,255,255,.22);
+    border-bottom: 1px solid rgba(255,255,255,.22);
+  }
+
+  .service-summary__top {
+    padding: 1.05rem 0 1.15rem;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+  }
+
+  .service-summary__top span,
+  .service-summary__turnaround span {
+    display: block;
+    color: #83a4b9;
+    font-size: .72rem;
+    font-weight: 750;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .service-summary__top strong {
+    display: block;
+    margin-top: .25rem;
+    color: #fff;
+    font-size: 1.05rem;
+  }
+
+  .service-summary__items {
+    flex: 1;
+  }
+
+  .service-summary__item {
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    gap: .75rem;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.14);
+  }
+
+  .service-summary__item > span {
+    color: #69bde4;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    font-weight: 800;
+  }
+
+  .service-summary__item p {
+    margin: 0;
+    color: #d5e0e8;
+    font-size: .92rem;
+    line-height: 1.45;
+  }
+
+  .service-summary__turnaround {
+    padding: 1.1rem 0 .1rem;
+  }
+
+  .service-summary__turnaround p {
+    margin: .3rem 0 0;
+    color: #fff;
+    font-size: .94rem;
+    line-height: 1.45;
+  }
+
+  .service-summary__bespoke { margin-top: 1.1rem; padding: 1.1rem 0; border-top: 1px solid rgba(255,255,255,.14); font-size: .9rem; }
+  .service-summary__bespoke strong { color: #fff; }
+  .service-summary__bespoke p { margin: .45rem 0 .65rem; color: #c4d3de; }
+  .service-summary__bespoke a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+  .service-details {
+    background: #fff;
+  }
+
+  .service-section-heading {
+    max-width: 760px;
+    margin-bottom: 2rem;
+  }
+
+  .service-section-heading .section-title {
+    max-width: 18ch;
+  }
+
+  .service-section-heading .lead {
+    max-width: 58ch;
+    margin-bottom: 0;
+  }
+
+  .service-deliverables {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .service-deliverable {
+    position: relative;
+    min-height: 220px;
+    padding: 1.4rem 1.35rem;
+    border: 1px solid #d8e2eb;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    box-shadow: 0 10px 30px rgba(17,39,61,.05);
+  }
+
+  .service-deliverable__number {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    margin-bottom: 2.2rem;
+    border-radius: 7px;
+    background: var(--brand-soft);
+    color: var(--brand-strong);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    font-weight: 800;
+  }
+
+  .service-deliverable__body {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .service-deliverable strong {
+    color: var(--text-strong);
+    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+    line-height: 1.35;
+  }
+
+  .service-deliverable__line {
+    display: block;
+    width: 42px;
+    height: 2px;
+    background: var(--brand);
+    opacity: .7;
+  }
+
+  .service-audience {
+    padding: clamp(3.4rem, 6vw, 5rem) 0;
+    background: linear-gradient(135deg, #0f2234 0%, #14344d 100%);
+  }
+
+  .service-section-heading--light .section-title {
+    color: #fff;
+    max-width: 22ch;
+  }
+
+  .service-section-heading--light .lead {
+    color: #b9c9d5;
+  }
+
+  .service-audience__eyebrow {
+    color: #7bc9ed;
+  }
+
+  .service-audience__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .9rem;
+  }
+
+  .service-audience__card {
+    min-height: 150px;
+    padding: 1.25rem;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 12px;
+    background: rgba(255,255,255,.045);
+  }
+
+  .service-audience__card span {
+    display: block;
+    margin-bottom: 1.5rem;
+    color: #78c6ea;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .72rem;
+    font-weight: 800;
+  }
+
+  .service-audience__card strong {
+    display: block;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .service-next {
+    background: #fff;
+  }
+
+  .service-next__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .75fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: end;
+    padding: clamp(2rem, 4vw, 3rem);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(91,195,230,.18), transparent 28%),
+      linear-gradient(135deg, #0e2234 0%, #123550 100%);
+    box-shadow: 0 24px 60px rgba(15,35,53,.12);
+  }
+
+  .service-next .eyebrow {
+    color: #7bc9ed;
+  }
+
+  .service-next .section-title {
+    margin-bottom: 0;
+    max-width: 16ch;
+    color: #fff;
+  }
+
+  .service-next__action p {
+    margin: 0 0 1.2rem;
+    color: #bfd0dd;
+    line-height: 1.55;
+  }
+
+  .service-next__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-width: 210px;
+    padding: .9rem 1rem;
+    border-radius: 10px;
+    background: #fff;
+    color: #10263a;
+    font-weight: 750;
+  }
+
+  .service-next__button span {
+    color: var(--brand);
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 920px) {
+    .service-hero__layout,
+    .service-next__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .service-summary {
+      min-height: 0;
+    }
+
+    .service-deliverables,
+    .service-audience__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-section-heading .section-title,
+    .service-section-heading--light .section-title,
+    .service-next .section-title {
+      max-width: 20ch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .service-hero {
+      padding-top: 3.4rem;
+    }
+
+    .service-back {
+      margin-bottom: 1.5rem;
+    }
+
+    .service-hero h1 {
+      font-size: clamp(2rem, 8.4vw, 2.6rem);
+    }
+
+    .service-deliverable,
+    .service-audience__card {
+      min-height: 0;
+    }
+
+    .service-deliverable__number,
+    .service-audience__card span {
+      margin-bottom: 1rem;
+    }
+
+    .service-next__layout {
+      padding: 1.4rem;
+    }
+  }
 </style>
