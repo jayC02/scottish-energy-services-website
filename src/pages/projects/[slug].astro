@@ -24,7 +24,7 @@ const schema = { '@type': 'CreativeWork', name: project.label, description: proj
     {media && <ProjectMedia project={media} priority />}
     {!media && image && <figure class="case-photo">
       <img src={image.src} srcset={image.small ? `${image.small} 640w, ${image.src} ${image.width || 1280}w` : undefined} sizes="(min-width: 801px) 60vw, 92vw" alt={image.alt} width={image.width || 1280} height={image.height || 720} fetchpriority="high" decoding="async" />
-      {image.credit && <figcaption><a href={`/photo-credits#${project.slug}`}>Image credit</a></figcaption>}
+      {(image.caption || image.credit) && <figcaption>{image.caption && <span>{image.caption} </span>}{image.credit && <a href={`/photo-credits#${project.slug}`}>Image credit</a>}</figcaption>}
     </figure>}
     <div class="case-scope">
       <h2>What we did</h2><ul class="scope-list">{project.scope.map(item => <li>{item}</li>)}</ul>

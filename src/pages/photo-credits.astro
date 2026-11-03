@@ -14,6 +14,7 @@ const serviceCredits = services.map(service => ({ service, image: serviceVisuals
     <div class="credits-grid">{credits.map(({ project, image }) => <section id={project.slug}>
       <h2><a href={`/projects/${project.slug}`}>{project.label}</a></h2>
       <p><a href={image.credit!.source}>{image.credit!.name}</a></p>
+      {image.caption && <p>{image.caption}</p>}
       {image.credit!.license && <p><a href={image.credit!.licenseUrl}>{image.credit!.license}</a></p>}
     </section>)}{serviceCredits.map(({ service, image }) => <section id={`service-${service.slug}`}>
       <h2><a href={`/services/${service.slug}`}>{service.title}</a></h2>

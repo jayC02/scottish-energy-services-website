@@ -6,10 +6,12 @@ export type ProjectImage = {
   position?: string;
   width?: number;
   height?: number;
+  caption?: string;
   credit?: { name: string; source: string; license?: string; licenseUrl?: string };
 };
 
-// Supplied project media and verified building photographs only.
+// Supplied media, matched building photographs and explicitly labelled context views.
+// Source/permission review: docs/PROJECT-CONTENT.md. Do not assume a credit grants reuse.
 export const projectImages: Record<string, ProjectImage> = {
   'glasgow-airport': {
     src: '/images/projects/glasgow-airport-poster.webp',
@@ -204,5 +206,150 @@ export const projectImages: Record<string, ProjectImage> = {
       "source": "https://www.smithdesign.co.uk/project/westwayretailpark"
     },
     "small": "/images/projects/aldi-stores-photo-small.webp"
+  },
+  "station-house-glasgow": {
+    "src": "/images/projects/station-house-glasgow-photo.webp",
+    "alt": "Station House at St Enoch Square in Glasgow",
+    "width": 1280,
+    "height": 603,
+    "small": "/images/projects/station-house-glasgow-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "Station House exterior before redevelopment.",
+    "credit": {
+      "name": "CCG",
+      "source": "https://www.c-c-g.co.uk/plans-to-transform-historic-st-enoch-square-station-building-approved/"
+    }
+  },
+  "banchory-business-park": {
+    "src": "/images/projects/banchory-business-park-photo.webp",
+    "alt": "Aerial photograph of the trade park on Burn O’Bennie Road in Banchory",
+    "width": 1090,
+    "height": 562,
+    "small": "/images/projects/banchory-business-park-photo-small.webp",
+    "smallWidth": 640,
+    "credit": {
+      "name": "Lismore Real Estate",
+      "source": "https://lismore-re.com/banchory-trade-park-banchory/"
+    }
+  },
+  "old-courthouse-campbeltown": {
+    "src": "/images/projects/old-courthouse-campbeltown-photo.webp",
+    "alt": "The former courthouse on Bolgam Street in Campbeltown",
+    "width": 992,
+    "height": 760,
+    "small": "/images/projects/old-courthouse-campbeltown-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "Archive exterior photograph, published in 2018.",
+    "credit": {
+      "name": "Argyll and Bute Council",
+      "source": "https://www.argyll-bute.gov.uk/news/2018/aug/brighter-future-campbeltown-old-courthouse"
+    }
+  },
+  "love-loan-glasgow": {
+    "src": "/images/projects/love-loan-glasgow-photo.webp",
+    "alt": "Buildings within the Love Loan development in Glasgow",
+    "width": 1280,
+    "height": 853,
+    "small": "/images/projects/love-loan-glasgow-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "View of the wider Love Loan development.",
+    "credit": {
+      "name": "Love Loan / Chris Stewart Group",
+      "source": "https://www.loveloan.co.uk/development/"
+    }
+  },
+  "st-bees-boarding-house": {
+    "src": "/images/projects/st-bees-boarding-house-photo.webp",
+    "alt": "Buildings and grounds at St Bees School",
+    "width": 1280,
+    "height": 960,
+    "small": "/images/projects/st-bees-boarding-house-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "St Bees School campus shown.",
+    "credit": {
+      "name": "Airjevans",
+      "source": "https://commons.wikimedia.org/wiki/File:StBeesSchoolFront.JPG",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+    }
+  },
+  "spice-direct-warehouse": {
+    "src": "/images/projects/spice-direct-warehouse-photo.webp",
+    "alt": "Spice Direct warehouse and delivery vehicle in Glasgow",
+    "width": 1280,
+    "height": 720,
+    "small": "/images/projects/spice-direct-warehouse-photo-small.webp",
+    "smallWidth": 640,
+    "credit": {
+      "name": "Spice Direct Wholesale",
+      "source": "https://spicedirectwholesale.co.uk/"
+    }
+  },
+  "tytherington-high-school": {
+    "src": "/images/projects/tytherington-high-school-photo.webp",
+    "alt": "Learning resource centre at Tytherington School in Macclesfield",
+    "width": 1200,
+    "height": 630,
+    "small": "/images/projects/tytherington-high-school-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "Tytherington School campus shown.",
+    "credit": {
+      "name": "Image via Pozzoni Architecture",
+      "source": "https://www.pozzoni.co.uk/projects/tytherington-high"
+    }
+  },
+  "scarborough-college-boarding-house": {
+    "src": "/images/projects/scarborough-college-boarding-house-photo.webp",
+    "alt": "Scarborough College buildings viewed across the sports field",
+    "width": 640,
+    "height": 480,
+    "caption": "College campus shown; the instruction concerns boarding accommodation.",
+    "credit": {
+      "name": "martin dawes",
+      "source": "https://commons.wikimedia.org/wiki/File:Scarborough_College_and_Sportsfield_-_geograph.org.uk_-_1131863.jpg",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+    },
+    "position": "50% 40%"
+  },
+  "adventure-planet-paisley": {
+    "src": "/images/projects/adventure-planet-paisley-photo.webp",
+    "alt": "Indoor play facilities at Adventure Planet in Paisley",
+    "width": 1280,
+    "height": 720,
+    "small": "/images/projects/adventure-planet-paisley-photo-small.webp",
+    "smallWidth": 640,
+    "credit": {
+      "name": "Adventure Planet",
+      "source": "https://adventureplanet.co.uk/paisley/"
+    }
+  },
+  "rutherglen-glencairn-fc": {
+    "src": "/images/projects/rutherglen-glencairn-fc-photo.webp",
+    "alt": "The football ground at Rutherglen Glencairn FC",
+    "width": 1280,
+    "height": 960,
+    "small": "/images/projects/rutherglen-glencairn-fc-photo-small.webp",
+    "smallWidth": 640,
+    "credit": {
+      "name": "Crowsus",
+      "source": "https://commons.wikimedia.org/wiki/File:Glencairn_2023_1.jpg",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+    },
+    "position": "50% 60%"
+  },
+  "covault-polmadie": {
+    "src": "/images/projects/covault-polmadie-photo.webp",
+    "alt": "Published development visualisation of CoVault Polmadie beside Polmadie Road",
+    "width": 1200,
+    "height": 587,
+    "small": "/images/projects/covault-polmadie-photo-small.webp",
+    "smallWidth": 640,
+    "caption": "Development visualisation published in 2022.",
+    "credit": {
+      "name": "Image via The Herald",
+      "source": "https://www.heraldscotland.com/news/20119295.first-rate-commercial-facility-polmadie-nears-completion/"
+    }
   }
 };

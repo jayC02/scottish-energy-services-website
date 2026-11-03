@@ -5,10 +5,14 @@ not imported into the website's client bundle.
 
 ## Portfolio expansion
 
-The existing 20 projects remain in `src/data/project-cases.ts`. A further 40
-curated examples are in `src/data/project-workbook.ts`: 24 SAP instructions and
-16 SBEM instructions. The Dunblane SAP instruction also records SBEM work.
-The combined selection has 60 entries, including 25 SAP and 21 SBEM examples.
+The existing 20 projects remain in `src/data/project-cases.ts`. Following the
+owner’s request to focus on larger projects, `src/data/project-workbook.ts` now
+contains ten additional named instructions: one SAP and nine SBEM instructions.
+The combined selection has 30 entries, including two SAP and 13 SBEM examples.
+Individual houses, private plots, small residential conversions and smaller or
+unclear instructions have been removed. Larger developments such as Moda
+Springside and Station House remain. Coats Street is withheld until the exact
+development, scale and corresponding image can be confirmed.
 Service totals overlap; they must not be added together as a unique project count.
 
 Source: the owner-supplied `SES Master Sheet.xlsx`, read without modification.
@@ -33,16 +37,59 @@ U-value work is mentioned only for Station House, where it is expressly recorded
 
 ## Privacy and media
 
-Private residential instructions use a generalised project name and location.
-Do not add client/contact names, emails, phone numbers, house or plot numbers,
-full private addresses, billing amounts or invoice identifiers to public data.
-The table below deliberately retains only worksheet row references.
+No private household names, contact details, house/plot numbers, full private
+addresses, fees or invoice identifiers are published. The supporting table below
+retains worksheet row references only. Private-home entries are no longer part
+of the public catalogue or generated individual project routes.
 
-The 40 additions have no approved project photographs in the supplied workbook.
-Their cards use the existing typography and borders without a fabricated image
-or a repeated SES logo. Add verified photographs to `project-images.ts` when the
-owner supplies them; the existing card and detail-page media rendering will then
-apply automatically. Existing photographs and the five homepage videos remain.
+All 30 retained entries have local imagery. The five existing homepage videos
+and homepage ordering are unchanged. Eleven image sets have been added (ten
+workbook projects and the previously logo-only CoVault entry), with a maximum
+width of 1280px, smaller 640px WebP variants where useful, no upscaling, explicit
+dimensions and lazy loading below the first row. No stock or AI images were used.
+
+Context and campus photographs are labelled on cards and detail pages. They do
+not establish that SES assessed every building shown. The Old Courthouse image
+is an archive exterior published in 2018, not evidence of its current condition.
+Station House shows the existing exterior before redevelopment. Love Loan shows
+the wider development, while the recorded assessment covers Units 2 and 3 only.
+CoVault’s published 2022 image is a development visualisation, explicitly labelled
+as such; the owner should replace it with an actual site photograph.
+
+### Photo permissions: owner review required before publication
+
+A source credit is not a reuse licence. No permission has been inferred from an
+image being publicly accessible, and no deployment or publication was performed
+in this task. The following eight newly sourced image sets are local draft
+assets: confirm rights with the relevant photographer/rightsholder before
+production publication, or replace them with SES-owned photographs. Publishers
+are identified below as sources, not necessarily as the copyright owner.
+
+| Project | Public source | Publication status / context |
+| --- | --- | --- |
+| Station House | [CCG](https://www.c-c-g.co.uk/plans-to-transform-historic-st-enoch-square-station-building-approved/) | Permission required; pre-redevelopment exterior |
+| Banchory Business Park | [Lismore](https://lismore-re.com/banchory-trade-park-banchory/) | Permission required; four-block trade park at Burn O’Bennie Road. Owner to confirm match to assessment blocks |
+| Old Courthouse | [Argyll and Bute Council](https://www.argyll-bute.gov.uk/news/2018/aug/brighter-future-campbeltown-old-courthouse) | Permission required; Bolgam Street archive photo, not the current Sheriff Court |
+| Love Loan | [Love Loan](https://www.loveloan.co.uk/development/) | Permission required; wider development context |
+| Spice Direct | [Spice Direct Wholesale](https://spicedirectwholesale.co.uk/) | Permission required; actual warehouse, not product imagery |
+| Tytherington High School | [Pozzoni Architecture](https://www.pozzoni.co.uk/projects/tytherington-high) | Permission required; Macclesfield campus context, not a claim that SES assessed this specific block |
+| Adventure Planet | [Adventure Planet Paisley](https://adventureplanet.co.uk/paisley/) | Permission required; venue interior |
+| CoVault Polmadie | [The Herald](https://www.heraldscotland.com/news/20119295.first-rate-commercial-facility-polmadie-nears-completion/) | Permission required; published development visualisation, actual photograph still needed |
+
+Three newly sourced photographs have explicit Creative Commons licences.
+Attribution, source links and licence links appear on `/photo-credits`; image
+resizing and cropping are disclosed there. Retain attribution and applicable
+share-alike terms for the adapted images:
+
+| Project | Author | Licence | Context |
+| --- | --- | --- | --- |
+| St Bees boarding house | Airjevans | CC BY-SA 3.0 | School campus, not identification of the assessed boarding house |
+| Scarborough College boarding house | martin dawes | CC BY-SA 2.0 | College campus; do not identify it as the boarding house |
+| Rutherglen Glencairn FC | Crowsus | CC BY-SA 4.0 | Club ground |
+
+The existing image sets retain their original credit metadata. Existing
+publisher-sourced photos without an explicit licence also remain subject to
+SES’s publication permissions; this task does not retrospectively certify them.
 
 ## New entries and supporting rows
 
@@ -54,44 +101,14 @@ those against column B of Invoice History; column H records invoice status.
 | Published project slug | Compliance Opportunities row | Invoice History row(s) |
 | --- | ---: | --- |
 | station-house-glasgow | 6 | 442 |
-| coats-street-housing | 11 | 735 |
-| pine-place-sap | 12 | 561 |
-| dunblane-energy-calculations | 23 | 485 |
-| campbeltown-residential-plot | 32 | 563, 791 |
-| scaliscro-cottages | 40 | 683 |
-| killearn-farm-conversion | 52 | 709 |
-| wick-river-campsite | 58 | 769 |
-| plean-farm-steadings | 60 | 636 |
-| elsrickle-residential-sap | 63 | 718 |
-| achnasheen-residential-sap | 64 | 496 |
-| kilmarnock-residential-sap | 66 | 434 |
-| dornoch-residential-sap | 76 | 486 |
-| plains-residential-sap | 78 | 567 |
-| muir-of-ord-new-house | 81 | 760 |
-| auchinleck-residential-sap | 82 | 795 |
-| islay-residential-sap | 84 | 576 |
-| dores-residential-sap | 86 | 533 |
-| black-isle-residential-sap | 87 | 564 |
-| newtonmore-house-assessment | 89 | 703 |
-| upper-lybster-residential-sap | 93 | 468 |
-| longniddry-cottage-assessment | 94 | 519 |
-| dirleton-residential-sap | 96 | 619 |
-| beauly-conversion | 104 | 647 |
 | banchory-business-park | 8 | 738 |
-| mfg-leven-filling-station | 14 | 810 |
 | old-courthouse-campbeltown | 15 | 828 |
 | love-loan-glasgow | 17 | 896 |
-| woodhall-equestrian | 18 | 705 |
 | st-bees-boarding-house | 21 | 844 |
-| kelso-farmshop | 26 | 867, 905 |
 | spice-direct-warehouse | 28 | 761 |
 | tytherington-high-school | 33 | 455 |
 | scarborough-college-boarding-house | 34 | 481 |
 | adventure-planet-paisley | 41 | 580 |
-| barvas-gateway-facility | 45 | 664 |
-| leadhills-golf-club | 48 | 675 |
-| bolts-car-hire-lerwick | 53 | 786 |
-| balfron-golf-course | 56 | 521 |
 | rutherglen-glencairn-fc | 59 | 842 |
 
 ## Existing entries and the overall volume claim
@@ -102,6 +119,6 @@ this expansion does not claim to recreate its approvals or validate every older
 entry. Supporting records and publication permissions should remain with SES.
 
 The statement "over 12,000 assessments" is the owner's current confirmation,
-supplied on 3 November 2026. It is distinct from the 60 selected portfolio entries
+supplied on 3 November 2026. It is distinct from the 30 selected portfolio entries
 and from invoice counts in this workbook. Do not describe those assessments as
 12,000 unique buildings, clients or projects.

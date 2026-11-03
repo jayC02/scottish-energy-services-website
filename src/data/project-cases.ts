@@ -140,7 +140,7 @@ const catalogue: CaseStudy[] = [
 const featuredSlugs = [
   'glasgow-airport', 'university-of-edinburgh', 'moda-springside',
   'st-james-quarter', 'vita-edinburgh', 'station-house-glasgow',
-  'kelvingrove-art-gallery', 'coats-street-housing', 'sec-armadillo'
+  'kelvingrove-art-gallery', 'banchory-business-park', 'sec-armadillo'
 ];
 export const caseStudies: CaseStudy[] = [
   ...featuredSlugs.map(slug => {
