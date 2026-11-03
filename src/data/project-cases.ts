@@ -1,3 +1,5 @@
+import { workbookProjects } from './project-workbook';
+
 export const projectServices = {
   'commercial-epcs': { label: 'Commercial EPCs', href: '/services/commercial-epcs' },
   saps: { label: 'SAP calculations', href: '/services/saps' },
@@ -22,7 +24,7 @@ export type CaseStudy = {
 
 // Public project facts only. The supporting workbook rows and owner confirmations
 // are recorded in docs/PROJECT-CONTENT.md, not sent to the browser.
-export const caseStudies: CaseStudy[] = [
+const catalogue: CaseStudy[] = [
   {
     slug: 'glasgow-airport', label: 'Glasgow Airport', sector: 'Aviation', location: 'Glasgow',
     summary: 'Commercial EPC assessments for airport buildings.', services: ['commercial-epcs'],
@@ -129,7 +131,24 @@ export const caseStudies: CaseStudy[] = [
     slug: 'forum-shopping-centre', label: 'The Forum Shopping Centre', sector: 'Retail', location: 'Wallsend',
     summary: 'Commercial EPC assessment for shopping centre premises.', services: ['commercial-epcs'],
     scope: ['Commercial EPC assessment work at the shopping centre.']
-  }
+  },
+  ...workbookProjects
+];
+
+// Show SAP and SBEM alongside the established commercial work in the opening rows.
+// The homepage's five-video selection remains independent of this ordering.
+const featuredSlugs = [
+  'glasgow-airport', 'university-of-edinburgh', 'moda-springside',
+  'st-james-quarter', 'vita-edinburgh', 'station-house-glasgow',
+  'kelvingrove-art-gallery', 'coats-street-housing', 'sec-armadillo'
+];
+export const caseStudies: CaseStudy[] = [
+  ...featuredSlugs.map(slug => {
+    const project = catalogue.find(item => item.slug === slug);
+    if (!project) throw new Error(`Missing featured project: ${slug}`);
+    return project;
+  }),
+  ...catalogue.filter(project => !featuredSlugs.includes(project.slug))
 ];
 
 export function projectsForService(slug: string, limit = 3) {

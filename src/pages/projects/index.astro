@@ -16,7 +16,7 @@ const filterOptions = [
 const schema = { '@type': 'ItemList', name: 'Scottish Energy Services projects', itemListElement: caseStudies.map((project,index) => ({ '@type': 'ListItem', position: index + 1, name: project.label, url: `${productionSite}/projects/${project.slug}` })) };
 ---
 <BaseLayout title="Projects" description="EPC, SAP, SBEM and compliance work for universities, venues, shopping centres, hotels and developments." structuredData={schema}>
-  <section class="portfolio-intro"><div class="container"><h1>Projects</h1><p class="lead">We’ve completed over 12,000 projects. Here are a few examples of our work.</p></div></section>
+  <section class="portfolio-intro"><div class="container"><h1>Projects</h1><p class="lead">We’ve completed over 12,000 assessments. Explore a selection of our EPC, SAP and SBEM work.</p></div></section>
   <section class="portfolio-work" aria-label="Project portfolio"><div class="container">
     <div class="portfolio-tools">
       <div class="portfolio-filter" data-project-filter-control hidden>
