@@ -5,11 +5,11 @@ const { slug } = Astro.props as { slug: string };
 const related = projectsForService(slug);
 ---
 {related.length > 0 && <section class="section related-projects"><div class="container">
-  <div class="related-heading"><h2>Our work</h2><a href="/projects">All projects <span aria-hidden="true">↗</span></a></div>
-  <div class="related-grid">{related.map(project => <ProjectCard project={project} compact />)}</div>
+  <div class="related-heading" data-animate><h2>Our work</h2><a href="/projects">All projects <span aria-hidden="true">↗</span></a></div>
+  <div class="related-grid" data-animate style="--d:120ms">{related.map(project => <ProjectCard project={project} compact />)}</div>
 </div></section>}
 <style>
-  .related-projects{background:var(--surface-soft)}.related-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.2rem}
-  h2{margin:0;font-size:1.6rem;line-height:1.2;color:var(--text-strong)}.related-heading>a{font-size:.85rem;color:var(--brand-strong)}
+  .related-projects{background:#fff;padding:clamp(3.5rem,7vw,5.5rem) 0 0}.related-heading{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.2rem}
+  h2{margin:0;font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;line-height:1.1;letter-spacing:-.04em;color:var(--navy)}.related-heading>a{font-size:.85rem;color:var(--brand-strong)}
   .related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}@media(max-width:800px){.related-grid{grid-template-columns:1fr}}
 </style>

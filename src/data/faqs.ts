@@ -13,7 +13,7 @@ export const faqs: Faq[] = [
   {
     category: 'General',
     question: 'How quickly can you complete a job?',
-    answer: 'Turnaround depends on service type and project scope, but many standard assessments can be completed within a few working days. Urgent instructions can often be prioritised.'
+    answer: 'We aim to complete every service within 48 hours of visiting the site. For design-stage calculations, the 48 hours runs from receiving complete drawings and project information.'
   },
   {
     category: 'General',

@@ -4,11 +4,7 @@ export const serviceVisuals: Record<string, ProjectImage> = {
   'commercial-epcs': projectImages['st-enoch-centre'],
   saps: projectImages['moda-springside'],
   'sbem-calculations': projectImages['uws-ayr'],
-  fras: {
-    src: '/images/services/fire-risk.webp', small: '/images/services/fire-risk-small.webp',
-    width: 1200, height: 900, smallWidth: 600, alt: 'A red fire alarm call point', position: '50% 65%',
-    credit: { name: 'Edward Betts', source: 'https://commons.wikimedia.org/wiki/File:Manual_call_point_1.jpg', license: 'Public domain' }
-  },
+  fras: { ...projectImages['theatre-royal-glasgow'], alt: 'Theatre Royal Glasgow, a public venue where fire safety management is essential', position: '50% 40%' },
   'section-63-assessments': projectImages['rusacks-hotel'],
   decs: projectImages['glasgow-life'],
   'overheating-assessments-tm59': projectImages['vita-edinburgh'],

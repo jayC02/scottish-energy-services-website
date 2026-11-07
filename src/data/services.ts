@@ -7,7 +7,24 @@ export type Service = {
   forWho: string[];
   whatIncluded: string[];
   turnaround: string;
+  category: ServiceCategory;
+  /** 'site' services start with a visit; 'desk' services start from drawings and data. */
+  delivery: 'site' | 'desk';
 };
+
+export type ServiceCategory = 'certificates' | 'compliance' | 'modelling';
+
+export const serviceCategories: { id: ServiceCategory; label: string }[] = [
+  { id: 'certificates', label: 'Energy certificates' },
+  { id: 'compliance', label: 'Compliance & safety' },
+  { id: 'modelling', label: 'Design & modelling' }
+];
+
+export const categoryLabel = (id: ServiceCategory) => serviceCategories.find(category => category.id === id)?.label ?? '';
+
+// SES aims to complete every service within 48 hours of the site visit.
+const SITE_TURNAROUND = 'Your report is issued within 48 hours of our site visit.';
+const DESK_TURNAROUND = 'Your results are issued within 48 hours of receiving complete drawings and project information.';
 
 export const services: Service[] = [
   {
@@ -15,10 +32,12 @@ export const services: Service[] = [
     title: 'Commercial EPCs',
     short: 'Energy Performance Certificates for commercial properties across the UK.',
     intro: 'We assess the energy efficiency of your building and provide a legally compliant EPC, including practical recommendations to improve rating and reduce running costs.',
-    highlights: ['Suitable for sales, lettings, and compliance', 'Fast turnaround across the UK', 'Clear guidance on improving ratings'],
+    highlights: ['Suitable for sales, lettings, and compliance', '48-hour turnaround after the site visit', 'Clear guidance on improving ratings'],
     forWho: ['Commercial landlords and asset managers', 'Property agencies and transaction teams', 'Developers completing new commercial space'],
     whatIncluded: ['On-site non-domestic assessment', 'Accredited EPC lodgement and certificate issue', 'Practical improvement recommendations'],
-    turnaround: 'Usually 3 to 6 working days for standard assessments.'
+    turnaround: SITE_TURNAROUND,
+    category: 'certificates',
+    delivery: 'site'
   },
   {
     slug: 'saps',
@@ -28,7 +47,9 @@ export const services: Service[] = [
     highlights: ['Building Regulations support', 'Design and completion assessments', 'Support for developers and architects'],
     forWho: ['Housebuilders and residential developers', 'Architectural practices', 'Project teams delivering conversions and extensions'],
     whatIncluded: ['Design-stage SAP calculations', 'As-built SAP updates and final outputs', 'Technical coordination with project teams'],
-    turnaround: 'Usually 3 to 5 working days, depending on the drawings and scope.'
+    turnaround: DESK_TURNAROUND,
+    category: 'modelling',
+    delivery: 'desk'
   },
   {
     slug: 'sbem-calculations',
@@ -38,7 +59,9 @@ export const services: Service[] = [
     highlights: ['New builds and conversions', 'Building Regulations support', 'EPC support where required'],
     forWho: ['Commercial developers', 'M&E consultants and design teams', 'Contractors delivering non-domestic projects'],
     whatIncluded: ['SBEM model setup and compliance calculations', 'Performance scenario testing where required', 'Documentation suitable for submission'],
-    turnaround: 'Programme-led delivery with staged outputs available for live projects.'
+    turnaround: DESK_TURNAROUND,
+    category: 'modelling',
+    delivery: 'desk'
   },
   {
     slug: 'fras',
@@ -48,7 +71,9 @@ export const services: Service[] = [
     highlights: ['Residential and commercial properties', 'Clear, actionable reports', 'Practical compliance support'],
     forWho: ['Landlords and managing agents', 'Facilities and operations teams', 'Duty holders responsible for shared premises'],
     whatIncluded: ['On-site fire risk review', 'Risk rating and prioritised action schedule', 'Clear implementation guidance'],
-    turnaround: 'Reports usually follow within 3 to 7 working days of inspection.'
+    turnaround: SITE_TURNAROUND,
+    category: 'compliance',
+    delivery: 'site'
   },
   {
     slug: 'section-63-assessments',
@@ -58,7 +83,9 @@ export const services: Service[] = [
     highlights: ['Full compliance guidance', 'Action plans and improvement options', 'Support with next steps'],
     forWho: ['Owners of qualifying non-domestic properties', 'Commercial agents and legal teams', 'Asset managers preparing for transactions'],
     whatIncluded: ['Section 63 assessment and reporting', 'Action Plan guidance', 'Practical next-step advice for compliance'],
-    turnaround: 'Delivery is scoped to building complexity and occupancy constraints.'
+    turnaround: SITE_TURNAROUND,
+    category: 'compliance',
+    delivery: 'site'
   },
   {
     slug: 'decs',
@@ -68,7 +95,9 @@ export const services: Service[] = [
     highlights: ['Operational energy ratings', 'Energy data review', 'Advice on the relevant requirements'],
     forWho: ['Public sector property teams', 'Education and healthcare estates', 'Operators of frequently visited buildings'],
     whatIncluded: ['Operational energy data review', 'DEC certificate issue', 'Advisory report with improvement priorities'],
-    turnaround: 'Usually 4 to 8 working days once the energy data is confirmed.'
+    turnaround: SITE_TURNAROUND,
+    category: 'certificates',
+    delivery: 'site'
   },
   {
     slug: 'overheating-assessments-tm59',
@@ -78,7 +107,9 @@ export const services: Service[] = [
     highlights: ['Residential overheating analysis', 'Dynamic modelling', 'Practical design advice'],
     forWho: ['Residential developers and design teams', 'Architects and sustainability consultants', 'Planning and compliance advisors'],
     whatIncluded: ['TM59 dynamic thermal modelling', 'Mitigation strategy testing', 'Reporting for planning and technical coordination'],
-    turnaround: 'Phased outputs can be aligned with concept, developed, and technical design milestones.'
+    turnaround: DESK_TURNAROUND,
+    category: 'modelling',
+    delivery: 'desk'
   },
   {
     slug: 'dynamic-simulation-modelling-dsm',
@@ -88,16 +119,20 @@ export const services: Service[] = [
     highlights: ['High-level technical modelling', 'Supports complex developments', 'Useful alongside SBEM and TM59'],
     forWho: ['Complex commercial and mixed-use projects', 'Engineering consultancies', 'Teams requiring detailed performance evidence'],
     whatIncluded: ['Dynamic model build from project data', 'Scenario testing and sensitivity analysis', 'Technical outputs for team and stakeholder review'],
-    turnaround: 'Scoped to project complexity with clear milestone-based reporting.'
+    turnaround: DESK_TURNAROUND,
+    category: 'modelling',
+    delivery: 'desk'
   },
   {
     slug: 'domestic-epcs-and-legionellas',
     title: 'Domestic EPCs and Legionella',
     short: 'Domestic EPCs and Legionella risk assessments for residential properties.',
     intro: 'We support landlords, agents, and homeowners with efficient certification and water safety assessments, helping maintain compliance and reduce risk.',
-    highlights: ['Fast turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],
+    highlights: ['48-hour turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],
     forWho: ['Private landlords and portfolio owners', 'Letting agents and property managers', 'Homeowners preparing to sell or let'],
     whatIncluded: ['Domestic EPC assessment and lodgement', 'Legionella risk review', 'Clear follow-up actions and renewal guidance'],
-    turnaround: 'Usually 2 to 5 working days.'
+    turnaround: SITE_TURNAROUND,
+    category: 'certificates',
+    delivery: 'site'
   }
 ];

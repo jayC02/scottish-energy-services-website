@@ -14,3 +14,10 @@ export const navItems = [
   { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' }
 ];
+
+// Headline service promise, used across service cards, service pages and FAQs.
+export const turnaroundPromise = {
+  hours: 48,
+  headline: '48-hour turnaround',
+  line: 'Reports within 48 hours of our site visit, on every service.'
+};

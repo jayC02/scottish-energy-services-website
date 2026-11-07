@@ -1,53 +1,106 @@
 ---
 import content from '../data/service-content.json';
 import type { ServiceSlug } from '../data/service-pages';
+import { siteConfig } from '../data/site';
 const { slug } = Astro.props as { slug: ServiceSlug };
 const detail = content[slug];
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 ---
-<section class="section service-knowledge" aria-label="Assessment guidance">
-  <div class="container knowledge-layout">
-    <aside class="knowledge-index">
-      <p class="eyebrow">Planning your assessment</p>
-      <nav aria-label="On this service page">
-        {detail.sections.map((section, index) => <a href={`#assessment-${index + 1}`}>{section.heading}</a>)}
-        <a href="#assessment-information">Information to send</a>
-        <a href="#assessment-sources">Sources</a>
-      </nav>
-    </aside>
-    <div class="knowledge-copy">
-      <p class="review-date">Last reviewed: <time datetime={detail.reviewed}>23 September 2026</time>. Reviewed against the official and technical sources below.</p>
+<section class="sk" aria-labelledby="sk-heading">
+  <div class="container sk__grid">
+    <div class="sk__intro" data-animate>
+      <p class="sk__eyebrow">Planning your assessment</p>
+      <h2 id="sk-heading">Your questions, answered.</h2>
+      <p>Straightforward guidance on what’s required, what we look at and what to send us.</p>
+      <div class="sk__help">
+        <strong>Rather talk it through?</strong>
+        <a href={phoneHref}>{siteConfig.phone}</a>
+        <a href="/quote">Send us your project details →</a>
+      </div>
+      <p class="sk__reviewed">Last reviewed <time datetime={detail.reviewed}>23 September 2026</time> against the official and technical sources listed.</p>
       <!-- TODO: Add a named SES technical reviewer and verified credentials when supplied by the business. -->
-      {detail.sections.map((section, index) => <section id={`assessment-${index + 1}`}>
-        <h2>{section.heading}</h2>
-        {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
-      </section>)}
-      <section id="assessment-information">
-        <h2>Information to send</h2>
-        <ul>{detail.inputs.map(input => <li>{input}</li>)}</ul>
-        <p>Send what you have through our <a href="/quote">quote form</a> or <a href="/contact">contact us</a> for advice.</p>
-      </section>
-      <section aria-labelledby="related-services-heading">
-        <h2 id="related-services-heading">Related assessments</h2>
-        <ul>{detail.related.map(related => <li><a href={`/services/${related}`}>{content[related as ServiceSlug].title}</a></li>)}</ul>
-      </section>
-      <section id="assessment-sources">
-        <h2>Sources</h2>
-        <p>Requirements depend on the property, proposed work and relevant dates. The sources below distinguish statutory guidance from assessment methodology; SES provides assessment services, not regulatory approval.</p>
-        <ul>{detail.sources.map(source => <li><a href={source.href}>{source.label}</a></li>)}</ul>
-      </section>
+    </div>
+
+    <div class="sk__list">
+      {detail.sections.map((section, index) => (
+        <details id={`assessment-${index + 1}`} class="sk__item" open={index === 0} data-animate style={`--d:${Math.min(index, 4) * 60}ms`}>
+          <summary><h3>{section.heading}</h3><span class="sk__icon" aria-hidden="true"></span></summary>
+          <div class="sk__body">{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</div>
+        </details>
+      ))}
+      <details id="assessment-information" class="sk__item" data-animate>
+        <summary><h3>What information should I send?</h3><span class="sk__icon" aria-hidden="true"></span></summary>
+        <div class="sk__body">
+          <ul>{detail.inputs.map(input => <li>{input}</li>)}</ul>
+          <p>Send what you have through our <a href="/quote">quote form</a> or <a href="/contact">contact us</a> for advice.</p>
+        </div>
+      </details>
+      <details id="assessment-sources" class="sk__item" data-animate>
+        <summary><h3>Sources and guidance</h3><span class="sk__icon" aria-hidden="true"></span></summary>
+        <div class="sk__body">
+          <p>Requirements depend on the property, proposed work and relevant dates. The sources below distinguish statutory guidance from assessment methodology; SES provides assessment services, not regulatory approval.</p>
+          <ul>{detail.sources.map(source => <li><a href={source.href}>{source.label}</a></li>)}</ul>
+        </div>
+      </details>
+
+      <div class="sk__related" data-animate>
+        <h3>Related assessments</h3>
+        <ul>{detail.related.map(related => <li><a href={`/services/${related}`}>{content[related as ServiceSlug].title} <span aria-hidden="true">→</span></a></li>)}</ul>
+      </div>
     </div>
   </div>
 </section>
+
 <style>
-  .knowledge-layout { display:grid;grid-template-columns:minmax(210px,.65fr) minmax(0,1.6fr);gap:clamp(2rem,5vw,5rem); }
-  .knowledge-index nav { display:grid;gap:.8rem;font-size:.9rem;line-height:1.5;border-top:1px solid var(--border);padding-top:1rem; }
-  .knowledge-copy { max-width:76ch; }
-  .knowledge-copy section { scroll-margin-top:110px;padding:1.6rem 0;border-bottom:1px solid var(--border); }
-  .knowledge-copy section:first-of-type { padding-top:.5rem; }
-  .knowledge-copy h2 { font-size:clamp(1.35rem,2.2vw,1.8rem);line-height:1.25;color:var(--text-strong);margin:0 0 1rem; }
-  .knowledge-copy p,.knowledge-copy li { line-height:1.7;color:var(--muted); }
-  .knowledge-copy li { margin-bottom:.5rem; }
-  .knowledge-copy a,.knowledge-index a { color:var(--brand-strong);text-decoration:underline;text-underline-offset:3px; }
-  .review-date { font-size:.85rem; }
-  @media(max-width:760px){.knowledge-layout{grid-template-columns:1fr}.knowledge-index nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem 1rem}}
+  .sk { padding: clamp(4rem, 8vw, 6.5rem) 0; background: #f3f7fa; }
+  .sk__grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .sk__intro { position: sticky; top: 110px; }
+  .sk__eyebrow { display: inline-flex; align-items: center; gap: .7rem; margin: 0 0 1rem; color: var(--mint-strong); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .sk__eyebrow::before { content: ''; width: 28px; height: 2px; background: currentColor; }
+  .sk__intro h2 { margin: 0; color: var(--navy); font-size: clamp(1.9rem, 3.4vw, 2.7rem); font-weight: 800; line-height: 1.08; letter-spacing: -.04em; }
+  .sk__intro > p { margin: 1rem 0 0; color: var(--muted); line-height: 1.6; }
+  .sk__help { display: grid; gap: .35rem; margin-top: 1.8rem; padding: 1.2rem 1.3rem; border-left: 3px solid var(--mint); background: #fff; }
+  .sk__help strong { color: var(--navy); }
+  .sk__help a { color: var(--brand-strong); font-weight: 700; }
+  .sk__help a:first-of-type { color: var(--navy); font-size: 1.2rem; font-weight: 800; letter-spacing: -.01em; }
+  .sk__intro .sk__reviewed { margin-top: 1.4rem; font-size: .78rem; }
+
+  .sk__list { border-top: 1px solid var(--border-strong); }
+  .sk__item { border-bottom: 1px solid var(--border-strong); scroll-margin-top: 110px; }
+  .sk__item summary { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; padding: 1.35rem 0; cursor: pointer; list-style: none; }
+  .sk__item summary::-webkit-details-marker { display: none; }
+  .sk__item summary:focus-visible { outline: 3px solid var(--brand); outline-offset: 4px; }
+  .sk__item h3 { margin: 0; color: var(--navy); font-size: clamp(1.02rem, 1.6vw, 1.18rem); font-weight: 750; line-height: 1.35; letter-spacing: -.015em; transition: color .2s ease; }
+  .sk__item summary:hover h3 { color: var(--brand-strong); }
+  .sk__icon { position: relative; flex: none; width: 34px; height: 34px; border: 1px solid var(--border-strong); border-radius: 999px; transition: background-color .3s ease, border-color .3s ease, transform .4s var(--ease-out); }
+  .sk__icon::before, .sk__icon::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; background: var(--navy); transition: transform .4s var(--ease-out), background-color .3s ease; }
+  .sk__icon::after { transform: rotate(90deg); }
+  .sk__item[open] .sk__icon { background: var(--navy); border-color: var(--navy); transform: rotate(180deg); }
+  .sk__item[open] .sk__icon::before, .sk__item[open] .sk__icon::after { background: var(--mint); }
+  .sk__item[open] .sk__icon::after { transform: rotate(0deg); }
+  .sk__body { padding: 0 3.5rem 1.4rem 0; animation: sk-open .5s var(--ease-out); }
+  @keyframes sk-open { from { opacity: 0; transform: translateY(-6px); } }
+  .sk__body p, .sk__body li { color: var(--muted); line-height: 1.7; }
+  .sk__body p { margin: 0 0 .8rem; }
+  .sk__body ul { margin: 0 0 .8rem; padding-left: 1.2rem; }
+  .sk__body li { margin-bottom: .4rem; }
+  .sk__body a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 3px; }
+
+  .sk__related { margin-top: 2.2rem; }
+  .sk__related h3 { margin: 0 0 .9rem; color: var(--navy); font-size: .8rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .sk__related ul { display: flex; flex-wrap: wrap; gap: .55rem; margin: 0; padding: 0; list-style: none; }
+  .sk__related a { display: inline-flex; gap: .45rem; padding: .6rem 1rem; border: 1px solid var(--border-strong); border-radius: 999px; background: #fff; color: var(--navy); font-size: .88rem; font-weight: 700; transition: border-color .25s ease, background-color .25s ease, color .25s ease; }
+  .sk__related a span { color: var(--mint-strong); transition: transform .3s var(--ease-out); }
+  .sk__related a:hover { border-color: var(--navy); background: var(--navy); color: #fff; }
+  .sk__related a:hover span { color: var(--mint); transform: translateX(3px); }
+
+  @media (max-width: 860px) {
+    .sk__grid { grid-template-columns: 1fr; }
+    .sk__intro { position: static; }
+    .sk__body { padding-right: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk__icon, .sk__icon::before, .sk__icon::after { transition: none; }
+    .sk__body { animation: none; }
+  }
 </style>

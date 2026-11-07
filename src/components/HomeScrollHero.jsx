@@ -28,7 +28,7 @@ export default function HomeScrollHero() {
         <div className="home-scroll-hero__content">
           <h2>Energy assessments and building compliance.</h2>
           <p className="home-scroll-hero__copy">
-            SAP, SBEM, EPCs, fire risk assessments and modelling for property and design teams.
+            SAP, SBEM, EPCs, fire risk assessments and modelling for property and design teams, with reports within 48 hours of our site visit.
           </p>
           <div className="home-scroll-hero__actions">
             <a className="home-scroll-hero__primary" href="/quote">Request a quote</a>

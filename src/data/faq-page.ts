@@ -41,7 +41,7 @@ const pricing: FaqGroup = {
     { question: 'Do your advertised prices include VAT?', answer: `No. ${vatNote}` },
     {
       question: 'How quickly can you complete an assessment?',
-      answer: 'Turnaround depends on the service, building, access and available information. Many standard assessments take a few working days. Tell us your deadline when enquiring; urgent work is subject to availability, and we confirm the programme with your quote.'
+      answer: 'We aim to complete every service within 48 hours of visiting the site. For design-stage work such as SAP, SBEM and modelling, the 48 hours runs from receiving complete drawings and project information. Tell us your deadline when enquiring and we will confirm the visit date with your quote.'
     },
     {
       question: 'Can you quote for larger buildings or portfolios?',

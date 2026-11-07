@@ -1,13 +1,18 @@
 ---
-import type { Service } from '../data/services';
+import { categoryLabel, type Service } from '../data/services';
 import ServiceKnowledge from './ServiceKnowledge.astro';
 import type { ServiceSlug } from '../data/service-pages';
-import ServicePricing from './ServicePricing.astro';
 import RelatedProjects from './RelatedProjects.astro';
-import { getServicePrice, quoteLink } from '../data/pricing';
+import { getServicePrice, quoteLink, startingPrice } from '../data/pricing';
+import { serviceVisuals } from '../data/service-visuals';
+import { siteConfig, turnaroundPromise } from '../data/site';
 
 const { service } = Astro.props as { service: Service };
 const price = getServicePrice(service.slug);
+const image = serviceVisuals[service.slug];
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const onSite = service.delivery === 'site';
+const hours = turnaroundPromise.hours;
 
 const shortTitle = service.title
   .replace(' Assessments', '')
@@ -15,86 +20,101 @@ const shortTitle = service.title
   .replace(' (FRAs)', '')
   .replace(' (DSM)', '')
   .replace(' (TM59)', '');
+
+const steps = [
+  { title: 'Tell us about the property', text: 'Send the address, building use and any drawings or existing reports through our quote form.' },
+  { title: 'Fixed quote, agreed upfront', text: 'We confirm the scope and full fee before any work begins, so there are no surprises.' },
+  onSite
+    ? { title: 'We visit the site', text: 'An assessor attends at a time that suits you and gathers everything needed on the day.' }
+    : { title: 'We review your information', text: 'We check your drawings and specification and flag anything missing straight away.' },
+  { title: `Report in ${hours} hours`, text: onSite ? `Your report is issued within ${hours} hours of the site visit.` : `Results are issued within ${hours} hours of receiving complete information.` }
+];
 ---
 
-<article class="service-page">
-  <section class="service-hero">
-    <div class="service-hero__gridlines" aria-hidden="true"></div>
+<article class="sd">
+  <section class="sd-hero" data-sticky-after>
+    <div class="container sd-hero__grid">
+      <div class="sd-hero__copy">
+        <nav class="sd-crumbs enter" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/services">Services</a><span aria-hidden="true">/</span><span aria-current="page">{shortTitle}</span></nav>
+        <p class="sd-eyebrow enter" style="--d:60ms">{categoryLabel(service.category)}</p>
+        <h1 class="enter" style="--d:120ms">{service.title}</h1>
+        <p class="sd-hero__intro enter" style="--d:200ms">{service.intro}</p>
 
-    <div class="container service-hero__layout">
-      <div class="service-hero__copy" data-reveal>
-        <nav class="service-back" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/services">Services</a><span aria-hidden="true">/</span><span aria-current="page">{shortTitle}</span></nav>
-        <h1>{service.title}</h1>
-        <p class="service-intro">{service.intro}</p>
+        <dl class="sd-facts enter" style="--d:280ms">
+          <div class="sd-facts__item sd-facts__item--accent"><dt>Turnaround</dt><dd>{hours} hours</dd></div>
+          <div class="sd-facts__item"><dt>Starting fee</dt><dd>{price ? startingPrice(price) : 'Tailored quote'}</dd></div>
+          <div class="sd-facts__item"><dt>Coverage</dt><dd>Scotland & UK</dd></div>
+        </dl>
 
-        {price && <ServicePricing price={price} />}
-
-        <div class="service-actions">
-          <a class="service-primary" href={quoteLink(service.slug)}>{price ? 'Get a Fixed Quote' : 'Request a quote'} <span aria-hidden="true">→</span></a>
-          <a class="service-secondary" href="#service-details">View details</a>
+        <div class="sd-actions enter" style="--d:360ms">
+          <a class="sd-btn sd-btn--primary" href={quoteLink(service.slug)}>Get a fixed quote <span aria-hidden="true">→</span></a>
+          <a class="sd-btn sd-btn--ghost" href={phoneHref}>Call {siteConfig.phone}</a>
         </div>
+        {price && <p class="sd-hero__small enter" style="--d:420ms">Starting price for standard assessments, excluding VAT. We confirm the full fee before work begins.</p>}
       </div>
 
-      <aside class="service-summary" data-reveal aria-label="Service summary">
-        <div class="service-summary__top">
-          <span>At a glance</span>
+      <div class="sd-hero__visual">
+        <span class="sd-hero__block enter" style="--d:150ms" aria-hidden="true"></span>
+        <div class="sd-hero__frame enter-wipe" style="--d:100ms">
+          <img src={image.src} srcset={image.small ? `${image.small} ${image.smallWidth || 640}w, ${image.src} ${image.width || 1280}w` : undefined} sizes="(min-width: 921px) 46vw, 92vw" width={image.width || 1280} height={image.height || 720} alt={image.alt} fetchpriority="high" decoding="async" data-parallax="0.08" style={`object-position: ${image.position || '50% 45%'}`} />
         </div>
+        <div class="sd-badge enter" style="--d:650ms">
+          <strong><span data-countup={hours}>{hours}</span><small>hrs</small></strong>
+          <span>{onSite ? 'From site visit to finished report' : 'From complete information to results'}</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="service-summary__items">
-          {service.highlights.slice(0, 3).map((item, index) => (
-            <div class="service-summary__item">
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{item}</p>
-            </div>
+  <section id="service-details" class="sd-overview">
+    <div class="container sd-overview__grid">
+      <div class="sd-overview__main">
+        <p class="sd-eyebrow sd-eyebrow--dark" data-animate="fade">What you get</p>
+        <h2 class="sd-h2" data-animate>What’s included</h2>
+        <ul class="sd-checklist">
+          {service.whatIncluded.map((item, index) => (
+            <li data-animate style={`--d:${index * 90}ms`}>
+              <span class="sd-check" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+              <span>{item}</span>
+            </li>
           ))}
-        </div>
+        </ul>
+        <ul class="sd-highlights" data-animate style="--d:200ms" aria-label="Key benefits">
+          {service.highlights.map(item => <li>{item}</li>)}
+        </ul>
+      </div>
 
-        <div class="service-summary__turnaround">
-          <span>Typical turnaround</span>
-          <p>{service.turnaround}</p>
+      <aside class="sd-panel" data-animate style="--d:150ms" aria-label="Who this service is for">
+        <h2>Who it’s for</h2>
+        <ul>
+          {service.forWho.map(item => <li>{item}</li>)}
+        </ul>
+        <div class="sd-panel__time">
+          <span class="sd-panel__clock" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" /><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+          <div><strong>{hours}-hour turnaround</strong><p>{service.turnaround}</p></div>
         </div>
-        {price?.bespoke && <div class="service-summary__bespoke">
-          <strong>Larger or complex projects</strong>
-          <p>Contact us for a quote for larger buildings, complex work or portfolios.</p>
-          <a href={quoteLink(service.slug)}>Discuss your project <span aria-hidden="true">→</span></a>
-        </div>}
+        {price?.bespoke && <p class="sd-panel__note">Larger building, complex scheme or portfolio? <a href={quoteLink(service.slug)}>Ask for a tailored quote</a>.</p>}
       </aside>
     </div>
   </section>
 
-  <section id="service-details" class="section service-details">
+  <section class="sd-process" aria-labelledby="process-heading">
     <div class="container">
-      <div class="service-section-heading" data-reveal>
-        <h2 class="section-title">What’s included</h2>
+      <div class="sd-process__head">
+        <p class="sd-eyebrow" data-animate="fade">How it works</p>
+        <h2 id="process-heading" class="sd-h2 sd-h2--light" data-animate>From enquiry to report in four simple steps.</h2>
       </div>
-
-      <div class="service-deliverables" data-reveal>
-        {service.whatIncluded.map((item, index) => (
-          <article class="service-deliverable">
-            <span class="service-deliverable__number">{String(index + 1).padStart(2, '0')}</span>
-            <div class="service-deliverable__body">
-              <strong>{item}</strong>
-              <span class="service-deliverable__line" aria-hidden="true"></span>
-            </div>
-          </article>
+      <div class="sd-steps" data-animate="fade">
+        <span class="sd-steps__line" aria-hidden="true"><span></span></span>
+        <ol class="sd-steps__list">
+        {steps.map((step, index) => (
+          <li class:list={['sd-step', { 'sd-step--final': index === steps.length - 1 }]} data-animate style={`--d:${200 + index * 160}ms`}>
+            <span class="sd-step__num">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
         ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="service-audience">
-    <div class="container">
-      <div class="service-section-heading service-section-heading--light" data-reveal>
-        <h2 class="section-title">Who we work with</h2>
-      </div>
-
-      <div class="service-audience__grid" data-reveal>
-        {service.forWho.map((item, index) => (
-          <article class="service-audience__card">
-            <span>{String(index + 1).padStart(2, '0')}</span>
-            <strong>{item}</strong>
-          </article>
-        ))}
+        </ol>
       </div>
     </div>
   </section>
@@ -102,430 +122,159 @@ const shortTitle = service.title
   <ServiceKnowledge slug={service.slug as ServiceSlug} />
   <RelatedProjects slug={service.slug} />
 
-  <section class="section service-next">
-    <div class="container service-next__layout">
-      <div data-reveal>
-        <h2 class="section-title">Discuss your project</h2>
-      </div>
-
-      <div class="service-next__action" data-reveal>
-        <p>
-          Send the location, plans and deadline. We’ll confirm the scope and fee.
-        </p>
-        <a class="service-next__button" href={quoteLink(service.slug)}>
-          Request a quote
-          <span aria-hidden="true">→</span>
-        </a>
+  <section class="sd-cta" data-sticky-hide>
+    <div class="container">
+      <div class="sd-cta__panel" data-animate="scale">
+        <span class="sd-cta__block" aria-hidden="true"></span>
+        <div class="sd-cta__copy">
+          <h2>Ready to book your assessment?</h2>
+          <p>Send the location, plans and deadline. We’ll confirm a fixed fee, and you’ll have your report within {hours} hours{onSite ? ' of our visit' : ' of receiving complete information'}.</p>
+        </div>
+        <div class="sd-cta__actions">
+          <a class="sd-btn sd-btn--mint" href={quoteLink(service.slug)}>Get a fixed quote <span aria-hidden="true">→</span></a>
+          <a class="sd-btn sd-btn--ghost" href={phoneHref}>Call {siteConfig.phone}</a>
+        </div>
       </div>
     </div>
   </section>
+
+  <div class="sd-sticky" data-sticky-cta aria-hidden="true">
+    <div class="container sd-sticky__inner">
+      <div class="sd-sticky__info">
+        <strong>{service.title}</strong>
+        <span><b>{hours}-hour turnaround</b>{price && <> · {startingPrice(price)}</>}</span>
+      </div>
+      <a class="sd-btn sd-btn--primary sd-btn--small" href={quoteLink(service.slug)} tabindex="-1">Get a quote <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
 </article>
 
 <style>
-  .service-page {
-    background: #fff;
+  .sd { background: #fff; }
+
+  /* Shared */
+  .sd-eyebrow { display: inline-flex; align-items: center; gap: .7rem; margin: 0 0 1rem; color: var(--mint); font-size: .76rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+  .sd-eyebrow::before { content: ''; width: 28px; height: 2px; background: currentColor; }
+  .sd-eyebrow--dark { color: var(--mint-strong); }
+  .sd-h2 { margin: 0; max-width: 20ch; color: var(--navy); font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 800; line-height: 1.08; letter-spacing: -.04em; text-wrap: balance; }
+  .sd-h2--light { color: #fff; }
+  .sd-btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 50px; padding: .85rem 1.4rem; border: 1px solid transparent; border-radius: 4px; font-size: .95rem; font-weight: 750; white-space: nowrap; transition: transform .35s var(--ease-out), background-color .25s ease, border-color .25s ease, color .25s ease, box-shadow .35s ease; }
+  .sd-btn span { transition: transform .35s var(--ease-out); }
+  .sd-btn:hover { transform: translateY(-2px); }
+  .sd-btn:hover span { transform: translateX(4px); }
+  .sd-btn--primary { background: var(--mint); color: var(--navy); box-shadow: 0 14px 30px -14px rgba(95, 212, 182, .7); }
+  .sd-btn--primary:hover { background: #79e0c6; }
+  .sd-btn--mint { background: var(--mint); color: var(--navy); }
+  .sd-btn--mint:hover { background: #79e0c6; }
+  .sd-btn--ghost { border-color: rgba(255, 255, 255, .3); color: #fff; }
+  .sd-btn--ghost:hover { border-color: #fff; background: rgba(255, 255, 255, .06); }
+  .sd-btn--small { min-height: 42px; padding: .6rem 1.1rem; font-size: .88rem; }
+
+  /* Hero */
+  .sd-hero { position: relative; overflow: hidden; padding: clamp(3rem, 6vw, 5.5rem) 0 clamp(4rem, 7vw, 6.5rem); background: radial-gradient(ellipse at 85% 0%, rgba(95, 212, 182, .12), transparent 45%), linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%); color: #fff; }
+  .sd-hero::before { content: ''; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(to right, black, transparent 60%); }
+  .sd-hero__grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(2.5rem, 6vw, 5.5rem); align-items: center; }
+  .sd-crumbs { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; color: rgba(214, 228, 238, .65); font-size: .82rem; font-weight: 600; }
+  .sd-crumbs a { transition: color .2s ease; }
+  .sd-crumbs a:hover { color: #fff; }
+  .sd-crumbs [aria-current] { color: #fff; }
+  .sd-hero h1 { margin: 0; max-width: 15ch; color: #fff; font-size: clamp(2.5rem, 5.4vw, 4.4rem); font-weight: 800; line-height: 1.02; letter-spacing: -.05em; text-wrap: balance; }
+  .sd-hero__intro { max-width: 54ch; margin: 1.4rem 0 0; color: #c2d2df; font-size: clamp(1.02rem, 1.4vw, 1.15rem); line-height: 1.65; }
+
+  .sd-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 2rem 0 0; border-top: 1px solid rgba(255, 255, 255, .16); border-bottom: 1px solid rgba(255, 255, 255, .16); }
+  .sd-facts__item { padding: 1rem 1rem 1rem 0; }
+  .sd-facts__item + .sd-facts__item { padding-left: 1rem; border-left: 1px solid rgba(255, 255, 255, .16); }
+  .sd-facts dt { color: #8eaabf; font-size: .7rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  .sd-facts dd { margin: .3rem 0 0; color: #fff; font-size: 1rem; font-weight: 750; line-height: 1.35; }
+  .sd-facts__item--accent dd { color: var(--mint); font-size: 1.2rem; }
+  .sd-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.8rem; }
+  .sd-hero__small { margin: 1rem 0 0; color: #8eaabf; font-size: .8rem; line-height: 1.5; }
+
+  .sd-hero__visual { position: relative; padding: 0 1.4rem 1.4rem 0; }
+  .sd-hero__block { position: absolute; right: 0; bottom: 0; width: 72%; height: 70%; background: var(--mint); }
+  .sd-hero__frame { position: relative; aspect-ratio: 4 / 3.4; overflow: hidden; background: #163a58; }
+  .sd-hero__frame img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); will-change: transform; }
+  .sd-badge { position: absolute; left: -1.6rem; bottom: 2.6rem; display: flex; align-items: center; gap: 1rem; max-width: 300px; padding: 1rem 1.25rem; border-radius: 4px; background: #fff; color: var(--navy); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .45); }
+  .sd-badge strong { display: flex; align-items: baseline; gap: .1rem; font-size: 2.4rem; font-weight: 800; line-height: 1; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+  .sd-badge strong small { color: var(--mint-strong); font-size: .85rem; letter-spacing: 0; }
+  .sd-badge > span { padding-left: 1rem; border-left: 2px solid var(--mint); color: var(--muted); font-size: .84rem; font-weight: 650; line-height: 1.35; }
+
+  /* Overview */
+  .sd-overview { padding: clamp(4rem, 8vw, 7rem) 0; }
+  .sd-overview__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .sd-checklist { display: grid; gap: 0; margin: 2.2rem 0 0; padding: 0; list-style: none; border-top: 1px solid var(--border); }
+  .sd-checklist li { display: flex; align-items: center; gap: 1.1rem; padding: 1.15rem 0; border-bottom: 1px solid var(--border); color: var(--navy); font-size: clamp(1.02rem, 1.5vw, 1.15rem); font-weight: 700; line-height: 1.4; }
+  .sd-check { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 999px; background: #e3f7f1; color: var(--mint-strong); }
+  .sd-highlights { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.6rem 0 0; padding: 0; list-style: none; }
+  .sd-highlights li { padding: .45rem .8rem; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: .84rem; font-weight: 600; }
+
+  .sd-panel { position: sticky; top: 110px; padding: clamp(1.6rem, 3vw, 2.2rem); border-radius: 6px; background: #f3f7fa; border-top: 4px solid var(--mint); }
+  .sd-panel h2 { margin: 0 0 1rem; color: var(--navy); font-size: 1.35rem; font-weight: 800; letter-spacing: -.03em; }
+  .sd-panel ul { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+  .sd-panel li { position: relative; padding-left: 1.4rem; color: var(--text); font-size: .96rem; line-height: 1.5; }
+  .sd-panel li::before { content: ''; position: absolute; left: 0; top: .55em; width: 8px; height: 8px; background: var(--mint-strong); }
+  .sd-panel__time { display: flex; gap: .9rem; margin-top: 1.6rem; padding: 1.1rem; border-radius: 4px; background: var(--navy); color: #fff; }
+  .sd-panel__clock { display: grid; place-items: center; flex: none; width: 42px; height: 42px; border-radius: 999px; background: rgba(95, 212, 182, .15); color: var(--mint); }
+  .sd-panel__time strong { display: block; color: var(--mint); font-size: 1rem; }
+  .sd-panel__time p { margin: .25rem 0 0; color: #c2d2df; font-size: .87rem; line-height: 1.5; }
+  .sd-panel__note { margin: 1.2rem 0 0; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+  .sd-panel__note a { color: var(--brand-strong); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Process */
+  .sd-process { position: relative; overflow: hidden; padding: clamp(4rem, 8vw, 6.5rem) 0; background: var(--navy); color: #fff; }
+  .sd-process::after { content: ''; position: absolute; right: -120px; bottom: -160px; width: 420px; height: 420px; background: var(--mint); opacity: .06; transform: rotate(20deg); }
+  .sd-process__head { margin-bottom: clamp(2.4rem, 5vw, 3.6rem); }
+  .sd-steps { --gap: clamp(1rem, 2.5vw, 2rem); position: relative; z-index: 1; }
+  .sd-steps__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); margin: 0; padding: 0; list-style: none; }
+  .sd-steps__line { position: absolute; top: 23px; left: 24px; right: calc((100% - 3 * var(--gap)) / 4 - 24px); height: 2px; background: rgba(255, 255, 255, .12); }
+  .sd-steps__line span { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(95, 212, 182, .4), var(--mint)); transform-origin: left; transition: transform 1.8s var(--ease-out) .3s; }
+  :global(.motion-ready) .sd-steps:not(.is-in) .sd-steps__line span { transform: scaleX(0); }
+  .sd-step__num { position: relative; display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 1.4rem; border: 2px solid rgba(255, 255, 255, .2); border-radius: 999px; background: var(--navy); color: #fff; font-size: .82rem; font-weight: 800; }
+  .sd-step h3 { margin: 0 0 .5rem; color: #fff; font-size: 1.15rem; font-weight: 750; letter-spacing: -.02em; }
+  .sd-step p { margin: 0; color: #a9bccb; font-size: .93rem; line-height: 1.6; }
+  .sd-step--final .sd-step__num { border-color: var(--mint); background: var(--mint); color: var(--navy); box-shadow: 0 0 0 8px rgba(95, 212, 182, .14); }
+  .sd-step--final h3 { color: var(--mint); }
+
+  /* Final CTA */
+  .sd-cta { padding: clamp(3rem, 6vw, 5rem) 0 clamp(4rem, 8vw, 6rem); }
+  .sd-cta__panel { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 2rem 3rem; align-items: center; padding: clamp(2rem, 5vw, 3.6rem); border-radius: 6px; background: linear-gradient(120deg, var(--navy), var(--navy-2)); color: #fff; }
+  .sd-cta__block { position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; background: var(--mint); opacity: .12; transform: rotate(16deg); }
+  .sd-cta__copy, .sd-cta__actions { position: relative; }
+  .sd-cta h2 { margin: 0; max-width: 20ch; color: #fff; font-size: clamp(1.8rem, 3.4vw, 2.7rem); font-weight: 800; line-height: 1.08; letter-spacing: -.04em; }
+  .sd-cta p { max-width: 54ch; margin: 1rem 0 0; color: #c2d2df; line-height: 1.6; }
+  .sd-cta__actions { display: flex; flex-direction: column; gap: .7rem; }
+
+  /* Sticky bar */
+  .sd-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; padding: .7rem 0; background: rgba(10, 34, 56, .96); backdrop-filter: blur(10px); border-top: 1px solid rgba(255, 255, 255, .08); color: #fff; transform: translateY(110%); transition: transform .5s var(--ease-out); }
+  .sd-sticky.is-visible { transform: none; }
+  .sd-sticky__inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .sd-sticky__info { display: grid; min-width: 0; }
+  .sd-sticky__info strong { overflow: hidden; font-size: .95rem; text-overflow: ellipsis; white-space: nowrap; }
+  .sd-sticky__info span { color: #a9bccb; font-size: .8rem; }
+  .sd-sticky__info b { color: var(--mint); font-weight: 750; }
+
+  @media (max-width: 1000px) {
+    .sd-steps__list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.4rem; }
+    .sd-steps__line { display: none; }
   }
-
-  .service-hero {
-    position: relative;
-    overflow: hidden;
-    padding: clamp(4.5rem, 8vw, 7rem) 0 clamp(3.8rem, 6vw, 5.8rem);
-    background:
-      radial-gradient(circle at 78% 22%, rgba(75, 178, 222, .17), transparent 28%),
-      linear-gradient(135deg, #0c1d2d 0%, #102b40 58%, #14384f 100%);
-    color: #fff;
-  }
-
-  .service-hero__gridlines {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: .4;
-    background-image:
-      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-    background-size: 54px 54px;
-    mask-image: linear-gradient(to left, black, transparent 76%);
-  }
-
-  .service-hero__layout {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: minmax(0, 1.12fr) minmax(330px, .68fr);
-    gap: clamp(3rem, 7vw, 7rem);
-    align-items: end;
-  }
-
-  .service-hero__copy {
-    max-width: 760px;
-  }
-
-  .service-back {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: .45rem;
-    margin-bottom: 2.1rem;
-    color: rgba(216, 230, 240, .72);
-    font-size: .82rem;
-    font-weight: 650;
-  }
-
-  .service-back:hover {
-    color: #fff;
-  }
-
-  .service-kicker {
-    margin: 0 0 .8rem;
-    color: #83cef0;
-    font-size: .78rem;
-    font-weight: 800;
-    letter-spacing: .11em;
-    text-transform: uppercase;
-  }
-
-  .service-hero h1 {
-    margin: 0;
-    max-width: 20ch;
-    color: #fff;
-    font-size: clamp(2.3rem, 5vw, 4rem);
-    line-height: 1.08;
-    letter-spacing: -.05em;
-    text-wrap: balance;
-  }
-
-  .service-intro {
-    max-width: 62ch;
-    margin: 1.4rem 0 0;
-    color: #c4d3de;
-    font-size: clamp(1.02rem, 1.45vw, 1.18rem);
-    line-height: 1.65;
-  }
-
-  .service-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .8rem;
-    margin-top: 1.8rem;
-  }
-
-  .service-primary,
-  .service-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-    min-height: 46px;
-    padding: .82rem 1.15rem;
-    border-radius: 999px;
-    font-size: .92rem;
-    font-weight: 750;
-    transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
-  }
-
-  .service-primary {
-    background: #fff;
-    color: #10283b;
-    border: 1px solid #fff;
-  }
-
-  .service-secondary {
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.32);
-    background: rgba(255,255,255,.035);
-  }
-
-  .service-primary:hover,
-  .service-secondary:hover {
-    transform: translateY(-2px);
-  }
-
-  .service-summary {
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    min-height: 410px;
-    border-top: 1px solid rgba(255,255,255,.22);
-    border-bottom: 1px solid rgba(255,255,255,.22);
-  }
-
-  .service-summary__top {
-    padding: 1.05rem 0 1.15rem;
-    border-bottom: 1px solid rgba(255,255,255,.14);
-  }
-
-  .service-summary__top span,
-  .service-summary__turnaround span {
-    display: block;
-    color: #83a4b9;
-    font-size: .72rem;
-    font-weight: 750;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-  }
-
-  .service-summary__top strong {
-    display: block;
-    margin-top: .25rem;
-    color: #fff;
-    font-size: 1.05rem;
-  }
-
-  .service-summary__items {
-    flex: 1;
-  }
-
-  .service-summary__item {
-    display: grid;
-    grid-template-columns: 2.4rem 1fr;
-    gap: .75rem;
-    padding: 1.05rem 0;
-    border-bottom: 1px solid rgba(255,255,255,.14);
-  }
-
-  .service-summary__item > span {
-    color: #69bde4;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: .72rem;
-    font-weight: 800;
-  }
-
-  .service-summary__item p {
-    margin: 0;
-    color: #d5e0e8;
-    font-size: .92rem;
-    line-height: 1.45;
-  }
-
-  .service-summary__turnaround {
-    padding: 1.1rem 0 .1rem;
-  }
-
-  .service-summary__turnaround p {
-    margin: .3rem 0 0;
-    color: #fff;
-    font-size: .94rem;
-    line-height: 1.45;
-  }
-
-  .service-summary__bespoke { margin-top: 1.1rem; padding: 1.1rem 0; border-top: 1px solid rgba(255,255,255,.14); font-size: .9rem; }
-  .service-summary__bespoke strong { color: #fff; }
-  .service-summary__bespoke p { margin: .45rem 0 .65rem; color: #c4d3de; }
-  .service-summary__bespoke a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
-
-  .service-details {
-    background: #fff;
-  }
-
-  .service-section-heading {
-    max-width: 760px;
-    margin-bottom: 2rem;
-  }
-
-  .service-section-heading .section-title {
-    max-width: 18ch;
-  }
-
-  .service-section-heading .lead {
-    max-width: 58ch;
-    margin-bottom: 0;
-  }
-
-  .service-deliverables {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-  }
-
-  .service-deliverable {
-    position: relative;
-    min-height: 220px;
-    padding: 1.4rem 1.35rem;
-    border: 1px solid #d8e2eb;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-    box-shadow: 0 10px 30px rgba(17,39,61,.05);
-  }
-
-  .service-deliverable__number {
-    display: inline-grid;
-    place-items: center;
-    width: 2.1rem;
-    height: 2.1rem;
-    margin-bottom: 2.2rem;
-    border-radius: 7px;
-    background: var(--brand-soft);
-    color: var(--brand-strong);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: .72rem;
-    font-weight: 800;
-  }
-
-  .service-deliverable__body {
-    display: grid;
-    gap: 1rem;
-  }
-
-  .service-deliverable strong {
-    color: var(--text-strong);
-    font-size: clamp(1.05rem, 1.5vw, 1.22rem);
-    line-height: 1.35;
-  }
-
-  .service-deliverable__line {
-    display: block;
-    width: 42px;
-    height: 2px;
-    background: var(--brand);
-    opacity: .7;
-  }
-
-  .service-audience {
-    padding: clamp(3.4rem, 6vw, 5rem) 0;
-    background: linear-gradient(135deg, #0f2234 0%, #14344d 100%);
-  }
-
-  .service-section-heading--light .section-title {
-    color: #fff;
-    max-width: 22ch;
-  }
-
-  .service-section-heading--light .lead {
-    color: #b9c9d5;
-  }
-
-  .service-audience__eyebrow {
-    color: #7bc9ed;
-  }
-
-  .service-audience__grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: .9rem;
-  }
-
-  .service-audience__card {
-    min-height: 150px;
-    padding: 1.25rem;
-    border: 1px solid rgba(255,255,255,.14);
-    border-radius: 12px;
-    background: rgba(255,255,255,.045);
-  }
-
-  .service-audience__card span {
-    display: block;
-    margin-bottom: 1.5rem;
-    color: #78c6ea;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: .72rem;
-    font-weight: 800;
-  }
-
-  .service-audience__card strong {
-    display: block;
-    color: #fff;
-    font-size: 1rem;
-    line-height: 1.4;
-  }
-
-  .service-next {
-    background: #fff;
-  }
-
-  .service-next__layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, .75fr);
-    gap: clamp(2.5rem, 6vw, 6rem);
-    align-items: end;
-    padding: clamp(2rem, 4vw, 3rem);
-    border-radius: 18px;
-    background:
-      radial-gradient(circle at 88% 12%, rgba(91,195,230,.18), transparent 28%),
-      linear-gradient(135deg, #0e2234 0%, #123550 100%);
-    box-shadow: 0 24px 60px rgba(15,35,53,.12);
-  }
-
-  .service-next .eyebrow {
-    color: #7bc9ed;
-  }
-
-  .service-next .section-title {
-    margin-bottom: 0;
-    max-width: 16ch;
-    color: #fff;
-  }
-
-  .service-next__action p {
-    margin: 0 0 1.2rem;
-    color: #bfd0dd;
-    line-height: 1.55;
-  }
-
-  .service-next__button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
-    min-width: 210px;
-    padding: .9rem 1rem;
-    border-radius: 10px;
-    background: #fff;
-    color: #10263a;
-    font-weight: 750;
-  }
-
-  .service-next__button span {
-    color: var(--brand);
-    font-size: 1.2rem;
-  }
-
   @media (max-width: 920px) {
-    .service-hero__layout,
-    .service-next__layout {
-      grid-template-columns: 1fr;
-    }
-
-    .service-summary {
-      min-height: 0;
-    }
-
-    .service-deliverables,
-    .service-audience__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .service-section-heading .section-title,
-    .service-section-heading--light .section-title,
-    .service-next .section-title {
-      max-width: 20ch;
-    }
+    .sd-hero__grid, .sd-overview__grid, .sd-cta__panel { grid-template-columns: 1fr; }
+    .sd-hero__visual { max-width: 620px; }
+    .sd-badge { left: 1rem; bottom: 2.4rem; }
+    .sd-panel { position: static; }
+    .sd-cta__actions { flex-direction: row; flex-wrap: wrap; }
   }
-
   @media (max-width: 640px) {
-    .service-hero {
-      padding-top: 3.4rem;
-    }
-
-    .service-back {
-      margin-bottom: 1.5rem;
-    }
-
-    .service-hero h1 {
-      font-size: clamp(2rem, 8.4vw, 2.6rem);
-    }
-
-    .service-deliverable,
-    .service-audience__card {
-      min-height: 0;
-    }
-
-    .service-deliverable__number,
-    .service-audience__card span {
-      margin-bottom: 1rem;
-    }
-
-    .service-next__layout {
-      padding: 1.4rem;
-    }
+    .sd-hero h1 { font-size: clamp(2.2rem, 10vw, 2.9rem); }
+    .sd-facts { grid-template-columns: 1fr 1fr; }
+    .sd-facts__item:nth-child(3) { grid-column: 1 / -1; padding-left: 0; border-left: 0; border-top: 1px solid rgba(255, 255, 255, .16); }
+    .sd-actions .sd-btn, .sd-cta__actions .sd-btn { width: 100%; }
+    .sd-badge strong { font-size: 2rem; }
+    .sd-steps__list { grid-template-columns: 1fr; }
+    .sd-sticky__info strong { font-size: .88rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sd-btn, .sd-btn span, .sd-sticky, .sd-steps__line span { transition: none; }
+    .sd-hero__frame img { transform: none; }
   }
 </style>
