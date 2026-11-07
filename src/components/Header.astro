@@ -3,7 +3,6 @@ import { navItems, siteConfig, turnaroundPromise } from '../data/site';
 import { services, serviceCategories, turnaroundOf } from '../data/services';
 import { caseStudies } from '../data/project-cases';
 import { projectImages } from '../data/project-images';
-import { faqColumns } from '../data/faq-page';
 
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
@@ -20,13 +19,6 @@ const dropdowns: Record<string, DropLink[]> = {
     { label: 'About SES', text: 'Who we are and how we work', href: '/about' },
     { label: 'Areas we cover', text: 'Glasgow, Scotland and across the UK', href: '/areas' },
     { label: 'Our projects', text: 'Buildings we have assessed', href: '/projects' }
-  ],
-  '/faq': faqColumns.flat().map(group => ({ label: group.title, text: `${group.items.length} questions answered`, href: `/faq#${group.id}-heading` })),
-  '/contact': [
-    { label: 'Contact us', text: siteConfig.address, href: '/contact' },
-    { label: 'Request a quote', text: 'Fixed fee confirmed before work starts', href: '/quote' },
-    { label: siteConfig.phone, text: 'Call the team', href: phoneHref },
-    { label: 'Email us', text: siteConfig.email, href: `mailto:${siteConfig.email}` }
   ]
 };
 const menuId = (href: string) => `menu-${href.replace(/\W+/g, '') || 'home'}`;
