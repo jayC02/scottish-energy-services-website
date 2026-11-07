@@ -10,6 +10,8 @@ export type Service = {
   category: ServiceCategory;
   /** 'site' services start with a visit; 'desk' services start from drawings and data. */
   delivery: 'site' | 'desk';
+  /** Completed the same day as the site visit instead of within 48 hours. */
+  sameDay?: boolean;
 };
 
 export type ServiceCategory = 'certificates' | 'compliance' | 'modelling';
@@ -19,6 +21,10 @@ export const serviceCategories: { id: ServiceCategory; label: string }[] = [
   { id: 'compliance', label: 'Compliance & safety' },
   { id: 'modelling', label: 'Design & modelling' }
 ];
+
+export const turnaroundOf = (service: Pick<Service, 'sameDay'>) => service.sameDay
+  ? { short: 'Same day', label: 'Same-day turnaround', step: 'Report the same day' }
+  : { short: '48 hours', label: '48-hour turnaround', step: 'Report in 48 hours' };
 
 export const categoryLabel = (id: ServiceCategory) => serviceCategories.find(category => category.id === id)?.label ?? '';
 
@@ -128,11 +134,12 @@ export const services: Service[] = [
     title: 'Domestic EPCs and Legionella',
     short: 'Domestic EPCs and Legionella risk assessments for residential properties.',
     intro: 'We support landlords, agents, and homeowners with efficient certification and water safety assessments, helping maintain compliance and reduce risk.',
-    highlights: ['48-hour turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],
+    highlights: ['Same-day turnaround', 'Ideal for landlords and agents', 'Combined service options where appropriate'],
     forWho: ['Private landlords and portfolio owners', 'Letting agents and property managers', 'Homeowners preparing to sell or let'],
     whatIncluded: ['Domestic EPC assessment and lodgement', 'Legionella risk review', 'Clear follow-up actions and renewal guidance'],
-    turnaround: SITE_TURNAROUND,
+    turnaround: 'Your EPC and Legionella report are issued the same day as our site visit.',
     category: 'certificates',
-    delivery: 'site'
+    delivery: 'site',
+    sameDay: true
   }
 ];

@@ -1,5 +1,5 @@
 ---
-import { services, serviceCategories, categoryLabel } from '../data/services';
+import { services, serviceCategories, turnaroundOf } from '../data/services';
 import { serviceVisuals } from '../data/service-visuals';
 import { getServicePrice, startingPrice } from '../data/pricing';
 import { turnaroundPromise } from '../data/site';
@@ -34,7 +34,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
       </div>
       <div class="svc-promise__copy">
         <strong>From site visit to finished report in {turnaroundPromise.hours} hours.</strong>
-        <p>It’s our standard on every service, not an upgrade. We agree the scope and fixed fee before we start, then turn your report around fast.</p>
+        <p>It’s our standard on every service, and Domestic EPCs and Legionella assessments are completed the same day. We agree the scope and fixed fee before we start.</p>
       </div>
       <ul class="svc-promise__points">
         <li><span>{services.length}</span> specialist services</li>
@@ -59,7 +59,6 @@ const countFor = (id: string) => services.filter(service => service.category ===
           <a class="svc-card__link" href={`/services/${service.slug}`} aria-labelledby={`service-${service.slug}`}>
             <div class="svc-card__media">
               <img src={image.src} srcset={image.small ? `${image.small} ${image.smallWidth || 640}w, ${image.src} ${image.width || 1280}w` : undefined} sizes="(min-width: 1051px) 380px, (min-width: 661px) 46vw, 92vw" width={image.width || 1280} height={image.height || 720} alt="" loading={page && index < 3 ? 'eager' : 'lazy'} fetchpriority={page && index === 0 ? 'high' : undefined} decoding="async" style={`object-position: ${image.position || '50% 45%'}`} />
-              <span class="svc-card__tag">{categoryLabel(service.category)}</span>
             </div>
             <div class="svc-card__body">
               <span class="svc-card__index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
@@ -68,7 +67,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
               <div class="svc-card__meta">
                 <span class="svc-card__speed">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" /><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                  {turnaroundPromise.hours}-hour turnaround
+                  {turnaroundOf(service).label}
                 </span>
                 <span class:list={['svc-card__price', { 'svc-card__price--bespoke': !price }]}>{price ? startingPrice(price) : 'Tailored quote'}</span>
               </div>
@@ -92,7 +91,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
   .svc-eyebrow::before { content: ''; width: 28px; height: 2px; background: currentColor; }
   .svc-head :is(h1, h2) { margin: 0; max-width: 16ch; color: var(--navy); font-size: clamp(2.2rem, 4.6vw, 3.75rem); font-weight: 800; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
   .svc-head__aside p { margin: 0; color: var(--muted); font-size: 1.02rem; line-height: 1.65; }
-  .svc-head__link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; color: var(--navy); font-weight: 750; border-bottom: 2px solid var(--mint); padding-bottom: .2rem; transition: gap .25s var(--ease-out); }
+  .svc-head__link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.1rem; color: var(--brand-strong); font-weight: 750; border-bottom: 2px solid var(--brand); padding-bottom: .2rem; transition: gap .25s var(--ease-out); }
   .svc-head__link:hover { gap: .85rem; }
 
   /* 48-hour promise */
@@ -111,7 +110,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
   .svc-promise__copy strong { display: block; font-size: clamp(1.15rem, 2vw, 1.45rem); line-height: 1.25; letter-spacing: -.02em; }
   .svc-promise__copy p { margin: .5rem 0 0; color: #b9cad8; font-size: .95rem; line-height: 1.6; max-width: 56ch; }
   .svc-promise__points { position: relative; z-index: 1; display: grid; gap: .65rem; margin: 0; padding: 0 0 0 clamp(1.2rem, 3vw, 2.4rem); list-style: none; border-left: 1px solid rgba(255, 255, 255, .14); font-size: .9rem; font-weight: 650; white-space: nowrap; }
-  .svc-promise__points span { display: inline-grid; place-items: center; min-width: 2.1rem; height: 1.6rem; margin-right: .55rem; padding: 0 .35rem; border-radius: 4px; background: rgba(95, 212, 182, .14); color: var(--mint); font-size: .74rem; font-weight: 800; }
+  .svc-promise__points span { display: inline-grid; place-items: center; min-width: 2.1rem; height: 1.6rem; margin-right: .55rem; padding: 0 .35rem; border-radius: 4px; background: rgba(76, 175, 148, .14); color: var(--mint); font-size: .74rem; font-weight: 800; }
 
   /* Filter */
   .svc-filter { margin-bottom: 1.6rem; }
@@ -121,7 +120,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
   .svc-filter button span { display: inline-grid; place-items: center; min-width: 1.45rem; height: 1.45rem; border-radius: 999px; background: #eaf0f5; color: var(--muted); font-size: .72rem; }
   .svc-filter button:hover { border-color: var(--navy); }
   .svc-filter button[aria-pressed='true'] { background: var(--navy); border-color: var(--navy); color: #fff; }
-  .svc-filter button[aria-pressed='true'] span { background: var(--mint); color: var(--navy); }
+  .svc-filter button[aria-pressed='true'] span { background: rgba(255, 255, 255, .18); color: #fff; }
 
   /* Cards */
   .svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 24px; }
@@ -129,11 +128,10 @@ const countFor = (id: string) => services.filter(service => service.category ===
   .svc-card[hidden] { display: none; }
   .svc-card.card-pop { animation: rise-in .7s var(--ease-out) both; animation-delay: var(--d, 0ms); }
   .svc-card__link { position: relative; display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid #e3eaf0; border-radius: 6px; background: #fff; color: var(--text-strong); box-shadow: 0 1px 2px rgba(10, 34, 56, .04); transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out), border-color .3s ease; }
-  .svc-card__link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--mint); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease-out); }
+  .svc-card__link::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: linear-gradient(90deg, var(--brand), var(--mint)); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease-out); }
   .svc-card__media { position: relative; aspect-ratio: 16 / 10.5; overflow: hidden; background: #dfe7ee; }
-  .svc-card__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 34, 56, 0) 45%, rgba(10, 34, 56, .55) 100%); transition: opacity .5s ease; }
+  .svc-card__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 34, 56, 0) 60%, rgba(10, 34, 56, .28) 100%); transition: opacity .5s ease; }
   .svc-card__media img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.01); transition: transform 1.1s var(--ease-out); }
-  .svc-card__tag { position: absolute; left: 14px; bottom: 14px; z-index: 1; padding: .32rem .62rem; border-radius: 3px; background: rgba(255, 255, 255, .94); color: var(--navy); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
   .svc-card__body { position: relative; display: flex; flex: 1; flex-direction: column; padding: 22px 24px 22px; }
   .svc-card__index { position: absolute; top: 20px; right: 22px; color: #c7d3dd; font-size: .8rem; font-weight: 800; font-variant-numeric: tabular-nums; transition: color .3s ease; }
   .svc-card__body :is(h2, h3) { margin: 0; padding-right: 2rem; color: var(--navy); font-size: 1.28rem; font-weight: 800; line-height: 1.22; letter-spacing: -.03em; }
@@ -153,8 +151,8 @@ const countFor = (id: string) => services.filter(service => service.category ===
     .svc-card__link:hover { transform: translateY(-6px); border-color: transparent; box-shadow: 0 28px 50px -24px rgba(10, 34, 56, .35); }
     .svc-card__link:hover::after { transform: scaleX(1); }
     .svc-card__link:hover .svc-card__media img { transform: scale(1.07); }
-    .svc-card__link:hover .svc-card__index { color: var(--mint-strong); }
-    .svc-card__link:hover .svc-card__arrow { background: var(--navy); border-color: var(--navy); color: var(--mint); transform: translateX(3px); }
+    .svc-card__link:hover .svc-card__index { color: var(--brand); }
+    .svc-card__link:hover .svc-card__arrow { background: var(--brand); border-color: var(--brand); color: #fff; transform: translateX(3px); }
   }
 
   @media (max-width: 1050px) {

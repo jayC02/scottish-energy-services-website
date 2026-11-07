@@ -20,11 +20,13 @@
   --shadow-sm: 0 10px 28px rgba(19, 40, 63, 0.08);
   --shadow: 0 24px 64px rgba(19, 40, 63, 0.1);
   --max: 1180px;
-  /* Premium palette: deep navy with a mint accent, used on service pages. */
+  /* Site palette: navy surfaces, blue for actions and links, green as the accent. */
   --navy: #0a2238;
   --navy-2: #0f3352;
-  --mint: #5fd4b6;
-  --mint-strong: #23a585;
+  --mint: #4caf94;        /* accent green on dark backgrounds */
+  --mint-strong: #23806b; /* accent green for text on light backgrounds */
+  --mint-soft: #e4f3ee;
+  --brand-bright: #1a7fbf; /* blue actions on dark backgrounds */
   --ease-out: cubic-bezier(.16, 1, .3, 1);
 }
 
@@ -272,14 +274,15 @@ textarea[aria-invalid="true"] {
 .motion-ready [data-animate] {
   opacity: 0;
   transform: translateY(32px);
-  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), clip-path 1.15s cubic-bezier(.77, 0, .18, 1);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
 .motion-ready [data-animate="fade"] { transform: none; }
 .motion-ready [data-animate="left"] { transform: translateX(-36px); }
 .motion-ready [data-animate="scale"] { transform: scale(.94); }
-.motion-ready [data-animate="wipe"] { opacity: 1; transform: none; clip-path: inset(0 100% 0 0); }
-.motion-ready [data-animate].is-in { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+.motion-ready [data-animate="wipe"] { opacity: 1; transform: none; clip-path: inset(0 100% 0 0); transition: clip-path 1.15s cubic-bezier(.77, 0, .18, 1); }
+.motion-ready [data-animate].is-in { opacity: 1; transform: none; }
+.motion-ready [data-animate="wipe"].is-in { clip-path: inset(0 0 0 0); }
 
 /* Entrance for content that is on screen at load (pure CSS, runs without JS). */
 @keyframes rise-in { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
@@ -291,3 +294,8 @@ textarea[aria-invalid="true"] {
   .motion-ready [data-animate] { opacity: 1; transform: none; clip-path: none; transition: none; }
   .enter, .enter-wipe { animation: none; }
 }
+
+/* Dims the page while a full-width header menu is open (sits just under the sticky header). */
+body::after { content: ''; position: fixed; inset: 0; z-index: 998; background: rgba(10, 34, 56, .28); opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+@media (min-width: 941px) { body:has(.has-mega.is-open:not(.is-suppressed))::after { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { body::after { transition: none; } }
