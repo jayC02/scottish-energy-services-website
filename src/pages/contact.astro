@@ -1,27 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { siteConfig } from '../data/site';
-import QuoteRequestForm from '../components/QuoteRequestForm.astro';
-
-const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+import EnquiryPage from '../components/EnquiryPage.astro';
 ---
-<BaseLayout title="Contact Our Glasgow Team" description="Contact Scottish Energy Services at 272 Bath St, Glasgow. Call 0141 255 1360 for EPC, Section 63, modelling and fire risk assessment enquiries.">
-  <section class="section">
-    <div class="container grid grid-2 form-layout">
-      <div data-reveal>
-        <h1 class="section-title">Talk to our team</h1>
-        <p class="lead">Tell us what you need, where the property is and your deadline. We’ll confirm the scope, fee and timescale.</p>
-        <div class="contact-card card">
-          <p><strong>Address:</strong> {siteConfig.address}, United Kingdom</p>
-          <p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p>
-          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p>
-        </div>
-      </div>
-      <QuoteRequestForm formType="contact" submitText="Send enquiry" reveal={true} />
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .form-layout { align-items: start; gap: 1rem 1.2rem; }
-</style>
+<EnquiryPage
+  metaTitle="Contact Our Glasgow Team"
+  metaDescription="Contact Scottish Energy Services at 272 Bath St, Glasgow. Call 0141 255 1360 for EPC, Section 63, modelling and fire risk assessment enquiries."
+  heading="Talk to our team"
+  lead="Call, email or send us the details. We’ll tell you what you need and confirm the fee."
+  formType="contact"
+  submitText="Send enquiry"
+/>

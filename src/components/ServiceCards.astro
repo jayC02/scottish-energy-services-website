@@ -3,6 +3,7 @@ import { services, serviceCategories, turnaroundOf } from '../data/services';
 import { serviceVisuals } from '../data/service-visuals';
 import { getServicePrice, startingPrice } from '../data/pricing';
 import { turnaroundPromise } from '../data/site';
+import { coverageRegions } from '../data/coverage';
 interface Props { page?: boolean; }
 const { page = false } = Astro.props;
 const Heading = page ? 'h1' : 'h2';
@@ -19,7 +20,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
         <Heading id="services-heading" class={enter} style="--d:80ms" {...reveal()}>Energy, compliance and fire safety assessments.</Heading>
       </div>
       <div class:list={['svc-head__aside', enter]} style="--d:160ms" {...reveal()}>
-        <p>Assessments for homes, commercial buildings and public estates across Scotland and the UK, each backed by our {turnaroundPromise.hours}-hour turnaround.</p>
+        <p>Assessments for homes, commercial buildings and public estates across Scotland and the north of England, each backed by our {turnaroundPromise.hours}-hour turnaround.</p>
         {!page && <a class="svc-head__link" href="/services">View all services <span aria-hidden="true">→</span></a>}
       </div>
     </header>
@@ -39,7 +40,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
       <ul class="svc-promise__points">
         <li><span>{services.length}</span> specialist services</li>
         <li><span>£</span> Fixed fee agreed upfront</li>
-        <li><span>UK</span> Scotland & UK coverage</li>
+        <li><span>{coverageRegions.length}</span> regions across Scotland and the north of England</li>
       </ul>
     </div>
 

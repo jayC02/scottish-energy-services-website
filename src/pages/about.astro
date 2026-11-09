@@ -1,88 +1,204 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CTASection from '../components/CTASection.astro';
+import CoverageMap from '../components/CoverageMap.astro';
+import { caseStudies } from '../data/project-cases';
 import { projectImages } from '../data/project-images';
-import { siteConfig } from '../data/site';
+import { services } from '../data/services';
+import { turnaroundPromise } from '../data/site';
+
 const hero = projectImages['theatre-royal-glasgow'];
 const gallery = projectImages['kelvingrove-art-gallery'];
-const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
-const examples = [
-  { name: 'Glasgow Life', href: '/projects/glasgow-life', work: 'Commercial EPCs across museums, cultural venues and leisure facilities.' },
-  { name: 'Vita Edinburgh', href: '/projects/vita-edinburgh', work: 'SBEM calculations for student accommodation at Fountainbridge.' },
-  { name: 'Moda Springside', href: '/projects/moda-springside', work: 'SAP calculations and EPC work for the residential development.' }
+
+const facts = [
+  { value: 'Around 15 years', text: 'carrying out energy assessments' },
+  { value: `${caseStudies.length} projects`, text: 'in our published portfolio' },
+  { value: `${services.length} services`, text: 'from EPCs to building modelling' },
+  { value: `${turnaroundPromise.hours} hours`, text: 'from our site visit to your report' }
 ];
+
+const clients = [
+  { who: 'Architects and engineers', need: 'SAP and SBEM calculations, overheating assessments and building modelling while the design can still change.', links: [['SAP', '/services/saps'], ['SBEM', '/services/sbem-calculations'], ['TM59', '/services/overheating-assessments-tm59'], ['DSM', '/services/dynamic-simulation-modelling-dsm']] },
+  { who: 'Developers', need: 'The calculations and certificates a new build or conversion needs, from building warrant to completion.', links: [['SAP', '/services/saps'], ['SBEM', '/services/sbem-calculations']] },
+  { who: 'Landlords and managing agents', need: 'Commercial EPCs, Section 63 assessments and fire risk assessments for buildings being sold, let or managed.', links: [['Commercial EPCs', '/services/commercial-epcs'], ['Section 63', '/services/section-63-assessments'], ['Fire risk', '/services/fras']] },
+  { who: 'Estates teams', need: 'Display Energy Certificates and EPCs across a single site or a whole portfolio.', links: [['DECs', '/services/decs'], ['Commercial EPCs', '/services/commercial-epcs']] },
+  { who: 'Homeowners', need: 'Domestic EPCs when you’re selling or renting, and Legionella risk assessments for rental properties.', links: [['Domestic EPCs and Legionella', '/services/domestic-epcs-and-legionellas']] }
+];
+
+const steps = [
+  { title: 'Scope and fee', text: 'We agree what’s needed and the full fee before work begins.' },
+  { title: 'Visit and drawings', text: 'We arrange access, drawings and delivery dates with your team.' },
+  { title: 'Report and next steps', text: `You receive the agreed calculations, certificates or report within ${turnaroundPromise.hours} hours of our visit, with advice on what comes next.` }
+];
+
+const faqs = [
+  { question: 'Who are Scottish Energy Services?', answer: 'Scottish Energy Services (SES) is an energy assessment consultancy based at 272 Bath St, Glasgow. We’ve been carrying out energy assessments for around 15 years, for property owners, design teams and homeowners.' },
+  { question: 'Are your energy assessors accredited?', answer: 'Yes. Our energy assessors are accredited through Elmhurst Energy and ecmk. The schemes provide quality checks, technical support and certificate lodgement.' },
+  { question: 'Where do you work?', answer: 'We cover all of Scotland and the north of England from our Glasgow office.' }
+];
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(faq => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
+};
 ---
-<BaseLayout title="About Scottish Energy Services" description="Around 15 years of energy assessment work from Glasgow. Meet SES and explore our services, project experience and energy assessor accreditation.">
-  <section class="about-intro"><div class="container about-intro-layout">
-    <div class="about-intro-copy">
-      <h1>About SES</h1>
-      <p class="about-lead">Energy assessments, from design to completion.</p>
-      <p>Scottish Energy Services has been carrying out energy assessments for around 15 years. Based in Glasgow, we work with architects, developers, landlords, managing agents and estates teams across Scotland and the wider UK.</p>
-      <p>Our work ranges from individual properties to major venues, developments and portfolios. We also help homeowners with domestic EPCs and property assessments.</p>
-      <a class="about-text-link" href="/services">Explore our services <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+<BaseLayout title="About Scottish Energy Services" description="Around 15 years of energy assessment work from Glasgow. Meet SES and explore our services, project experience and energy assessor accreditation." structuredData={faqSchema}>
+  <section class="about-hero">
+    <div class="container">
+      <h1>Building energy assessors, based in Glasgow</h1>
+      <p class="about-hero__answer">Scottish Energy Services is a Glasgow energy assessment consultancy. For around 15 years we’ve helped architects, developers, landlords, managing agents, estates teams and homeowners understand what their buildings need, from a single flat to an international airport.</p>
     </div>
-    <figure class="about-photo about-hero-photo">
-      <img src={hero.src} srcset={`${hero.small} 640w, ${hero.src} ${hero.width}w`} sizes="(min-width: 801px) 46vw, 92vw" width={hero.width} height={hero.height} alt={hero.alt} fetchpriority="high" decoding="async" />
-      <figcaption><a href="/projects/theatre-royal-glasgow">Theatre Royal Glasgow. Commercial EPC work.</a></figcaption>
+    <figure class="about-hero__photo">
+      <img src={hero.src} srcset={`${hero.small} 640w, ${hero.src} ${hero.width}w`} sizes="100vw" width={hero.width} height={hero.height} alt={hero.alt} fetchpriority="high" decoding="async" />
+      <figcaption><a href="/projects/theatre-royal-glasgow">Theatre Royal, Glasgow. Commercial EPC work.</a></figcaption>
     </figure>
-  </div></section>
-
-  <section class="about-work"><div class="container about-work-layout">
-    <figure class="about-photo about-work-photo">
-      <img src={gallery.src} srcset={`${gallery.small} 640w, ${gallery.src} 1280w`} sizes="(min-width: 801px) 46vw, 92vw" width="1280" height="720" alt="Kelvingrove Art Gallery and Museum in Glasgow" loading="lazy" decoding="async" />
-      <figcaption><a href="/projects/kelvingrove-art-gallery">Kelvingrove Art Gallery and Museum. Commercial EPC work.</a></figcaption>
-    </figure>
-    <div class="about-work-copy">
-      <h2>Buildings you’ll recognise</h2>
-      <p>Our commercial EPC projects include Glasgow Airport, the SEC Armadillo and Kelvingrove Art Gallery. We also work on student accommodation, retail premises, hotels and residential developments.</p>
-      <dl class="about-project-list">{examples.map(example => <div>
-        <dt><a href={example.href}>{example.name} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></a></dt>
-        <dd>{example.work}</dd>
-      </div>)}</dl>
-      <a class="about-text-link" href="/projects">See our projects <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+    <div class="container">
+      <ul class="about-facts">
+        {facts.map(fact => <li><strong>{fact.value}</strong><span>{fact.text}</span></li>)}
+      </ul>
     </div>
-  </div></section>
+  </section>
 
-  <section class="about-practice"><div class="container about-practice-layout">
-    <div>
-      <h2>Accredited energy assessors</h2>
-      <p>Our energy assessors are accredited through Elmhurst Energy and ecmk. The schemes provide quality checks, technical support and certificate lodgement.</p>
-      <p>Our energy assessment work covers domestic and commercial EPCs, new build assessments, Display Energy Certificates and Section 63.</p>
-      <div class="about-accreditation" aria-label="Energy assessor accreditation schemes">
-        <a href="https://www.elmhurstenergy.co.uk/join/" aria-label="Elmhurst Energy accreditation"><img src="/images/accreditation/elmhurst-energy.png" alt="Elmhurst Energy" width="200" height="70" loading="lazy" decoding="async" /></a>
-        <a href="https://www.ecmk.co.uk/accreditation/" aria-label="ecmk accreditation"><img src="/images/accreditation/ecmk.svg" alt="ecmk" width="120" height="55" loading="lazy" decoding="async" /></a>
+  <section class="about-clients" aria-labelledby="clients-heading">
+    <div class="container about-split">
+      <h2 id="clients-heading">Who we work with</h2>
+      <ul class="about-client-list">
+        {clients.map(client => (
+          <li>
+            <h3>{client.who}</h3>
+            <p>{client.need}</p>
+            <p class="about-client-links">{client.links.map(([label, href]) => <a href={href}>{label}</a>)}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="about-proof" aria-labelledby="proof-heading">
+    <div class="container about-proof__layout">
+      <figure>
+        <img src={gallery.src} srcset={`${gallery.small} 640w, ${gallery.src} 1280w`} sizes="(min-width: 901px) 55vw, 92vw" width="1280" height="720" alt="Kelvingrove Art Gallery and Museum in Glasgow" loading="lazy" decoding="async" />
+      </figure>
+      <div>
+        <h2 id="proof-heading">Buildings you’ll recognise</h2>
+        <p>Our commercial EPC work includes Glasgow Airport, the SEC Armadillo and Kelvingrove Art Gallery. We also work on student accommodation, schools, hotels, shops and new homes.</p>
+        <a class="about-link" href="/projects">See all {caseStudies.length} projects</a>
       </div>
     </div>
-    <div class="about-working">
-      <h2>Working with your team</h2>
-      <p>We provide SAP, SBEM, EPCs, Section 63, DECs, overheating assessments, building modelling, fire risk assessments and Legionella risk assessments.</p>
-      <dl class="about-process">
-        <div><dt>Scope and fees</dt><dd>We agree what’s needed and the full fee before work begins.</dd></div>
-        <div><dt>Visits and delivery</dt><dd>We arrange access, drawings and delivery dates with your team.</dd></div>
-        <div><dt>Reports and next steps</dt><dd>You receive the agreed calculations, certificates or assessment report, with advice on what comes next.</dd></div>
+  </section>
+
+  <section class="about-how" aria-labelledby="how-heading">
+    <div class="container about-split">
+      <div>
+        <h2 id="how-heading">How we work with you</h2>
+        <div class="about-accreditation">
+          <h3>Accredited energy assessors</h3>
+          <p>Our energy assessors are accredited through Elmhurst Energy and ecmk, which provide quality checks, technical support and certificate lodgement.</p>
+          <div class="about-accreditation__logos">
+            <a href="https://www.elmhurstenergy.co.uk/join/" rel="noopener" aria-label="Elmhurst Energy accreditation"><img src="/images/accreditation/elmhurst-energy.png" alt="Elmhurst Energy" width="200" height="70" loading="lazy" decoding="async" /></a>
+            <a href="https://www.ecmk.co.uk/accreditation/" rel="noopener" aria-label="ecmk accreditation"><img src="/images/accreditation/ecmk.svg" alt="ecmk" width="120" height="55" loading="lazy" decoding="async" /></a>
+          </div>
+        </div>
+      </div>
+      <ol class="about-steps">
+        {steps.map(step => <li><h3>{step.title}</h3><p>{step.text}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="about-where" aria-labelledby="where-heading">
+    <div class="container about-where__layout">
+      <div>
+        <h2 id="where-heading">From Glasgow, across Scotland and the north of England</h2>
+        <p>Our office is on Bath Street in Glasgow. We carry out assessments everywhere from the Central Belt to Shetland, and south to Cheshire and Yorkshire.</p>
+        <a class="about-link about-link--light" href="/areas">See the areas we cover</a>
+      </div>
+      <CoverageMap pinBase="/areas" showKey={false} />
+    </div>
+  </section>
+
+  <section class="about-faq" aria-labelledby="about-faq-heading">
+    <div class="container about-split">
+      <h2 id="about-faq-heading">Quick answers about SES</h2>
+      <dl>
+        {faqs.map(faq => <div><dt>{faq.question}</dt><dd>{faq.answer}</dd></div>)}
       </dl>
     </div>
-  </div></section>
+  </section>
 
-  <section class="about-contact"><div class="container about-contact-layout">
-    <div><h2>Talk to SES</h2><p>Tell us the property, service and deadline. We’ll confirm the scope and fee.</p><p class="about-contact-details"><a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a><a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p></div>
-    <a class="btn btn-primary" href="/quote">Request a quote</a>
-  </div></section>
+  <CTASection title="Talk to SES" text="Tell us the property, service and deadline. We’ll confirm the scope and fee." />
 </BaseLayout>
+
 <style>
-  .about-intro{padding:3rem 0 3.5rem;background:white}.about-intro-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
-  h1{margin:0 0 1.1rem;color:var(--text-strong);font-size:clamp(2.1rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.03em}
-  h2{margin:0 0 1rem;font-size:clamp(1.5rem,2.6vw,2rem);line-height:1.2;letter-spacing:-.025em;color:var(--text-strong)}
-  p{color:var(--muted);margin:0 0 1rem;font-size:.96rem;line-height:1.75;max-width:64ch}
-  .about-lead{color:var(--text-strong);font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.4;max-width:30ch;margin-bottom:1.25rem}
-  .about-photo{margin:0;min-width:0}.about-photo img{width:100%;object-fit:cover;border-radius:12px}.about-hero-photo img{height:410px;object-position:50% 45%}.about-photo figcaption{margin-top:.7rem;color:var(--muted);font-size:.72rem;line-height:1.5}.about-photo figcaption a:hover{color:var(--brand-strong);text-decoration:underline;text-underline-offset:3px}
-  .about-text-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:.9rem;font-weight:650;color:var(--brand-strong)}.about-text-link svg{transition:transform .2s ease}.about-text-link:hover svg{transform:translateX(3px)}
-  .about-work{padding:3rem 0;background:#f5f8fb}.about-work-layout{display:grid;grid-template-columns:1.08fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}.about-work-photo img{height:420px;object-position:50% 45%}
-  .about-project-list{margin:1.25rem 0 .5rem}.about-project-list>div{padding:.85rem 0;border-top:1px solid var(--border)}.about-project-list dt{font-weight:650;font-size:.95rem;color:var(--text-strong)}.about-project-list dt a{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:28px}.about-project-list dt a:hover{color:var(--brand-strong)}.about-project-list dd{margin:.2rem 0 0;font-size:.84rem;line-height:1.6;color:var(--muted)}
-  .about-practice{padding:3.5rem 0;background:white}.about-practice-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem)}.about-working{border-left:1px solid var(--border);padding-left:clamp(1.5rem,3vw,3rem)}
-  .about-accreditation{display:flex;align-items:center;flex-wrap:wrap;gap:2rem;margin-top:2rem}.about-accreditation a{display:grid;place-items:center;min-height:64px}.about-accreditation img{object-fit:contain;max-height:60px;width:auto;max-width:190px}.about-accreditation a:last-child img{max-width:105px;height:48px}
-  .about-process{margin:1.2rem 0 0}.about-process>div+div{margin-top:1rem}.about-process dt{font-size:.9rem;color:var(--text-strong);font-weight:650}.about-process dd{margin:.25rem 0 0;color:var(--muted);font-size:.86rem;line-height:1.6}
-  .about-contact{padding:2.5rem 0;background:#f5f8fb;border-top:1px solid var(--border)}.about-contact-layout{display:flex;justify-content:space-between;align-items:center;gap:2rem}.about-contact h2{margin-bottom:.6rem}.about-contact p{margin:0}.about-contact-details{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;padding-top:.9rem;font-size:.85rem}.about-contact-details a{text-decoration:underline;text-underline-offset:3px;color:var(--brand-strong)}.about-contact .btn{flex:none}
-  @media(max-width:800px){.about-intro-layout,.about-work-layout,.about-practice-layout{grid-template-columns:1fr;gap:2rem}.about-intro{padding:2rem 0}.about-hero-photo img{height:330px}.about-work-photo{order:2}.about-work-photo img{height:300px}.about-working{padding:2rem 0 0;border-left:0;border-top:1px solid var(--border)}.about-practice{padding:2.5rem 0}.about-contact-layout{display:block}.about-contact .btn{margin-top:1.4rem}}
-  @media(max-width:400px){.about-hero-photo img{height:275px}.about-work-photo img{height:240px}.about-accreditation{gap:1.4rem}.about-accreditation img{max-width:165px}.about-accreditation a:last-child img{max-width:85px}}
-  @media(prefers-reduced-motion:reduce){.about-text-link svg{transition:none}.about-text-link:hover svg{transform:none}}
+  h2, h3 { color: var(--text-strong); }
+  h2 { margin: 0; font-size: clamp(1.75rem, 3.1vw, 2.6rem); font-weight: 800; line-height: 1.08; letter-spacing: -.03em; }
+  .about-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 1.6rem clamp(2rem, 6vw, 5.5rem); align-items: start; }
+
+  .about-link { display: inline-block; margin-top: 1.1rem; color: var(--brand-strong); font-weight: 700; text-decoration: underline; text-decoration-color: var(--brand); text-underline-offset: 5px; }
+  .about-link--light { color: #fff; text-decoration-color: var(--mint); }
+  .about-link--light:hover { color: var(--mint); }
+
+  /* Hero */
+  .about-hero { padding-top: clamp(2.5rem, 5vw, 4.5rem); }
+  h1 { margin: 0; max-width: 21ch; color: var(--text-strong); font-size: clamp(2.3rem, 5vw, 4.3rem); font-weight: 800; line-height: 1.02; letter-spacing: -.04em; }
+  .about-hero__answer { margin: 1.4rem 0 clamp(2rem, 4vw, 3rem); max-width: 66ch; color: var(--text); font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; }
+  .about-hero__photo { margin: 0; }
+  .about-hero__photo img { width: 100%; height: clamp(280px, 40vw, 560px); object-fit: cover; object-position: 50% 42%; }
+  figcaption { width: min(var(--max), 92vw); margin: .6rem auto 0; color: var(--muted); font-size: .8rem; }
+  figcaption a:hover { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 3px; }
+  .about-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.4rem clamp(1.2rem, 3vw, 2.5rem); margin: clamp(1.8rem, 3.5vw, 2.8rem) 0 0; padding: 0 0 clamp(2.5rem, 5vw, 4rem); list-style: none; border-bottom: 1px solid var(--border); }
+  .about-facts strong { display: block; color: var(--navy); font-size: clamp(1.25rem, 2vw, 1.65rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+  .about-facts span { display: block; margin-top: .3rem; color: var(--muted); font-size: .94rem; line-height: 1.4; }
+
+  /* Clients */
+  .about-clients { padding: clamp(3rem, 6vw, 5rem) 0; }
+  .about-client-list { margin: 0; padding: 0; list-style: none; border-top: 2px solid var(--navy); }
+  .about-client-list li { display: grid; grid-template-columns: minmax(0, .75fr) minmax(0, 1.25fr); gap: .3rem clamp(1rem, 3vw, 2.5rem); padding: 1.1rem 0; border-bottom: 1px solid var(--border); }
+  h3 { margin: 0; font-size: 1.05rem; font-weight: 750; line-height: 1.35; }
+  .about-client-list p { grid-column: 2; margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.6; }
+  .about-client-list h3 { grid-row: span 2; }
+  .about-client-links { display: flex; flex-wrap: wrap; gap: .2rem 1rem; }
+  .about-client-links a { color: var(--brand-strong); font-size: .92rem; font-weight: 600; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+  .about-client-links a:hover { text-decoration-color: currentColor; }
+
+  /* Proof */
+  .about-proof { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--surface-tint); }
+  .about-proof__layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.8rem clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .about-proof figure { margin: 0; }
+  .about-proof img { width: 100%; height: clamp(240px, 30vw, 400px); border-radius: 6px; object-fit: cover; }
+  .about-proof p { margin: 1rem 0 0; color: var(--text); font-size: 1.04rem; line-height: 1.65; }
+
+  /* How we work */
+  .about-how { padding: clamp(3rem, 6vw, 5rem) 0; }
+  .about-accreditation { margin-top: 1.6rem; }
+  .about-accreditation p { margin: .35rem 0 0; color: var(--muted); font-size: .96rem; line-height: 1.6; }
+  .about-accreditation__logos { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem 2rem; margin-top: 1.4rem; }
+  .about-accreditation__logos img { width: auto; max-width: 170px; max-height: 52px; object-fit: contain; }
+  .about-steps { margin: 0; padding: 0; list-style: none; counter-reset: step; border-top: 2px solid var(--navy); }
+  .about-steps li { position: relative; padding: 1.2rem 0 1.2rem 3.6rem; border-bottom: 1px solid var(--border); counter-increment: step; }
+  .about-steps li::before { content: counter(step); position: absolute; left: 0; top: .85rem; color: var(--brand); font-size: 2rem; font-weight: 800; line-height: 1.2; letter-spacing: -.03em; }
+  .about-steps p { margin: .25rem 0 0; color: var(--muted); font-size: .96rem; line-height: 1.6; }
+
+  /* Where */
+  .about-where { padding: clamp(3rem, 6vw, 4.5rem) 0; background: var(--navy); color: #cfe0ec; }
+  .about-where__layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2rem clamp(2rem, 6vw, 5.5rem); align-items: center; }
+  .about-where h2 { max-width: 16ch; color: #fff; }
+  .about-where p { margin: 1rem 0 0; max-width: 50ch; font-size: 1.06rem; line-height: 1.65; color: #dbe7f0; }
+  .about-where :global(.dot-map) { width: min(100%, 400px); justify-self: end; }
+
+  /* FAQ */
+  .about-faq { padding: clamp(3rem, 6vw, 5rem) 0 clamp(1rem, 2vw, 1.5rem); }
+  dl { display: grid; gap: 1.5rem; margin: 0; }
+  dt { margin-bottom: .35rem; color: var(--text-strong); font-size: 1.05rem; font-weight: 750; }
+  dd { margin: 0; max-width: 66ch; color: var(--muted); font-size: .98rem; line-height: 1.65; }
+
+  @media (max-width: 900px) {
+    .about-split, .about-proof__layout, .about-where__layout { grid-template-columns: 1fr; }
+    .about-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .about-where :global(.dot-map) { justify-self: center; }
+  }
+  @media (max-width: 560px) {
+    .about-client-list li { grid-template-columns: 1fr; }
+    .about-client-list p { grid-column: 1; }
+    .about-client-list h3 { grid-row: auto; }
+  }
 </style>

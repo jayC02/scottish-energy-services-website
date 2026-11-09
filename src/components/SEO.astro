@@ -4,11 +4,11 @@ import { canonicalPath, productionSite } from '../data/seo-routing.mjs';
 interface Props {
   title: string; description: string; pathname?: string; canonical?: string;
   image?: string; imageAlt?: string; type?: 'website' | 'article';
-  ogTitle?: string; ogDescription?: string; noindex?: boolean;
+  ogTitle?: string; ogDescription?: string; noindex?: boolean; dateModified?: string;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 const { title, description, pathname = '/', canonical, image = '/images/projects/glasgow-airport-poster.webp',
-  imageAlt = 'Glasgow Airport', type = 'website', ogTitle, ogDescription, noindex = false, structuredData = [] } = Astro.props;
+  imageAlt = 'Glasgow Airport', type = 'website', ogTitle, ogDescription, noindex = false, dateModified, structuredData = [] } = Astro.props;
 const url = new URL(canonical || canonicalPath(pathname), productionSite);
 url.search = ''; url.hash = '';
 // Homepage body remains protected; clarify commercial intent in head metadata only.
@@ -20,14 +20,16 @@ const orgId = `${productionSite}/#organisation`;
 const siteId = `${productionSite}/#website`;
 const graph: Record<string, unknown>[] = [
   { '@type': 'WebPage', '@id': `${url.href}#webpage`, url: url.href, name: fullTitle,
-    description: seoDescription, inLanguage: 'en-GB', isPartOf: { '@id': siteId }, about: { '@id': orgId } }
+    description: seoDescription, inLanguage: 'en-GB', isPartOf: { '@id': siteId }, about: { '@id': orgId }, ...(dateModified ? { dateModified } : {}) }
 ];
-if (pathname === '/' || pathname === '/about' || pathname === '/contact') {
+const normalisedPath = pathname.replace(/\/$/, '') || '/';
+if (['/', '/about', '/contact', '/quote', '/areas'].includes(normalisedPath)) {
   graph.push({ '@type': 'ProfessionalService', '@id': orgId, name: siteConfig.name,
     url: `${productionSite}/`, logo: new URL('/images/ses-logo-icon.png', productionSite).href,
     telephone: '+441412551360', email: siteConfig.email,
     address: { '@type': 'PostalAddress', streetAddress: '272 Bath St', addressLocality: 'Glasgow', postalCode: 'G2 4JR', addressCountry: 'GB' },
-    areaServed: { '@type': 'Country', name: 'United Kingdom' } });
+    areaServed: ['Scotland', 'North West England', 'North East England', 'Yorkshire and the Humber'].map(name => ({ '@type': 'AdministrativeArea', name })),
+    knowsAbout: ['Energy Performance Certificates', 'Section 63 assessments', 'SAP calculations', 'SBEM calculations', 'Display Energy Certificates', 'TM59 overheating assessments', 'Dynamic simulation modelling', 'Fire risk assessments', 'Legionella risk assessments'] });
   graph.push({ '@type': 'WebSite', '@id': siteId, url: `${productionSite}/`, name: siteConfig.name,
     inLanguage: 'en-GB', publisher: { '@id': orgId } });
 }

@@ -1,26 +1,11 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { siteConfig } from '../data/site';
-import QuoteRequestForm from '../components/QuoteRequestForm.astro';
-
-const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+import EnquiryPage from '../components/EnquiryPage.astro';
 ---
-<BaseLayout title="Request an Assessment Quote" description="Request a quote for an EPC, Section 63 assessment, SAP, SBEM or building-performance study. Send your property address, service and target date.">
-  <section class="section">
-    <div class="container grid grid-2 form-layout">
-      <div data-reveal>
-        <h1 class="section-title">Request a quote</h1>
-        <p class="lead">Send the service, property details and deadline. We’ll confirm the scope and full fee before work begins.</p>
-        <div class="contact-card card">
-          <p><strong>Phone:</strong> <a href={phoneHref} data-track="phone_click">{siteConfig.phone}</a></p>
-          <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a></p>
-        </div>
-      </div>
-      <QuoteRequestForm formType="quote" submitText="Get a Fixed Quote" reveal={true} />
-    </div>
-  </section>
-</BaseLayout>
-
-<style>
-  .form-layout { align-items: start; gap: 1rem 1.2rem; }
-</style>
+<EnquiryPage
+  metaTitle="Request an Assessment Quote"
+  metaDescription="Request a quote for an EPC, Section 63 assessment, SAP, SBEM or building-performance study. Send your property address, service and target date."
+  heading="Request a quote"
+  lead="Send the service, property and deadline. We’ll confirm the scope and full fee before work begins."
+  formType="quote"
+  submitText="Get a fixed quote"
+/>

@@ -14,7 +14,11 @@ function existing(question: string, links?: Link[]): FaqEntry {
 
 const general: FaqGroup = {
   id: 'general', title: 'General', items: [
-    existing('Do you cover the whole UK?'),
+    {
+      question: 'Which areas do you cover?',
+      answer: 'We cover all of Scotland and the north of England from our Glasgow office. That includes the Highlands and islands, the North West, the North East, and Yorkshire and the Humber.',
+      links: [{ label: 'See our coverage map', href: '/areas' }]
+    },
     {
       question: 'Who do you work with?',
       answer: 'We work with landlords, agents, developers, architects, commercial property owners, public-sector organisations and housing providers. Our services cover both commercial and residential properties, including commercial and domestic EPCs.'

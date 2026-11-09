@@ -7,8 +7,8 @@ export type Faq = {
 export const faqs: Faq[] = [
   {
     category: 'General',
-    question: 'Do you cover the whole UK?',
-    answer: 'Yes. We are based in Scotland and deliver projects across the UK, depending on the service and project requirements.'
+    question: 'Which areas do you cover?',
+    answer: 'We cover all of Scotland and the north of England from our Glasgow office, including the Highlands and islands, the North West, the North East, and Yorkshire and the Humber.'
   },
   {
     category: 'General',

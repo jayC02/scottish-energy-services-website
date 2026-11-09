@@ -17,8 +17,7 @@ type DropLink = { label: string; text: string; href: string };
 const dropdowns: Record<string, DropLink[]> = {
   '/about': [
     { label: 'About SES', text: 'Who we are and how we work', href: '/about' },
-    { label: 'Areas we cover', text: 'Glasgow, Scotland and across the UK', href: '/areas' },
-    { label: 'Our projects', text: 'Buildings we have assessed', href: '/projects' }
+    { label: 'Areas we cover', text: 'All of Scotland and the north of England', href: '/areas' }
   ]
 };
 const menuId = (href: string) => `menu-${href.replace(/\W+/g, '') || 'home'}`;
@@ -81,7 +80,7 @@ const menuId = (href: string) => `menu-${href.replace(/\W+/g, '') || 'home'}`;
                     <div class="mega__promo">
                       <p class="mega__eyebrow">Our work</p>
                       <p class="mega__title">Trusted on some of Scotland’s best-known buildings.</p>
-                      <p class="mega__text">Airports, universities, venues, hotels and retail across Scotland and the UK.</p>
+                      <p class="mega__text">Airports, universities, venues, hotels and retail across Scotland and the north of England.</p>
                       <a class="mega__cta" href="/projects">View all {caseStudies.length} projects <span aria-hidden="true">→</span></a>
                     </div>
                     <ul class="mega__projects">

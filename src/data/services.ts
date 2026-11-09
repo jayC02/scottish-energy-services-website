@@ -36,7 +36,7 @@ export const services: Service[] = [
   {
     slug: 'commercial-epcs',
     title: 'Commercial EPCs',
-    short: 'Energy Performance Certificates for commercial properties across the UK.',
+    short: 'Energy Performance Certificates for commercial properties across Scotland and the north of England.',
     intro: 'We assess the energy efficiency of your building and provide a legally compliant EPC, including practical recommendations to improve rating and reduce running costs.',
     highlights: ['Suitable for sales, lettings, and compliance', '48-hour turnaround after the site visit', 'Clear guidance on improving ratings'],
     forWho: ['Commercial landlords and asset managers', 'Property agencies and transaction teams', 'Developers completing new commercial space'],

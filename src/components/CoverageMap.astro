@@ -1,204 +1,171 @@
-<section class="section coverage-section">
-  <div class="container coverage-layout">
-    <div class="coverage-copy" data-reveal>
-      <p class="eyebrow">Coverage</p>
-      <h2 class="section-title">Based in Glasgow. Delivering projects across the UK.</h2>
-      <p class="lead">
-        We coordinate surveys, modelling and reporting for domestic and commercial clients across
-        Scotland, England, Wales and Northern Ireland.
-      </p>
-      <a href="/areas" class="coverage-link">See coverage details <span aria-hidden="true">→</span></a>
-    </div>
+---
+import { buildDotMap, mapSize, project, ringOf } from '../data/coverage-geo';
+import { projectPins } from '../data/coverage';
 
-    <div class="coverage-visual" data-reveal aria-label="UK-wide service coverage">
-      <div class="coverage-gridlines" aria-hidden="true"></div>
+interface Props {
+  pinBase?: string; // Page holding the region anchors that pins link to.
+  showKey?: boolean;
+}
+const { pinBase = '', showKey = true } = Astro.props;
 
-      <div class="coverage-base">
-        <span>Base</span>
-        <strong>Glasgow</strong>
-      </div>
+const { outside, groups } = buildDotMap();
+const glasgow = project(55.86, -4.25);
 
-      <div class="coverage-title">
-        <span>Operational coverage</span>
-        <strong>UK</strong>
-      </div>
+type Label = { name: string; lat: number; lon: number; anchor?: 'start' | 'end'; dx?: number; dy?: number };
+const labels: Label[] = [
+  { name: 'Lerwick', lat: 60.15, lon: -1.15, dx: 12, dy: 5 },
+  { name: 'Kirkwall', lat: 58.98, lon: -2.75, dx: 14, dy: 5 },
+  { name: 'Stornoway', lat: 58.2, lon: -6.95, anchor: 'end', dx: -6, dy: 5 },
+  { name: 'Inverness', lat: 57.48, lon: -4.22, dx: 10, dy: -8 },
+  { name: 'Aberdeen', lat: 57.15, lon: -2.1, dx: 12, dy: 5 },
+  { name: 'Dundee', lat: 56.46, lon: -2.6, dx: 10, dy: 5 },
+  { name: 'Edinburgh', lat: 55.95, lon: -2.45, dx: 8, dy: 0 },
+  { name: 'Carlisle', lat: 54.89, lon: -3.5, anchor: 'end', dx: -8, dy: 5 },
+  { name: 'Newcastle', lat: 54.98, lon: -1.4, dx: 10, dy: 5 },
+  { name: 'York', lat: 53.96, lon: -0.12, dx: 8, dy: 5 },
+  { name: 'Liverpool', lat: 53.41, lon: -3.1, anchor: 'end', dx: -8, dy: 2 },
+  { name: 'Manchester', lat: 53.48, lon: -2.24, dx: 8, dy: 5 }
+];
+---
+<figure class="dot-map" data-dot-map>
+  <svg viewBox={`0 0 ${mapSize.width} ${mapSize.height}`} role="img" aria-labelledby="dot-map-title dot-map-desc" data-dot-map-svg>
+    <title id="dot-map-title">Map of Scottish Energy Services coverage</title>
+    <desc id="dot-map-desc">Coverage spreads out from our Glasgow office across all of Scotland, including the Highlands and islands, and across the north of England down to Cheshire and South Yorkshire. Marked pins show towns where we have completed projects.</desc>
 
-      <div class="coverage-regions">
-        <span>Scotland</span>
-        <span>England</span>
-        <span>Wales</span>
-        <span>Northern Ireland</span>
-      </div>
+    <path class="dot-map__outside" d={outside} />
+    {groups.map(group => (
+      <path class="dot-map__dots" data-region={group.region} d={group.d} style={`--r:${group.ring}`} />
+    ))}
 
-      <div class="coverage-note">
-        <span>From</span>
-        <strong>Single properties</strong>
-        <span>to</span>
-        <strong>multi-site programmes</strong>
-      </div>
-    </div>
-  </div>
-</section>
+    <g class="dot-map__labels" aria-hidden="true">
+      {labels.map(label => {
+        const point = project(label.lat, label.lon);
+        return <text x={point.x + (label.dx ?? 0)} y={point.y + (label.dy ?? 0)} text-anchor={label.anchor ?? 'start'}>{label.name}</text>;
+      })}
+    </g>
+
+    {projectPins.filter(pin => pin.location !== 'Glasgow').map(pin => {
+      const point = project(pin.lat, pin.lon);
+      const text = `${pin.location}: ${pin.count} ${pin.count === 1 ? 'project' : 'projects'}`;
+      const flip = point.x > mapSize.width * 0.62;
+      return (
+        <a class="dot-map__pin" href={`${pinBase}#${pin.region}`} aria-label={text} data-region={pin.region} style={`--r:${ringOf(pin.lat, pin.lon)}`}>
+          <circle class="dot-map__pin-hit" cx={point.x} cy={point.y} r="13" />
+          <circle class="dot-map__pin-dot" cx={point.x} cy={point.y} r="5" />
+          <text x={point.x + (flip ? -11 : 11)} y={point.y + 5} text-anchor={flip ? 'end' : 'start'}>{text}</text>
+        </a>
+      );
+    })}
+
+    <g class="dot-map__base">
+      <circle class="dot-map__pulse" cx={glasgow.x} cy={glasgow.y} r="9" />
+      <circle class="dot-map__pulse dot-map__pulse--late" cx={glasgow.x} cy={glasgow.y} r="9" />
+      <circle class="dot-map__core" cx={glasgow.x} cy={glasgow.y} r="7.5" />
+      <text x={glasgow.x - 14} y={glasgow.y + 6} text-anchor="end">Glasgow</text>
+    </g>
+  </svg>
+  {showKey && <figcaption class="dot-map__key">
+    <span><i class="dot-map__swatch dot-map__swatch--covered"></i>We cover this area</span>
+    <span><i class="dot-map__swatch dot-map__swatch--pin"></i>Towns with completed projects</span>
+  </figcaption>}
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-dot-map]').forEach((map) => {
+    const svg = map.querySelector('[data-dot-map-svg]');
+    if (!svg) return;
+
+    // Regions listed elsewhere on the page light up their part of the map.
+    document.querySelectorAll<HTMLElement>('[data-map-region]').forEach((link) => {
+      const region = link.dataset.mapRegion;
+      if (!region) return;
+      const show = () => svg.setAttribute('data-active', region);
+      const clear = () => svg.removeAttribute('data-active');
+      link.addEventListener('pointerenter', show);
+      link.addEventListener('pointerleave', clear);
+      link.addEventListener('focus', show);
+      link.addEventListener('blur', clear);
+    });
+
+    // The ripple only runs while the map is on screen.
+    new IntersectionObserver(([entry]) => map.classList.toggle('is-paused', !entry.isIntersecting)).observe(map);
+  });
+</script>
 
 <style>
-  .coverage-section {
-    background: #f7f9fc;
+  .dot-map { --dot: #4d9fd1; --dot-glow: #8ff0d2; --pin: #fff; margin: 0; min-width: 0; color: #cfe0ec; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .dot-map__outside { fill: none; stroke: rgba(160, 190, 214, .17); stroke-width: 3.6; stroke-linecap: round; }
+  .dot-map__dots {
+    fill: none;
+    stroke: var(--dot);
+    stroke-width: 4.5;
+    stroke-linecap: round;
+    animation:
+      dot-fill .75s var(--ease-out) calc(.25s + var(--r) * 115ms) both,
+      dot-ripple 8s linear calc(2.6s + var(--r) * 150ms) infinite;
+    transition: opacity .3s ease;
+  }
+  @keyframes dot-fill { from { opacity: 0; stroke: var(--dot-glow); } to { opacity: 1; stroke: var(--dot); } }
+  @keyframes dot-ripple {
+    0%, 12%, 100% { stroke: var(--dot); }
+    4% { stroke: var(--dot-glow); }
   }
 
-  .coverage-layout {
-    display: grid;
-    grid-template-columns: minmax(0, .82fr) minmax(460px, 1.18fr);
-    gap: clamp(2.8rem, 6vw, 6rem);
-    align-items: center;
+  .dot-map__labels text, .dot-map__base text, .dot-map__pin text {
+    font-family: inherit;
+    paint-order: stroke;
+    stroke: var(--navy);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+  }
+  .dot-map__labels text { fill: #cfe0ec; font-size: 15px; font-weight: 500; animation: dot-label .6s ease 1.5s both; }
+  @keyframes dot-label { from { opacity: 0; } to { opacity: 1; } }
+
+  .dot-map__base text { fill: #fff; font-size: 20px; font-weight: 800; letter-spacing: -.01em; }
+  .dot-map__core { fill: #fff; stroke: var(--navy); stroke-width: 3; }
+  .dot-map__pulse { fill: none; stroke: var(--dot-glow); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: dot-pulse 4s var(--ease-out) infinite; }
+  .dot-map__pulse--late { animation-delay: 1.2s; }
+  @keyframes dot-pulse {
+    0% { opacity: .9; transform: scale(.8); }
+    70%, 100% { opacity: 0; transform: scale(4.5); }
   }
 
-  .coverage-copy .section-title {
-    max-width: 15ch;
+  .dot-map__pin { outline: none; cursor: pointer; animation: dot-label .5s ease calc(.7s + var(--r) * 115ms) both; transition: opacity .3s ease; }
+  .dot-map__pin-hit { fill: transparent; }
+  .dot-map__pin-dot { fill: var(--pin); stroke: var(--navy); stroke-width: 2.5; transform-box: fill-box; transform-origin: center; transition: transform .25s var(--ease-out), fill .2s ease; }
+  .dot-map__pin text { fill: #fff; font-size: 16px; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity .15s ease; }
+  .dot-map__pin:is(:hover, :focus-visible) .dot-map__pin-dot { fill: var(--dot-glow); transform: scale(1.5); }
+  .dot-map__pin:is(:hover, :focus-visible) text { opacity: 1; }
+
+  /* Hovering a region in the list dims everything else on the map. */
+  svg[data-active] :is(.dot-map__dots, .dot-map__pin) { opacity: .2 !important; }
+  svg[data-active="central-belt"] [data-region="central-belt"],
+  svg[data-active="south-scotland"] [data-region="south-scotland"],
+  svg[data-active="tayside-fife"] [data-region="tayside-fife"],
+  svg[data-active="north-east-scotland"] [data-region="north-east-scotland"],
+  svg[data-active="highlands-islands"] [data-region="highlands-islands"],
+  svg[data-active="north-west-england"] [data-region="north-west-england"],
+  svg[data-active="north-east-england"] [data-region="north-east-england"],
+  svg[data-active="yorkshire-humber"] [data-region="yorkshire-humber"] { opacity: 1 !important; }
+
+  .is-paused :is(.dot-map__dots, .dot-map__pulse) { animation-play-state: paused; }
+
+  .dot-map__key { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; margin-top: .9rem; font-size: .84rem; }
+  .dot-map__key span { display: inline-flex; align-items: center; gap: .5rem; }
+  .dot-map__swatch { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-map__swatch--covered { background: var(--dot); }
+  .dot-map__swatch--pin { background: var(--pin); }
+
+  @media (max-width: 700px) {
+    .dot-map__labels text { font-size: 20px; }
+    .dot-map__base text { font-size: 25px; }
+    .dot-map__pin text { font-size: 21px; }
   }
-
-  .coverage-copy .lead {
-    max-width: 48ch;
-  }
-
-  .coverage-link {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-    margin-top: .5rem;
-    color: var(--brand-strong);
-    font-weight: 700;
-  }
-
-  .coverage-link span {
-    transition: transform .2s ease;
-  }
-
-  .coverage-link:hover span {
-    transform: translateX(4px);
-  }
-
-  .coverage-visual {
-    position: relative;
-    overflow: hidden;
-    min-height: 390px;
-    padding: clamp(1.5rem, 3vw, 2.2rem);
-    border-radius: 18px;
-    background:
-      radial-gradient(circle at 72% 28%, rgba(89, 184, 226, .18), transparent 26%),
-      linear-gradient(145deg, #102438 0%, #14344c 100%);
-    color: #fff;
-    box-shadow: 0 24px 50px rgba(16, 36, 56, .14);
-  }
-
-  .coverage-gridlines {
-    position: absolute;
-    inset: 0;
-    opacity: .45;
-    background-image:
-      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-    background-size: 44px 44px;
-  }
-
-  .coverage-base,
-  .coverage-title,
-  .coverage-regions,
-  .coverage-note {
-    position: relative;
-    z-index: 1;
-  }
-
-  .coverage-base {
-    display: inline-grid;
-    gap: .1rem;
-    padding: .65rem .8rem;
-    border: 1px solid rgba(255,255,255,.18);
-    border-radius: 10px;
-    background: rgba(255,255,255,.06);
-  }
-
-  .coverage-base span,
-  .coverage-title span,
-  .coverage-note > span {
-    color: #a9c0d2;
-    font-size: .72rem;
-    text-transform: uppercase;
-    letter-spacing: .09em;
-  }
-
-  .coverage-base strong {
-    font-size: .95rem;
-  }
-
-  .coverage-title {
-    margin-top: 2.6rem;
-  }
-
-  .coverage-title strong {
-    display: block;
-    margin-top: -.25rem;
-    font-size: clamp(5.5rem, 11vw, 9rem);
-    line-height: .9;
-    letter-spacing: -.065em;
-    color: #fff;
-  }
-
-  .coverage-regions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .55rem;
-    margin-top: 1rem;
-  }
-
-  .coverage-regions span {
-    padding: .45rem .7rem;
-    border-radius: 999px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.14);
-    color: #d7e3ec;
-    font-size: .82rem;
-  }
-
-  .coverage-note {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: .4rem .55rem;
-    margin-top: 2rem;
-    padding-top: 1.1rem;
-    border-top: 1px solid rgba(255,255,255,.16);
-  }
-
-  .coverage-note strong {
-    color: #fff;
-    font-size: .93rem;
-  }
-
-  @media (max-width: 900px) {
-    .coverage-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .coverage-copy .section-title {
-      max-width: 18ch;
-    }
-
-    .coverage-visual {
-      min-height: 340px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .coverage-visual {
-      min-height: 315px;
-    }
-
-    .coverage-title {
-      margin-top: 2rem;
-    }
-
-    .coverage-title strong {
-      font-size: 6rem;
-    }
+  @media (prefers-reduced-motion: reduce) {
+    .dot-map__dots, .dot-map__labels text, .dot-map__pin { animation: none; }
+    .dot-map__pulse { animation: none; opacity: 0; }
+    .dot-map__dots, .dot-map__pin, .dot-map__pin-dot { transition: none; }
   }
 </style>

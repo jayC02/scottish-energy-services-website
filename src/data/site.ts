@@ -3,7 +3,7 @@ export const siteConfig = {
   phone: '0141 255 1360',
   email: 'info@scottishenergyservices.co.uk',
   address: '272 Bath St, Glasgow G2 4JR',
-  serviceArea: 'Based in Scotland, delivering energy and compliance services for residential and non-domestic projects across the UK.'
+  serviceArea: 'Based in Scotland, delivering energy and compliance services for residential and non-domestic projects across Scotland and the north of England.'
 };
 
 export const navItems = [

@@ -1,28 +1,214 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CoverageMap from '../components/CoverageMap.astro';
 import CTASection from '../components/CTASection.astro';
+import { coverageFaqs, coverageRegions, coverageReviewed, projectPins, projectsInRegion } from '../data/coverage';
+import { siteConfig, turnaroundPromise } from '../data/site';
+
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const nations = ['Scotland', 'North of England'] as const;
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: coverageFaqs.map(faq => ({ '@type': 'Question', name: faq.question, acceptedAnswer: { '@type': 'Answer', text: faq.answer } }))
+};
+
+const listNames = (names: string[]) => names.length < 2 ? names.join('') : `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 ---
-<BaseLayout title="Glasgow, Edinburgh & UK Service Coverage" description="Energy assessment coverage from Glasgow across Edinburgh, the Central Belt and wider Scotland. Contact SES to confirm survey availability for your site.">
-  <section class="section">
-    <div class="container" data-reveal>
-      <h1 class="section-title">UK coverage</h1>
-      <p class="lead">Based in Glasgow, we support projects across the UK. Send your postcode and service to check availability.</p>
+<BaseLayout
+  title="Areas We Cover: Scotland and Northern England"
+  description="Energy assessments across all of Scotland and the north of England from our Glasgow office. EPCs, SAP, SBEM, Section 63 and fire risk assessments."
+  dateModified={coverageReviewed.iso}
+  structuredData={faqSchema}
+>
+  <section class="cover-hero">
+    <div class="container cover-hero__layout">
+      <div class="cover-hero__copy">
+        <h1>Energy assessments across Scotland and the north of England</h1>
+        <p class="cover-hero__answer">We cover all of Scotland and the north of England from our office at 272 Bath St, Glasgow. Send us your postcode and service and we’ll confirm the visit date and fee.</p>
+
+        <div class="cover-hero__regions">
+          {nations.map(nation => (
+            <div>
+              <h2>{nation}</h2>
+              <ul>
+                {coverageRegions.filter(region => region.nation === nation).map(region => (
+                  <li><a href={`#${region.id}`} data-map-region={region.id}>{region.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div class="cover-hero__actions">
+          <a class="btn cover-hero__cta" href="/quote">Check your postcode</a>
+          <a class="cover-hero__phone" href={phoneHref} data-track="phone_click">Call {siteConfig.phone}</a>
+        </div>
+      </div>
+      <CoverageMap />
     </div>
   </section>
-  <section class="section" style="padding-top:0">
-    <div class="container grid grid-3">
-      <article class="card" data-reveal><h2>Scotland</h2><p>Surveys across the Central Belt, Highlands and regional towns.</p></article>
-      <article class="card" data-reveal><h2>England and Wales</h2><p>Appointments for individual properties and portfolios.</p></article>
-      <article class="card" data-reveal><h2>Northern Ireland</h2><p>Contact us to arrange a survey and confirm the timescale.</p></article>
-    </div>
-  </section>
-  <section class="section">
+
+  <section class="cover-towns" aria-labelledby="towns-heading">
     <div class="container">
-      <h2>Planning your assessment</h2>
-      <p>For <a href="/services/commercial-epcs">commercial EPCs</a> and <a href="/services/section-63-assessments">Section 63</a>, send the address, floor area, access details and deadline.</p>
-      <p>For <a href="/services/saps">SAP</a> and <a href="/services/sbem-calculations">SBEM</a>, send drawings and specifications. We’ll confirm the requirements for your location.</p>
-      <p>Our contact address is 272 Bath St, Glasgow, G2 4JR. <a href="/contact">Contact SES to confirm availability</a>.</p>
+      <div class="cover-intro">
+        <h2 id="towns-heading">Towns and cities we cover</h2>
+        <p>These are some of the places we cover, not a full list. The white pins on the map mark {projectPins.length} towns where we’ve completed projects. Wherever you are, your report arrives within {turnaroundPromise.hours} hours of our visit.</p>
+      </div>
+      {nations.map(nation => (
+        <div class="cover-nation">
+          <h3 class="cover-nation__name">{nation}</h3>
+          {coverageRegions.filter(region => region.nation === nation).map(region => {
+            const projects = projectsInRegion(region.id);
+            const shown = projects.slice(0, 3);
+            const more = projects.length - shown.length;
+            return (
+              <article class="cover-region" id={region.id} data-map-region={region.id}>
+                <h4>{region.name}</h4>
+                <p class="cover-region__towns">{listNames(region.towns)}.</p>
+                <p class="cover-region__work">
+                  Our work here includes {shown.map((project, index) => (
+                    <>{index > 0 && (index === shown.length - 1 && more === 0 ? ' and ' : ', ')}<a href={`/projects/${project.slug}`}>{project.label}</a></>
+                  ))}{more > 0 && <> and <a href="/projects">{more} more {more === 1 ? 'project' : 'projects'}</a></>}.
+                </p>
+              </article>
+            );
+          })}
+        </div>
+      ))}
     </div>
   </section>
-  <CTASection title="Check availability" text="Send your postcode and the service you need." />
+
+  <section class="cover-border" aria-labelledby="border-heading">
+    <div class="container">
+      <div class="cover-intro">
+        <h2 id="border-heading">What changes either side of the border</h2>
+        <p>Scotland and England have different energy and fire safety rules. We work to the rules that apply where your building is, so tell us the postcode early.</p>
+      </div>
+      <div class="cover-table-wrap" tabindex="0" role="region" aria-labelledby="border-heading">
+        <table>
+          <thead>
+            <tr><th scope="col">Requirement</th><th scope="col">Scotland</th><th scope="col">North of England</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><a href="/services/commercial-epcs">EPC records</a></th>
+              <td>Held on the <a href="https://www.scottishepcregister.org.uk/" rel="noopener">Scottish EPC Register</a></td>
+              <td>Held on the <a href="https://www.gov.uk/find-energy-certificate" rel="noopener">GOV.UK energy certificate service</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="/services/saps">SAP</a> and <a href="/services/sbem-calculations">SBEM</a> for building regulations</th>
+              <td><a href="https://www.gov.scot/publications/building-standards-technical-handbook-non-domestic-april-2026-pdf/" rel="noopener">Section 6 of the Building Standards</a></td>
+              <td><a href="https://www.gov.uk/government/publications/conservation-of-fuel-and-power-approved-document-l" rel="noopener">Approved Document L</a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="/services/section-63-assessments">Section 63</a></th>
+              <td>Applies to <a href="https://www.legislation.gov.uk/ssi/2016/146/contents" rel="noopener">many non-domestic buildings over 1,000 m²</a> when sold or newly let</td>
+              <td>Does not apply</td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="/services/fras">Fire risk assessments</a></th>
+              <td><a href="https://www.legislation.gov.uk/asp/2005/5/contents" rel="noopener">Fire (Scotland) Act 2005</a></td>
+              <td><a href="https://www.legislation.gov.uk/uksi/2005/1541/contents" rel="noopener">Regulatory Reform (Fire Safety) Order 2005</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cover-faq" aria-labelledby="coverage-faq-heading">
+    <div class="container cover-faq__layout">
+      <div>
+        <h2 id="coverage-faq-heading">Questions about coverage</h2>
+        <p class="cover-faq__reviewed">Coverage details reviewed <time datetime={coverageReviewed.iso}>{coverageReviewed.label}</time>.</p>
+      </div>
+      <dl>
+        {coverageFaqs.map(faq => (
+          <div><dt>{faq.question}</dt><dd>{faq.answer}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <CTASection title="Check we cover your building" text="Send your postcode and the service you need." button="Check your postcode" />
 </BaseLayout>
+
+<style>
+  h2, h3, h4 { color: var(--text-strong); }
+
+  /* Map hero */
+  .cover-hero { position: relative; padding: clamp(2.5rem, 5vw, 4.5rem) 0 clamp(2.5rem, 4vw, 3.5rem); background: var(--navy); color: #cfe0ec; }
+  .cover-hero__layout { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .cover-hero :global(.dot-map) { width: min(100%, 500px); justify-self: end; }
+  h1 { margin: 0; max-width: 17ch; color: #fff; font-size: clamp(2.3rem, 4.7vw, 4rem); font-weight: 800; line-height: 1.03; letter-spacing: -.04em; }
+  .cover-hero__answer { margin: 1.4rem 0 0; max-width: 54ch; color: #dbe7f0; font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; }
+
+  .cover-hero__regions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem clamp(1.5rem, 3vw, 2.5rem); margin-top: clamp(2rem, 4vw, 3rem); }
+  .cover-hero__regions h2 { margin: 0 0 .5rem; color: #fff; font-size: 1rem; font-weight: 750; letter-spacing: 0; }
+  .cover-hero__regions ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(207, 224, 236, .22); }
+  .cover-hero__regions a { display: block; padding: .62rem 0; border-bottom: 1px solid rgba(207, 224, 236, .22); color: #cfe0ec; font-size: .96rem; line-height: 1.35; transition: color .2s ease, padding-left .3s var(--ease-out); }
+  .cover-hero__regions a:is(:hover, :focus-visible) { padding-left: .5rem; color: var(--mint); }
+
+  .cover-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; margin-top: clamp(1.8rem, 3vw, 2.5rem); }
+  .cover-hero__cta { background: #fff; color: var(--navy); font-weight: 750; }
+  .cover-hero__cta:hover { background: var(--mint); transform: translateY(-2px); }
+  .cover-hero__phone { color: #fff; font-weight: 650; text-decoration: underline; text-decoration-color: var(--mint); text-underline-offset: 5px; }
+
+  /* Shared section heading */
+  .cover-intro { max-width: 70ch; margin-bottom: clamp(1.8rem, 3vw, 2.6rem); }
+  .cover-intro h2, .cover-faq h2 { margin: 0 0 .75rem; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; }
+  .cover-intro p { margin: 0; color: var(--muted); font-size: 1.04rem; line-height: 1.65; }
+
+  /* Towns */
+  .cover-towns { padding: clamp(3rem, 6vw, 5rem) 0; }
+  .cover-nation + .cover-nation { margin-top: clamp(2.2rem, 4vw, 3.2rem); }
+  .cover-nation__name { margin: 0; padding-bottom: .7rem; border-bottom: 2px solid var(--navy); font-size: 1.2rem; font-weight: 800; letter-spacing: -.01em; }
+  .cover-region { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1fr); gap: .4rem clamp(1.5rem, 3vw, 3rem); padding: 1.15rem 0; border-bottom: 1px solid var(--border); scroll-margin-top: 110px; }
+  .cover-region:target { background: linear-gradient(90deg, var(--mint-soft), transparent 70%); }
+  .cover-region h4 { margin: 0; font-size: 1.04rem; font-weight: 750; line-height: 1.4; }
+  .cover-region p { margin: 0; font-size: .95rem; line-height: 1.6; }
+  .cover-region__towns { color: var(--text); }
+  .cover-region__work { color: var(--muted); }
+  .cover-region__work a, td a, tbody th a { color: var(--brand-strong); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+  .cover-region__work a:hover, td a:hover, tbody th a:hover { text-decoration-color: currentColor; }
+
+  /* Border table */
+  .cover-border { padding: clamp(3rem, 6vw, 5rem) 0; background: var(--surface-tint); }
+  .cover-table-wrap { overflow-x: auto; }
+  table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: .96rem; line-height: 1.5; }
+  th, td { padding: 1rem clamp(.8rem, 2vw, 1.5rem) 1rem 0; border-bottom: 1px solid var(--border-strong); text-align: left; vertical-align: top; }
+  thead th { padding-top: 0; border-bottom: 2px solid var(--navy); color: var(--text-strong); font-weight: 800; }
+  tbody th { width: 28%; color: var(--text-strong); font-weight: 650; }
+  td { color: var(--text); }
+
+  /* FAQ */
+  .cover-faq { padding: clamp(3rem, 6vw, 5rem) 0 clamp(1rem, 2vw, 1.5rem); }
+  .cover-faq__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.5rem clamp(2rem, 5vw, 4.5rem); }
+  .cover-faq__reviewed { margin: 0; color: var(--muted); font-size: .88rem; }
+  dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem clamp(1.5rem, 3vw, 2.5rem); margin: 0; }
+  dt { margin-bottom: .4rem; color: var(--text-strong); font-size: 1.04rem; font-weight: 750; line-height: 1.35; }
+  dd { margin: 0; color: var(--muted); font-size: .96rem; line-height: 1.65; }
+
+  @media (max-width: 900px) {
+    .cover-hero__layout { grid-template-columns: 1fr; }
+    .cover-hero :global(.dot-map) { order: -1; width: min(100%, 480px); justify-self: center; }
+    .cover-hero__copy { display: contents; }
+    h1 { order: -2; }
+    .cover-hero__answer { order: -2; margin-top: -1rem; }
+    .cover-hero__regions, .cover-hero__actions { margin-top: 0; }
+    .cover-faq__layout { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .cover-region { grid-template-columns: 1fr; }
+    dl { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 460px) {
+    .cover-hero__regions { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cover-hero__regions a { transition: none; }
+    .cover-hero__regions a:is(:hover, :focus-visible) { padding-left: 0; }
+    .cover-hero__cta:hover { transform: none; }
+  }
+</style>

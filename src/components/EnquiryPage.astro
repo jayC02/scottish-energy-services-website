@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuoteRequestForm from './QuoteRequestForm.astro';
+import { siteConfig, turnaroundPromise } from '../data/site';
+
+// /contact and /quote are the same page with their own wording, so both stay in step.
+interface Props {
+  metaTitle: string;
+  metaDescription: string;
+  heading: string;
+  lead: string;
+  formType: 'contact' | 'quote';
+  submitText: string;
+}
+const { metaTitle, metaDescription, heading, lead, formType, submitText } = Astro.props;
+
+const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
+const directionsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address)}`;
+
+const answers = [
+  { question: 'What should I send for a quote?', answer: 'The address or postcode, the service you need, what the building is used for, its approximate floor area and your deadline. Send what you have and we’ll advise on the rest.' },
+  { question: 'How quickly will I get my report?', answer: `Within ${turnaroundPromise.hours} hours of our site visit on every service. Domestic EPCs and Legionella risk assessments are turned around the same day.` },
+  { question: 'Which areas do you cover?', answer: 'All of Scotland and the north of England, from our office in Glasgow.' }
+];
+const faqSchema = {
+  '@type': 'FAQPage',
+  mainEntity: answers.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))
+};
+---
+<BaseLayout title={metaTitle} description={metaDescription} structuredData={faqSchema}>
+  <section class="enquiry">
+    <div class="enquiry__side">
+      <div class="enquiry__side-inner">
+        <h1>{heading}</h1>
+        <p class="enquiry__lead">{lead}</p>
+
+        <a class="enquiry__phone" href={phoneHref} data-track="phone_click">{siteConfig.phone}</a>
+        <a class="enquiry__email" href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a>
+
+        <address>
+          {siteConfig.address}<br />
+          <a href={directionsHref} rel="noopener">Get directions</a>
+        </address>
+      </div>
+    </div>
+
+    <div class="enquiry__main">
+      <div class="enquiry__main-inner">
+        <QuoteRequestForm formType={formType} submitText={submitText} />
+      </div>
+    </div>
+  </section>
+
+  <section class="enquiry-answers" aria-label="Common questions">
+    <div class="container enquiry-answers__grid">
+      {answers.map(item => (
+        <div>
+          <h2>{item.question}</h2>
+          <p>{item.answer}</p>
+          {item.question.startsWith('Which') && <a href="/areas">See our coverage map</a>}
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .enquiry { --edge: max(4vw, calc((100vw - var(--max)) / 2)); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+
+  .enquiry__side { background: var(--navy); color: #cfe0ec; }
+  .enquiry__side-inner { position: sticky; top: 84px; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 4rem) clamp(2.5rem, 5vw, 4rem) var(--edge); }
+  h1 { margin: 0; color: #fff; font-size: clamp(2.3rem, 4.4vw, 3.7rem); font-weight: 800; line-height: 1.03; letter-spacing: -.04em; }
+  .enquiry__lead { margin: 1.1rem 0 clamp(2.2rem, 5vw, 3.6rem); max-width: 40ch; color: #dbe7f0; font-size: clamp(1.03rem, 1.3vw, 1.15rem); line-height: 1.6; }
+
+  .enquiry__phone, .enquiry__email { color: #fff; text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: .18em; transition: color .2s ease, text-decoration-color .2s ease; }
+  .enquiry__phone { font-size: clamp(2rem, 3.7vw, 3.1rem); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .enquiry__email { margin-top: .55rem; font-size: clamp(1rem, 1.5vw, 1.25rem); font-weight: 600; overflow-wrap: anywhere; }
+  .enquiry__phone:hover, .enquiry__email:hover { color: var(--mint); text-decoration-color: currentColor; }
+
+  address { margin-top: clamp(1.6rem, 3vw, 2.4rem); font-style: normal; font-size: .98rem; line-height: 1.7; }
+  address a { color: #fff; text-decoration: underline; text-decoration-color: var(--mint); text-underline-offset: 4px; }
+  address a:hover { color: var(--mint); }
+
+  .enquiry__main-inner { padding: clamp(2rem, 5vw, 4.5rem) var(--edge) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem); }
+
+  .enquiry-answers { padding: clamp(2.2rem, 4vw, 3.2rem) 0 clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--border); background: var(--surface-tint); }
+  .enquiry-answers__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem clamp(1.5rem, 4vw, 3.5rem); }
+  .enquiry-answers h2 { margin: 0 0 .45rem; color: var(--text-strong); font-size: 1.08rem; font-weight: 750; line-height: 1.35; letter-spacing: -.01em; }
+  .enquiry-answers p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+  .enquiry-answers a { display: inline-block; margin-top: .45rem; color: var(--brand-strong); font-size: .95rem; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 900px) {
+    .enquiry { grid-template-columns: 1fr; }
+    .enquiry__side-inner { position: static; padding-right: var(--edge); }
+    .enquiry__main-inner { padding-left: var(--edge); }
+    .enquiry-answers__grid { grid-template-columns: 1fr; }
+  }
+</style>
