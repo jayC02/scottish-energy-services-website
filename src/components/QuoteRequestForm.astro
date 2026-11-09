@@ -40,22 +40,26 @@ const serviceOptions = [
   <input type="hidden" name="sourcePage" value={Astro.url.pathname} />
 
   <div class="enquiry-form__grid">
-    <label>Name
-      <input required type="text" name="name" maxlength="120" aria-describedby={`${formType}-name-error`} autocomplete="name" />
+    <label>
+      <span>Name <b class="req" aria-hidden="true">*</b></span>
+      <input required type="text" name="name" maxlength="120" placeholder="Your name" aria-describedby={`${formType}-name-error`} autocomplete="name" />
       <span class="field-error" id={`${formType}-name-error`} data-error-for="name" aria-live="polite"></span>
     </label>
 
-    <label>Email
-      <input required type="email" name="email" maxlength="254" aria-describedby={`${formType}-email-error`} autocomplete="email" />
+    <label>
+      <span>Email <b class="req" aria-hidden="true">*</b></span>
+      <input required type="email" name="email" maxlength="254" placeholder="you@company.co.uk" aria-describedby={`${formType}-email-error`} autocomplete="email" />
       <span class="field-error" id={`${formType}-email-error`} data-error-for="email" aria-live="polite"></span>
     </label>
 
-    <label><span>Phone <small>optional</small></span>
-      <input type="tel" name="phone" maxlength="20" aria-describedby={`${formType}-phone-error`} autocomplete="tel" />
+    <label>
+      <span>Phone</span>
+      <input type="tel" name="phone" maxlength="20" placeholder="Your phone number" aria-describedby={`${formType}-phone-error`} autocomplete="tel" />
       <span class="field-error" id={`${formType}-phone-error`} data-error-for="phone" aria-live="polite"></span>
     </label>
 
-    <label>Service
+    <label>
+      <span>Service <b class="req" aria-hidden="true">*</b></span>
       <select name="service" required aria-describedby={`${formType}-service-error`}>
         <option value="">Select a service</option>
         {serviceOptions.map((option) => <option value={option} data-service-slug={serviceSlugs[option]}>{option}</option>)}
@@ -63,22 +67,24 @@ const serviceOptions = [
       <span class="field-error" id={`${formType}-service-error`} data-error-for="service" aria-live="polite"></span>
     </label>
 
-    <label class="full"><span>Property address or postcode <small>optional</small></span>
-      <input type="text" name="propertyAddress" maxlength={quoteFields[0].limit} aria-describedby={`${formType}-propertyAddress-error`} autocomplete="off" />
+    <label class="full">
+      <span>Property address or postcode</span>
+      <input type="text" name="propertyAddress" maxlength={quoteFields[0].limit} placeholder="e.g. G2 4JR" aria-describedby={`${formType}-propertyAddress-error`} autocomplete="off" />
       <span class="field-error" id={`${formType}-propertyAddress-error`} data-error-for="propertyAddress" aria-live="polite"></span>
     </label>
 
-    <label class="full">Your project
-      <textarea required name="message" rows="4" maxlength="10000" placeholder="What’s the building, what do you need and when do you need it by?" aria-describedby={`${formType}-message-error`}></textarea>
+    <label class="full">
+      <span>Project details <b class="req" aria-hidden="true">*</b></span>
+      <textarea required name="message" rows="3" maxlength="10000" placeholder="What’s the building, what do you need and when do you need it by?" aria-describedby={`${formType}-message-error`}></textarea>
       <span class="field-error" id={`${formType}-message-error`} data-error-for="message" aria-live="polite"></span>
     </label>
   </div>
 
   <details class="enquiry-form__more">
-    <summary>Add property details <small>optional</small></summary>
+    <summary><span>Add more property details</span> <small>(optional)</small></summary>
     <p>These help us confirm the scope and fee. Not sure what you need? Send what you have and we’ll advise.</p>
     <div class="enquiry-form__grid">
-      {quoteFields.slice(1).map(field => <label>{field.label}
+      {quoteFields.slice(1).map(field => <label><span>{field.label}</span>
         {field.options.length ? <select name={field.name} aria-describedby={`${formType}-${field.name}-error`}>
           <option value="">Select if known</option>
           {field.options.map(option => <option value={option}>{option}</option>)}
@@ -93,59 +99,86 @@ const serviceOptions = [
     <input type="text" name="website" tabindex="-1" autocomplete="off" />
   </label>
 
-  <div class="enquiry-form__send">
-    <div class="captcha-wrap">
-      <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light" aria-describedby={`${formType}-turnstileToken-error`}></div>
-      <input type="hidden" name="cf-turnstile-response" value="" />
-      <span class="field-error" id={`${formType}-turnstileToken-error`} data-error-for="turnstileToken" aria-live="polite"></span>
-    </div>
-    <button class="btn btn-primary" type="submit" data-submit-text={submitText}>{submitText}</button>
+  <div class="captcha-wrap">
+    <div class="cf-turnstile" data-turnstile-widget data-sitekey={turnstileSiteKey} data-theme="light" aria-describedby={`${formType}-turnstileToken-error`}></div>
+    <input type="hidden" name="cf-turnstile-response" value="" />
+    <span class="field-error" id={`${formType}-turnstileToken-error`} data-error-for="turnstileToken" aria-live="polite"></span>
   </div>
 
+  <button class="enquiry-form__submit" type="submit" data-submit-text={submitText}>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 3 10.2 13.8M21 3l-6.6 18-4.2-7.2L3 9.6 21 3Z" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <span>{submitText}</span>
+  </button>
+
   <div class="form-status" data-form-status aria-live="polite"></div>
-  <p class="enquiry-form__privacy">We only use your details to respond to your enquiry. Read our <a href="/privacy">Privacy Policy</a>. Please don’t include sensitive personal information.</p>
+  <p class="enquiry-form__privacy">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z" fill="currentColor" /><path d="m8.8 12 2.2 2.2 4.3-4.4" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    <span>We only use your details to respond to your enquiry. Read our <a href="/privacy">Privacy Policy</a>.</span>
+  </p>
   <noscript><p>Please enable JavaScript to use the protected enquiry form, or contact us by phone or email.</p></noscript>
 </form>
 
 <style>
-  .enquiry-form { display: grid; gap: 1.15rem; }
-  .enquiry-form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.05rem 1.1rem; }
-  .enquiry-form label:not(.sr-only) { display: grid; gap: .4rem; align-content: start; color: var(--text-strong); font-size: .93rem; font-weight: 650; }
-  small { color: var(--muted); font-size: .84rem; font-weight: 400; }
+  .enquiry-form { display: grid; gap: 1rem; }
+  .enquiry-form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .95rem 1rem; }
+  .enquiry-form label:not(.sr-only) { display: grid; gap: .38rem; align-content: start; color: var(--text-strong); font-size: .88rem; font-weight: 650; }
+  .req { color: #c23b3b; font-weight: 700; }
   .full { grid-column: 1 / -1; }
 
   .enquiry-form input, .enquiry-form select, .enquiry-form textarea {
-    padding: .82rem .9rem;
-    border-color: var(--border-strong);
-    border-radius: 8px;
+    padding: .72rem .85rem;
+    border-color: #d5dee8;
+    border-radius: 9px;
     background-color: #fff;
-    font-size: 1rem;
+    font-size: .95rem;
     font-weight: 400;
     transition: border-color .2s ease, box-shadow .2s ease;
   }
-  .enquiry-form input:hover, .enquiry-form select:hover, .enquiry-form textarea:hover { border-color: #93a6b8; }
+  .enquiry-form input::placeholder, .enquiry-form textarea::placeholder { color: #8a97a6; }
+  .enquiry-form input:hover, .enquiry-form select:hover, .enquiry-form textarea:hover { border-color: #a9b7c6; }
   .enquiry-form input:focus-visible, .enquiry-form select:focus-visible, .enquiry-form textarea:focus-visible { outline: 0; border-color: var(--brand); box-shadow: 0 0 0 3px var(--ring); }
-  .enquiry-form textarea { min-height: 124px; }
+  .enquiry-form textarea { min-height: 92px; }
   .enquiry-form :global(.field-error:empty) { display: none; }
 
-  .enquiry-form__more { border-block: 1px solid var(--border); }
-  .enquiry-form__more summary { display: flex; align-items: center; gap: .55rem; min-height: 50px; color: var(--brand-strong); font-size: .95rem; font-weight: 650; cursor: pointer; list-style: none; }
+  .enquiry-form__more summary { display: inline-flex; align-items: center; gap: .45rem; min-height: 40px; color: var(--navy); font-size: .9rem; font-weight: 700; cursor: pointer; list-style: none; }
   .enquiry-form__more summary::-webkit-details-marker { display: none; }
-  .enquiry-form__more summary::before { content: ''; width: 9px; height: 9px; margin: -3px .15rem 0 .2rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .25s var(--ease-out); }
-  .enquiry-form__more[open] summary::before { margin-top: 4px; transform: rotate(-135deg); }
-  .enquiry-form__more p { margin: 0 0 1rem; color: var(--muted); font-size: .92rem; }
-  .enquiry-form__more .enquiry-form__grid { padding-bottom: 1.2rem; }
+  .enquiry-form__more summary::before { content: ''; width: 7px; height: 7px; margin: -4px .3rem 0 .15rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .25s var(--ease-out), margin .25s var(--ease-out); }
+  .enquiry-form__more[open] summary::before { margin-top: 3px; transform: rotate(-135deg); }
+  .enquiry-form__more small { color: var(--muted); font-weight: 400; }
+  .enquiry-form__more p { margin: .2rem 0 .9rem; color: var(--muted); font-size: .88rem; }
+  .enquiry-form__more .enquiry-form__grid { padding-bottom: .4rem; }
 
-  .enquiry-form__send { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 1.5rem; }
-  .enquiry-form__send .btn { min-width: 200px; padding-block: .95rem; font-size: 1rem; font-weight: 700; }
-  .enquiry-form__privacy { margin: 0; color: var(--muted); font-size: .84rem; line-height: 1.55; }
-  .enquiry-form__privacy a { color: var(--brand-strong); text-decoration: underline; text-underline-offset: 3px; }
+  .enquiry-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    width: 100%;
+    min-height: 52px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(120deg, var(--navy-2), var(--navy));
+    color: #fff;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 14px 28px -14px rgba(10, 34, 56, .7);
+    transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease;
+  }
+  .enquiry-form__submit:hover { transform: translateY(-1px); box-shadow: 0 18px 32px -14px rgba(10, 34, 56, .75); }
+  .enquiry-form__submit:disabled { opacity: .7; cursor: progress; transform: none; }
 
-  @media (max-width: 640px) {
+  .enquiry-form__privacy { display: flex; align-items: center; justify-content: center; gap: .45rem; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.45; text-align: center; }
+  .enquiry-form__privacy svg { flex: none; color: var(--navy); }
+  .enquiry-form__privacy a { color: var(--navy); font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 600px) {
     .enquiry-form__grid { grid-template-columns: 1fr; }
-    .enquiry-form__send .btn { width: 100%; }
+    .enquiry-form__privacy { align-items: flex-start; text-align: left; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .enquiry-form__more summary::before { transition: none; }
+    .enquiry-form__more summary::before, .enquiry-form__submit { transition: none; }
+    .enquiry-form__submit:hover { transform: none; }
   }
 </style>

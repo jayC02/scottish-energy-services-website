@@ -2,97 +2,194 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import QuoteRequestForm from './QuoteRequestForm.astro';
 import { siteConfig, turnaroundPromise } from '../data/site';
+import { services } from '../data/services';
 
-// /contact and /quote are the same page with their own wording, so both stay in step.
+// /contact and /quote share this layout with their own wording, so both stay in step.
 interface Props {
   metaTitle: string;
   metaDescription: string;
+  tag: string;
   heading: string;
   lead: string;
+  cardTitle: string;
+  cardText: string;
   formType: 'contact' | 'quote';
   submitText: string;
 }
-const { metaTitle, metaDescription, heading, lead, formType, submitText } = Astro.props;
+const { metaTitle, metaDescription, tag, heading, lead, cardTitle, cardText, formType, submitText } = Astro.props;
 
 const phoneHref = `tel:${siteConfig.phone.replace(/\s+/g, '')}`;
 const directionsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address)}`;
 
-const answers = [
-  { question: 'What should I send for a quote?', answer: 'The address or postcode, the service you need, what the building is used for, its approximate floor area and your deadline. Send what you have and we’ll advise on the rest.' },
-  { question: 'How quickly will I get my report?', answer: `Within ${turnaroundPromise.hours} hours of our site visit on every service. Domestic EPCs and Legionella risk assessments are turned around the same day.` },
-  { question: 'Which areas do you cover?', answer: 'All of Scotland and the north of England, from our office in Glasgow.' }
+const reasons = [
+  'Fixed fee agreed before work starts',
+  'Accredited energy assessors',
+  `Reports within ${turnaroundPromise.hours} hours of our visit`,
+  'Covering Scotland and the north of England'
 ];
-const faqSchema = {
-  '@type': 'FAQPage',
-  mainEntity: answers.map(item => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } }))
-};
+
+const highlights = [
+  { icon: 'bolt', title: `${services.length} specialist services`, text: 'EPCs, SAP, SBEM, Section 63, fire risk and more' },
+  { icon: 'clock', title: `${turnaroundPromise.hours}-hour turnaround`, text: 'From site visit to finished report' },
+  { icon: 'map', title: 'Scotland and northern England', text: 'From Glasgow to Shetland and Yorkshire', href: '/areas' },
+  { icon: 'shield', title: 'Accredited assessors', text: 'Through Elmhurst Energy and ecmk' }
+];
 ---
-<BaseLayout title={metaTitle} description={metaDescription} structuredData={faqSchema}>
-  <section class="enquiry">
-    <div class="enquiry__side">
-      <div class="enquiry__side-inner">
-        <h1>{heading}</h1>
-        <p class="enquiry__lead">{lead}</p>
-
-        <a class="enquiry__phone" href={phoneHref} data-track="phone_click">{siteConfig.phone}</a>
-        <a class="enquiry__email" href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a>
-
-        <address>
-          {siteConfig.address}<br />
-          <a href={directionsHref} rel="noopener">Get directions</a>
-        </address>
-      </div>
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <section class="contact-hero">
+    <div class="contact-hero__photo" aria-hidden="true">
+      <img src="/images/contact/glasgow-clyde-sunset.webp" srcset="/images/contact/glasgow-clyde-sunset-small.webp 640w, /images/contact/glasgow-clyde-sunset.webp 1200w" sizes="(min-width: 901px) 48vw, 100vw" width="1200" height="1080" alt="" fetchpriority="high" decoding="async" />
     </div>
 
-    <div class="enquiry__main">
-      <div class="enquiry__main-inner">
+    <div class="container contact-hero__layout">
+      <div class="contact-hero__copy">
+        <p class="contact-hero__tag">{tag}</p>
+        <h1>{heading}</h1>
+        <p class="contact-hero__lead">{lead}</p>
+
+        <ul class="contact-methods">
+          <li>
+            <span class="contact-methods__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h3.2l1.6 4-2 1.3a10.5 10.5 0 0 0 6.9 6.9l1.3-2 4 1.6V19a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /></svg></span>
+            <div><a class="contact-methods__main" href={phoneHref} data-track="phone_click">{siteConfig.phone}</a><span>Call our Glasgow office</span></div>
+          </li>
+          <li>
+            <span class="contact-methods__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6" /><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+            <div><a class="contact-methods__main" href={`mailto:${siteConfig.email}`} data-track="email_click">{siteConfig.email}</a><span>Send drawings or details any time</span></div>
+          </li>
+          <li>
+            <span class="contact-methods__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" /><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6" /></svg></span>
+            <div><address class="contact-methods__main">{siteConfig.address}</address><a class="contact-methods__link" href={directionsHref} rel="noopener">Get directions</a></div>
+          </li>
+        </ul>
+
+        <div class="contact-reasons">
+          <h2>Why get in touch?</h2>
+          <ul>
+            {reasons.map(reason => (
+              <li><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" /><path d="m7.8 12.2 2.8 2.8 5.6-5.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>{reason}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <h2>{cardTitle}</h2>
+        <p class="contact-card__text">{cardText}</p>
         <QuoteRequestForm formType={formType} submitText={submitText} />
       </div>
     </div>
   </section>
 
-  <section class="enquiry-answers" aria-label="Common questions">
-    <div class="container enquiry-answers__grid">
-      {answers.map(item => (
-        <div>
-          <h2>{item.question}</h2>
-          <p>{item.answer}</p>
-          {item.question.startsWith('Which') && <a href="/areas">See our coverage map</a>}
-        </div>
-      ))}
-    </div>
+  <section class="contact-highlights" aria-label="Why choose Scottish Energy Services">
+    <ul class="container">
+      {highlights.map(item => {
+        const Tag = item.href ? 'a' : 'div';
+        return (
+          <li>
+            <Tag class="contact-highlights__item" href={item.href}>
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                {item.icon === 'bolt' && <path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />}
+                {item.icon === 'clock' && <><rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="currentColor" stroke-width="1.5" /><path d="M3.5 9.5h17M8 3v4m8-4v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></>}
+                {item.icon === 'map' && <><path d="M9 4 3.5 6v14L9 18l6 2 5.5-2V4L15 6 9 4Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /><path d="M9 4v14m6-12v14" stroke="currentColor" stroke-width="1.5" /></>}
+                {item.icon === 'shield' && <><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6L12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" /><path d="m8.8 12 2.2 2.2 4.3-4.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></>}
+              </svg>
+              <span><strong>{item.title}</strong><span>{item.text}</span></span>
+            </Tag>
+          </li>
+        );
+      })}
+    </ul>
   </section>
 </BaseLayout>
 
 <style>
-  .enquiry { --edge: max(4vw, calc((100vw - var(--max)) / 2)); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
+  /* Hero: soft light wash with the Clyde at sunset behind the form */
+  .contact-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 4.5rem);
+    background:
+      radial-gradient(ellipse 60% 70% at 72% 92%, rgba(242, 196, 170, .32), transparent 70%),
+      radial-gradient(ellipse 50% 60% at 10% 0%, rgba(222, 236, 246, .9), transparent 70%),
+      linear-gradient(180deg, #f7fafd 0%, #fdf8f6 100%);
+  }
+  .contact-hero::before {
+    content: '';
+    position: absolute;
+    left: 28%;
+    bottom: -48%;
+    width: 820px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0) 70%);
+    pointer-events: none;
+  }
+  .contact-hero__photo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50vw;
+    clip-path: polygon(14% 0, 100% 0, 100% 86%, 0 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 26%);
+  }
+  .contact-hero__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+  .contact-hero__photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255, 236, 226, .25), rgba(255, 220, 210, .12)); }
 
-  .enquiry__side { background: var(--navy); color: #cfe0ec; }
-  .enquiry__side-inner { position: sticky; top: 84px; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 4vw, 4rem) clamp(2.5rem, 5vw, 4rem) var(--edge); }
-  h1 { margin: 0; color: #fff; font-size: clamp(2.3rem, 4.4vw, 3.7rem); font-weight: 800; line-height: 1.03; letter-spacing: -.04em; }
-  .enquiry__lead { margin: 1.1rem 0 clamp(2.2rem, 5vw, 3.6rem); max-width: 40ch; color: #dbe7f0; font-size: clamp(1.03rem, 1.3vw, 1.15rem); line-height: 1.6; }
+  .contact-hero__layout { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2rem clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .contact-hero__copy { padding-top: .4rem; }
 
-  .enquiry__phone, .enquiry__email { color: #fff; text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 2px; text-underline-offset: .18em; transition: color .2s ease, text-decoration-color .2s ease; }
-  .enquiry__phone { font-size: clamp(2rem, 3.7vw, 3.1rem); font-weight: 800; line-height: 1.1; letter-spacing: -.03em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-  .enquiry__email { margin-top: .55rem; font-size: clamp(1rem, 1.5vw, 1.25rem); font-weight: 600; overflow-wrap: anywhere; }
-  .enquiry__phone:hover, .enquiry__email:hover { color: var(--mint); text-decoration-color: currentColor; }
+  .contact-hero__tag { display: inline-block; margin: 0 0 1.1rem; padding: .3rem .75rem; border-radius: 8px; background: var(--brand-soft); color: var(--navy); font-size: .82rem; font-weight: 700; }
+  h1 { margin: 0; color: var(--navy); font-size: clamp(2.6rem, 5.2vw, 4.4rem); font-weight: 800; line-height: 1; letter-spacing: -.045em; }
+  .contact-hero__lead { margin: 1.1rem 0 0; max-width: 46ch; color: #3b4a5c; font-size: 1.04rem; line-height: 1.65; }
 
-  address { margin-top: clamp(1.6rem, 3vw, 2.4rem); font-style: normal; font-size: .98rem; line-height: 1.7; }
-  address a { color: #fff; text-decoration: underline; text-decoration-color: var(--mint); text-underline-offset: 4px; }
-  address a:hover { color: var(--mint); }
+  .contact-methods { display: grid; gap: 1.1rem; margin: clamp(1.8rem, 3vw, 2.4rem) 0 0; padding: 0; list-style: none; }
+  .contact-methods li { display: flex; align-items: center; gap: 1rem; }
+  .contact-methods__icon { display: grid; flex: none; place-items: center; width: 52px; height: 52px; border-radius: 12px; background: #e3edf6; color: var(--navy); }
+  .contact-methods div { display: grid; gap: .1rem; min-width: 0; }
+  .contact-methods__main { color: var(--navy); font-size: 1.12rem; font-weight: 750; font-style: normal; line-height: 1.3; overflow-wrap: anywhere; }
+  a.contact-methods__main:hover { color: var(--brand); }
+  .contact-methods div > span { color: var(--muted); font-size: .9rem; }
+  .contact-methods__link { justify-self: start; color: var(--navy); font-size: .92rem; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .contact-methods__link:hover { color: var(--brand); }
 
-  .enquiry__main-inner { padding: clamp(2rem, 5vw, 4.5rem) var(--edge) clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 4rem); }
+  .contact-reasons { margin-top: clamp(1.8rem, 3vw, 2.3rem); padding-top: clamp(1.5rem, 2.5vw, 2rem); border-top: 1px solid #dbe3ec; max-width: 420px; }
+  .contact-reasons h2 { margin: 0 0 .9rem; color: var(--navy); font-size: 1.25rem; font-weight: 800; letter-spacing: -.02em; }
+  .contact-reasons ul { display: grid; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+  .contact-reasons li { display: flex; align-items: center; gap: .7rem; color: var(--text); font-size: .97rem; }
+  .contact-reasons svg { flex: none; color: var(--mint-strong); }
 
-  .enquiry-answers { padding: clamp(2.2rem, 4vw, 3.2rem) 0 clamp(2.5rem, 5vw, 4rem); border-top: 1px solid var(--border); background: var(--surface-tint); }
-  .enquiry-answers__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.6rem clamp(1.5rem, 4vw, 3.5rem); }
-  .enquiry-answers h2 { margin: 0 0 .45rem; color: var(--text-strong); font-size: 1.08rem; font-weight: 750; line-height: 1.35; letter-spacing: -.01em; }
-  .enquiry-answers p { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
-  .enquiry-answers a { display: inline-block; margin-top: .45rem; color: var(--brand-strong); font-size: .95rem; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
+  .contact-card { position: relative; justify-self: end; width: min(100%, 520px); padding: clamp(1.4rem, 2.6vw, 2rem); border: 1px solid rgba(216, 224, 233, .8); border-radius: 20px; background: #fff; box-shadow: 0 40px 80px -40px rgba(10, 34, 56, .35), 0 2px 6px rgba(10, 34, 56, .05); }
+  .contact-card h2 { margin: 0; color: var(--navy); font-size: 1.6rem; font-weight: 800; letter-spacing: -.03em; }
+  .contact-card__text { margin: .35rem 0 1.3rem; color: var(--muted); font-size: .93rem; line-height: 1.55; }
 
+  /* Highlights strip */
+  .contact-highlights { border-top: 1px solid var(--border); background: #f5f7fb; }
+  .contact-highlights ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-block: 0; padding: clamp(1.4rem, 3vw, 2rem) 0; list-style: none; }
+  .contact-highlights li + li { border-left: 1px solid var(--border); }
+  .contact-highlights__item { display: flex; align-items: center; gap: .9rem; height: 100%; padding: .2rem clamp(.8rem, 2vw, 1.6rem); }
+  .contact-highlights li:first-child .contact-highlights__item { padding-left: 0; }
+  .contact-highlights svg { flex: none; color: var(--navy); }
+  .contact-highlights strong { display: block; color: var(--navy); font-size: .98rem; font-weight: 750; line-height: 1.3; }
+  .contact-highlights__item > span > span { display: block; margin-top: .15rem; color: var(--muted); font-size: .85rem; line-height: 1.4; }
+  a.contact-highlights__item:hover strong { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 1100px) {
+    .contact-highlights ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem 0; }
+    .contact-highlights li:nth-child(3) { border-left: 0; }
+    .contact-highlights li:nth-child(3) .contact-highlights__item { padding-left: 0; }
+  }
   @media (max-width: 900px) {
-    .enquiry { grid-template-columns: 1fr; }
-    .enquiry__side-inner { position: static; padding-right: var(--edge); }
-    .enquiry__main-inner { padding-left: var(--edge); }
-    .enquiry-answers__grid { grid-template-columns: 1fr; }
+    .contact-hero { padding-top: 0; }
+    .contact-hero__photo { position: relative; width: 100%; height: 240px; margin-bottom: -3rem; clip-path: none; -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 100%); mask-image: linear-gradient(180deg, #000 45%, transparent 100%); }
+    .contact-hero__layout { grid-template-columns: 1fr; }
+    .contact-card { justify-self: stretch; width: 100%; }
+  }
+  @media (max-width: 560px) {
+    .contact-methods__main { font-size: 1rem; }
+    .contact-highlights ul { grid-template-columns: 1fr; }
+    .contact-highlights li + li { border-left: 0; }
+    .contact-highlights__item { padding-left: 0; }
   }
 </style>
