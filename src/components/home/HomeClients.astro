@@ -1,0 +1,54 @@
+---
+import ClientLogoLoop from './ClientLogoLoop.jsx';
+
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+const Heading = compact ? 'h3' : 'h2';
+---
+
+<section class:list={['clients', { 'clients--compact': compact }]} aria-labelledby="clients-title">
+  <div class:list={['clients__inner', { container: !compact }]}>
+    <Heading id="clients-title" class="clients__title">Trusted by property, design and public sector teams</Heading>
+    <div class="clients__loop">
+      <ClientLogoLoop client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .clients {
+    --clients-ink: var(--text-strong, #0f1b2a);
+    padding: clamp(2.75rem, 5vw, 4rem) 0 clamp(3.5rem, 6vw, 5rem);
+    background: #fff;
+  }
+
+  .clients--compact {
+    padding: 0;
+    margin: 0 0 1.5rem;
+  }
+
+  .clients__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .clients__title {
+    margin: 0;
+    color: var(--clients-ink);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+
+  /* Reserve the loop's height so the page doesn't shift while the island loads. */
+  .clients__loop { min-height: 64px; min-width: 0; display: flex; align-items: center; }
+  .clients__loop :global(.hp-logoloop) { color: var(--clients-ink); }
+  .clients__loop :global(.logoloop__list) { min-height: 64px; }
+
+  @media (max-width: 860px) {
+    .clients__inner { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  }
+</style>

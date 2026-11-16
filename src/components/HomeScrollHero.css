@@ -70,8 +70,9 @@
 .home-scroll-hero__copy {
   max-width: 60ch;
   margin: 1rem auto 0;
-  color: rgba(239,247,252,.9);
-  font-size: clamp(.98rem, 1.35vw, 1.12rem);
+  color: #fff;
+  font-size: clamp(1rem, 1.4vw, 1.16rem);
+  font-weight: 500;
   line-height: 1.55;
 }
 

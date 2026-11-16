@@ -14,7 +14,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
 ---
 <section class:list={['svc', { 'svc--page': page }]} aria-labelledby="services-heading">
   <div class="container">
-    <header class="svc-head">
+    <header class:list={['svc-head', { 'svc-head--with-clients': Astro.slots.has('clients') }]}>
       <div class="svc-head__title">
         <p class:list={['svc-eyebrow', enter]} {...reveal('fade')}>Our services</p>
         <Heading id="services-heading" class={enter} style="--d:80ms" {...reveal()}>Energy, compliance and fire safety assessments.</Heading>
@@ -24,6 +24,8 @@ const countFor = (id: string) => services.filter(service => service.category ===
         {!page && <a class="svc-head__link" href="/services">View all services <span aria-hidden="true">→</span></a>}
       </div>
     </header>
+
+    <slot name="clients" />
 
     <div class:list={['svc-promise', { 'enter svc-promise--load': page }]} style="--d:240ms" {...reveal('scale')}>
       <div class="svc-promise__figure">
@@ -88,6 +90,7 @@ const countFor = (id: string) => services.filter(service => service.category ===
 
   /* Heading */
   .svc-head { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: end; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .svc-head--with-clients { margin-bottom: 1rem; }
   .svc-eyebrow { display: inline-flex; align-items: center; gap: .7rem; margin: 0 0 1.1rem; color: var(--mint-strong); font-size: .78rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
   .svc-eyebrow::before { content: ''; width: 28px; height: 2px; background: currentColor; }
   .svc-head :is(h1, h2) { margin: 0; max-width: 16ch; color: var(--navy); font-size: clamp(2.2rem, 4.6vw, 3.75rem); font-weight: 800; line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }

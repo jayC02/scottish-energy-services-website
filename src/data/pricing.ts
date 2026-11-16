@@ -6,7 +6,8 @@ export const servicePricing = [
   { slug: 'decs', label: 'Display Energy Certificate (DEC)', amount: 200, bespoke: false },
   { slug: 'fras', label: 'Fire Risk Assessment', amount: 225, bespoke: false },
   { slug: 'section-63-assessments', label: 'Section 63', amount: 200, bespoke: true },
-  { slug: 'overheating-assessments-tm59', label: 'TM59 Overheating Assessment', amount: 200, bespoke: false }
+  { slug: 'overheating-assessments-tm59', label: 'TM59 Overheating Assessment', amount: 200, bespoke: false },
+  { slug: 'domestic-epcs-and-legionellas', label: 'Domestic EPCs and Legionella', amount: 65, bespoke: false }
 ] as const;
 
 export type ServicePrice = (typeof servicePricing)[number];

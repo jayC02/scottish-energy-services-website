@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ServiceCards from '../components/ServiceCards.astro';
 import ProjectsShowcase from '../components/ProjectsShowcase.astro';
-import ClientLogoCarousel from '../components/ClientLogoCarousel.astro';
+import HomeClients from '../components/home/HomeClients.astro';
 import WhyChooseUs from '../components/WhyChooseUs.astro';
 import FAQAccordion from '../components/FAQAccordion.astro';
 import PricingSection from '../components/PricingSection.astro';
@@ -15,11 +15,11 @@ import PricingSection from '../components/PricingSection.astro';
 >
   <Hero />
 
-  <ServiceCards />
+  <ServiceCards>
+    <HomeClients slot="clients" compact />
+  </ServiceCards>
 
   <ProjectsShowcase />
-
-  <ClientLogoCarousel />
 
   <PricingSection />
 
